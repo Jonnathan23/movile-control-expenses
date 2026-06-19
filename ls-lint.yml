@@ -1,56 +1,58 @@
 ls:
-    # Regla maestra: Abarca todo el código fuente en tus apps y packages
-    "src/**":
-        .dir: kebab-case
-        .ts: kebab-case
-        .tsx: kebab-case
 
-        # Específicos de Frontend (React / TanStack)
-        .hook.ts: kebab-case
-        .page.tsx: kebab-case
-        .layout.tsx: kebab-case
-        .adapter.ts: kebab-case
-        .schema.ts: kebab-case
+  # Capa Domain
+  "src/**/dtos/**":
+    .ts: regex:^[a-z0-9-]+.dto$
+  "src/**/entities/**":
+    .ts: regex:^[a-z0-9-]+.entity$
+  "src/**/interfaces/**":
+    .ts: regex:^[a-z0-9-]+.interface$
+  "src/**/repositories/**":
+    .ts: regex:^[a-z0-9-]+.repository$
+  "src/**/datasources/**":
+    .ts: regex:^[a-z0-9-]+.datasource$
 
-        # Capa Domain
-        .dto.ts: kebab-case
-        .model.ts: kebab-case
-        .projection.ts: kebab-case
-        .interface.ts: kebab-case
-        .datasource.ts: kebab-case
-        .repository.ts: kebab-case
+  # Capa Infrastructure
+  "src/**/mappers/**":
+    .ts: regex:^[a-z0-9-]+.mapper$
 
-        # Capa Infrastructure
-        .datasource.impl.ts: kebab-case
-        .mapper.ts: kebab-case
+  # Capa Application (Casos de uso)
+  "src/**/use-cases/**":
+    .ts: regex:^[a-z0-9-]+.use-case$
 
-        # Capa Application
-        .use-case.ts: kebab-case
+  # Capa Presentation / Frontend
+  "src/**/pages/**":
+    .tsx: regex:^[a-z0-9-]+.page$
+  "src/**/hooks/**":
+    .ts: regex:^[a-z0-9-]+.hook$
+  "src/**/context/**":
+    .tsx: regex:^[a-z0-9-]+.context$
+    .ts: regex:^[a-z0-9-]+.context$
+  "src/**/stores/**":
+    .ts: regex:^[a-z0-9-]+.store$
+  "src/**/reducers/**":
+    .ts: regex:^[a-z0-9-]+.reducer$
 
-        # Capa Presentation
-        .component.tsx: kebab-case
-        .page.tsx: kebab-case
-        .hook.ts: kebab-case
-        .reducer.ts: kebab-case
-        .context.tsx: kebab-case
-        .context.ts: kebab-case
-        .provider.tsx: kebab-case
-        .store.ts: kebab-case
+  "src/**":
+    .dir: kebab-case
+    .ts: kebab-case
+    .tsx: kebab-case
+
 ignore:
-    - node_modules
-    - .git
-    - dist
-    - build
-    - docs
-    - .vscode
-    - scripts
-    - .agents
-    - __test__
-    - __tests__
-    - .env.local
-    - .env.template
-    - vite.config.ts
-    - "*.json"
-    - .wakatime-project
-    - "main.tsx"
-    - "**/main.tsx"
+  - node_modules
+  - .git
+  - dist
+  - build
+  - docs
+  - .vscode
+  - scripts
+  - .agents
+  - __test__
+  - __tests__
+  - .env.local
+  - .env.template
+  - vite.config.ts
+  - "*.json"
+  - .wakatime-project
+  - "main.tsx"
+  - "App.tsx"
