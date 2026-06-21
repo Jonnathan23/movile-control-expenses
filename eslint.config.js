@@ -4,7 +4,6 @@ import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
 import tseslint from 'typescript-eslint'
 import { defineConfig, globalIgnores } from 'eslint/config'
-import unicorn from 'eslint-plugin-unicorn'
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended'
 
 export default defineConfig([
@@ -18,21 +17,10 @@ export default defineConfig([
       reactHooks.configs.flat.recommended,
       reactRefresh.configs.vite,
     ],
-    plugins: {
-      unicorn,
-    },
     languageOptions: {
       globals: globals.browser,
     },
     rules: {
-      // Evitar el uso de abreviaciones comunes
-      'unicorn/prevent-abbreviations': [
-        'error',
-        {
-          checkFilenames: false,
-          checkDefaultAndExportedParams: false,
-        },
-      ],
       // Reglas estrictas de nomenclatura
       '@typescript-eslint/naming-convention': [
         'error',
@@ -43,8 +31,7 @@ export default defineConfig([
         },
         // 2. Ignorar variables que provengan de un import para evitar errores con dependencias externas
         {
-          selector: 'variable',
-          modifiers: ['imported'],
+          selector: 'import',
           format: null,
         },
         // 3. El resto de variables locales deben ir en camelCase
