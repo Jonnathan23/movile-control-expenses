@@ -8,7 +8,7 @@ import { useBudget } from "src/features/expenses/presentation/hooks/use-budget.h
 import { saveExpenseUseCase, updateExpenseUseCase } from "src/features/expenses/core/di/expense.dependency";
 import { CreateExpenseDtoImpl } from "src/features/expenses/core/domain/dtos/create-expense.dto";
 import { UpdateExpenseDtoImpl } from "src/features/expenses/core/domain/dtos/update-expense.dto";
-import ErrorMessage from "src/shared/presentation/errors/error-message";
+import ErrorMessage from "src/shared/ui/presentation/components/errors/error-message";
 
 type ValuePiece = Date | null;
 type Value = ValuePiece | [ValuePiece, ValuePiece];
