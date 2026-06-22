@@ -1,4 +1,5 @@
 import { ExpenseEntity } from "src/features/expenses/core/domain/entities/expense.entity";
+import type { CategoryEntity } from "src/features/expenses/core/domain/entities/category.entity";
 
 export type BudgetActions =
     | { type: "add-budget"; payload: { budget: number } }
@@ -9,7 +10,8 @@ export type BudgetActions =
     | { type: "get-expense-by-id"; payload: { id: string } }
     | { type: "update-expense"; payload: { expense: ExpenseEntity } }
     | { type: "reset-app" }
-    | { type: "add-filter-category"; payload: { id: string } };
+    | { type: "add-filter-category"; payload: { id: string } }
+    | { type: "set-categories"; payload: { categories: CategoryEntity[] } };
 
 export type BudgetState = {
     budget: number;
@@ -17,6 +19,7 @@ export type BudgetState = {
     expenses: ExpenseEntity[];
     editingId: string;
     currentCategory: string;
+    categories: CategoryEntity[];
 };
 
 export const initialState: BudgetState = {
@@ -25,6 +28,7 @@ export const initialState: BudgetState = {
     expenses: [],
     editingId: "",
     currentCategory: "",
+    categories: [],
 };
 
 export const budgetReducer = (state: BudgetState = initialState, action: BudgetActions): BudgetState => {
@@ -96,6 +100,13 @@ export const budgetReducer = (state: BudgetState = initialState, action: BudgetA
         return {
             ...state,
             currentCategory: action.payload.id,
+        };
+    }
+
+    if (action.type === "set-categories") {
+        return {
+            ...state,
+            categories: action.payload.categories,
         };
     }
 

@@ -1,9 +1,9 @@
 import type { ChangeEvent } from "react";
-import { defaultCategories } from "src/features/expenses/core/di/expense.dependency";
+
 import { useBudget } from "src/features/expenses/presentation/hooks/use-budget.hook";
 
 export default function FilterByCategory() {
-    const { dispatch } = useBudget();
+    const { dispatch, state } = useBudget();
 
     const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
         dispatch({ type: "add-filter-category", payload: { id: e.target.value } });
@@ -16,7 +16,7 @@ export default function FilterByCategory() {
                     <label htmlFor="category">Filtrar Gastos</label>
                     <select id="category" className="bg-slate-10 p-3 flex-1 rounded" onChange={handleChange}>
                         <option value="">Todas las categorias</option>
-                        {defaultCategories.map((category) => (
+                        {state.categories.map((category) => (
                             <option key={category.id} value={category.id}>
                                 {category.name}
                             </option>

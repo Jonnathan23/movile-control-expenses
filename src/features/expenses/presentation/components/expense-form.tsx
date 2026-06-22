@@ -5,7 +5,7 @@ import "react-calendar/dist/Calendar.css";
 import "react-date-picker/dist/DatePicker.css";
 import { useBudget } from "src/features/expenses/presentation/hooks/use-budget.hook";
 
-import { saveExpenseUseCase, updateExpenseUseCase, defaultCategories } from "src/features/expenses/core/di/expense.dependency";
+import { saveExpenseUseCase, updateExpenseUseCase } from "src/features/expenses/core/di/expense.dependency";
 import { CreateExpenseDtoImpl } from "src/features/expenses/core/domain/dtos/create-expense.dto";
 import { UpdateExpenseDtoImpl } from "src/features/expenses/core/domain/dtos/update-expense.dto";
 import ErrorMessage from "src/shared/presentation/errors/error-message";
@@ -169,10 +169,10 @@ export default function ExpenseForm() {
                     value={expense.category}
                     onChange={handleChange}
                 >
-                    <option value="" defaultValue={defaultCategories[0].id} disabled>
+                    <option value="" disabled>
                         --- Seleccione Categoria ---
                     </option>
-                    {defaultCategories.map((category) => (
+                    {state.categories.map((category) => (
                         <option key={category.id} value={category.id}>
                             {category.name}
                         </option>

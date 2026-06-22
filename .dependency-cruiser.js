@@ -43,12 +43,7 @@ const dependencyCruiserConfiguration = {
         },
         tsPreCompilationDeps: true,
         tsConfig: {
-            fileName: "tsconfig.json",
-        },
-        reporterOptions: {
-            err: {
-                theme: "dark",
-            },
+            fileName: "tsconfig.app.json",
         },
     },
 };

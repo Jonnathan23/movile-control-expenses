@@ -1,75 +1,26 @@
-# React + TypeScript + Vite
+# Mobile Control Expenses
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicación web para el control de gastos personales. Desarrollada con React, TypeScript y Vite bajo Clean Architecture.
 
-Currently, two official plugins are available:
+## Requisitos Previos
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Es estrictamente necesario tener instalado [Bun](https://bun.sh/) en tu sistema para ejecutar los scripts.
+- Es estrictamente necesario tener instalado [pnpm](https://pnpm.io/) en tu sistema para la gestión de dependencias.
 
-## React Compiler
+## Instalación y Ejecución
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+1. Instala las dependencias del proyecto:
+   ```bash
+   pnpm install
+   ```
 
-Note: This will impact Vite dev & build performances.
+2. Inicia el servidor de desarrollo:
+   ```bash
+   bun run dev
+   ```
 
-## Expanding the ESLint configuration
+## Validaciones y Calidad de Código
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Este proyecto asegura la calidad del código mediante:
+- **ESLint**: Reglas estrictas de linteo para mantener un estándar consistente. Puedes revisar el estado ejecutando `bun run lint` y/o `bun run lint:fs`.
+- **Husky**: Hooks de Git pre-commit integrados que validan y formatean el código automáticamente antes de permitir realizar un commit.

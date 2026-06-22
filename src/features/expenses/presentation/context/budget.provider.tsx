@@ -1,7 +1,7 @@
-import { useReducer, type ReactNode, useMemo } from "react";
+import { useReducer, useEffect, type ReactNode, useMemo } from "react";
 import { budgetReducer, initialState } from "src/features/expenses/presentation/reducers/budget.reducer";
 
-import { getExpensesUseCase, getBudgetUseCase } from "src/features/expenses/core/di/expense.dependency";
+import { getExpensesUseCase, getBudgetUseCase, getCategoriesUseCase } from "src/features/expenses/core/di/expense.dependency";
 import { BudgetContext } from "src/features/expenses/presentation/context/budget.context";
 
 interface BudgetProviderProps {
@@ -17,6 +17,12 @@ export const BudgetProvider = ({ children }: BudgetProviderProps) => {
 
     const totalExpense = useMemo(() => state.expenses.reduce((total, expense) => expense.amount + total, 0), [state.expenses]);
     const remaininBudget = state.budget - totalExpense;
+
+    useEffect(() => {
+        getCategoriesUseCase.execute().then((categories) => {
+            dispatch({ type: "set-categories", payload: { categories } });
+        });
+    }, []);
 
     return (
         <BudgetContext.Provider

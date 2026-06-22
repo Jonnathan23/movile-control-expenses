@@ -6,7 +6,7 @@ import { formatDate } from "src/shared/helpers/format.helper";
 import { ExpenseEntity } from "src/features/expenses/core/domain/entities/expense.entity";
 
 import { useBudget } from "src/features/expenses/presentation/hooks/use-budget.hook";
-import { deleteExpenseUseCase, defaultCategories } from "src/features/expenses/core/di/expense.dependency";
+import { deleteExpenseUseCase } from "src/features/expenses/core/di/expense.dependency";
 import AmountDisplay from "src/features/expenses/presentation/components/amount-display";
 
 type ExpenseDetailProps = {
@@ -14,8 +14,8 @@ type ExpenseDetailProps = {
 };
 
 export default function ExpenseDetail({ expense }: ExpenseDetailProps) {
-    const categoryInfo = useMemo(() => defaultCategories.find((cat) => cat.id === expense.category), [expense]);
-    const { dispatch } = useBudget();
+    const { state, dispatch } = useBudget();
+    const categoryInfo = useMemo(() => state.categories.find((cat) => cat.id === expense.category), [expense, state.categories]);
 
     const handleDelete = () => {
         deleteExpenseUseCase.execute(expense.id);
