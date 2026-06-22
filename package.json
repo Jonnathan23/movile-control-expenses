@@ -8,6 +8,7 @@
         "build": "tsc -b && vite build",
         "lint": "eslint .",
         "lint:fs": "ls-lint",
+        "lint:deps": "depcruise src",
         "preview": "vite preview",
         "typecheck": "tsc -b",
         "typecheck:logs:windows": "cmd /c \"tsc -b > tsc.logs 2>&1\"",
