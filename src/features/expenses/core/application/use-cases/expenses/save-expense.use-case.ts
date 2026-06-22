@@ -5,7 +5,7 @@ import type { CreateExpenseDto } from "src/features/expenses/core/domain/dtos/cr
 export class SaveExpenseUseCase {
     constructor(private readonly expenseRepository: ExpenseRepository) {}
 
-    public execute(dto: CreateExpenseDto): ExpenseEntity {
+    public execute(dto: CreateExpenseDto): Promise<ExpenseEntity> {
         return this.expenseRepository.saveExpense(dto);
     }
 }

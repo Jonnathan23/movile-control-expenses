@@ -7,19 +7,19 @@ import type { UpdateExpenseDto } from "src/features/expenses/core/domain/dtos/up
 export class ExpenseRepositoryImpl implements ExpenseRepository {
     constructor(private readonly expenseDataSource: ExpenseDataSource) {}
 
-    public getExpenses(): ExpenseEntity[] {
+    public getExpenses(): Promise<ExpenseEntity[]> {
         return this.expenseDataSource.getExpenses();
     }
 
-    public saveExpense(dto: CreateExpenseDto): ExpenseEntity {
+    public saveExpense(dto: CreateExpenseDto): Promise<ExpenseEntity> {
         return this.expenseDataSource.saveExpense(dto);
     }
 
-    public updateExpense(dto: UpdateExpenseDto): ExpenseEntity {
+    public updateExpense(dto: UpdateExpenseDto): Promise<ExpenseEntity> {
         return this.expenseDataSource.updateExpense(dto);
     }
 
-    public deleteExpense(id: string): void {
-        this.expenseDataSource.deleteExpense(id);
+    public deleteExpense(id: string): Promise<void> {
+        return this.expenseDataSource.deleteExpense(id);
     }
 }

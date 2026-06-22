@@ -5,15 +5,15 @@ import { BudgetEntity } from "src/features/expenses/core/domain/entities/budget.
 export class BudgetRepositoryImpl implements BudgetRepository {
     constructor(private readonly budgetDataSource: BudgetDataSource) {}
 
-    public getBudget(): BudgetEntity {
+    public getBudget(): Promise<BudgetEntity> {
         return this.budgetDataSource.getBudget();
     }
 
-    public saveBudget(amount: number): BudgetEntity {
+    public saveBudget(amount: number): Promise<BudgetEntity> {
         return this.budgetDataSource.saveBudget(amount);
     }
 
-    public resetAll(): void {
-        this.budgetDataSource.resetAll();
+    public resetAll(): Promise<void> {
+        return this.budgetDataSource.resetAll();
     }
 }

@@ -3,7 +3,7 @@ import { BudgetRepository } from "src/features/expenses/core/domain/repositories
 export class ResetAppUseCase {
     constructor(private readonly budgetRepository: BudgetRepository) {}
 
-    public execute(): void {
-        this.budgetRepository.resetAll();
+    public execute(): Promise<void> {
+        return this.budgetRepository.resetAll();
     }
 }

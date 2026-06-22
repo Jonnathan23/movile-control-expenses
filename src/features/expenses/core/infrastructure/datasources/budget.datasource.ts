@@ -7,18 +7,18 @@ export class BudgetDataSourceImpl implements BudgetDataSource {
 
     constructor(private readonly budgetMapper: BudgetMapper) {}
 
-    public getBudget(): BudgetEntity {
+    public async getBudget(): Promise<BudgetEntity> {
         const stored = localStorage.getItem(this.storageKey);
         const rawData = stored ? JSON.parse(stored) : 0;
         return this.budgetMapper.toEntity(rawData);
     }
 
-    public saveBudget(amount: number): BudgetEntity {
+    public async saveBudget(amount: number): Promise<BudgetEntity> {
         localStorage.setItem(this.storageKey, JSON.stringify(amount));
         return new BudgetEntity(amount);
     }
 
-    public resetAll(): void {
+    public async resetAll(): Promise<void> {
         localStorage.removeItem(this.storageKey);
         localStorage.removeItem("expenses"); // Clears both budget and expenses
     }

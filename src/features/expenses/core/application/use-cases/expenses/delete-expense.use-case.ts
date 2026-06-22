@@ -3,7 +3,7 @@ import { ExpenseRepository } from "src/features/expenses/core/domain/repositorie
 export class DeleteExpenseUseCase {
     constructor(private readonly expenseRepository: ExpenseRepository) {}
 
-    public execute(id: string): void {
-        this.expenseRepository.deleteExpense(id);
+    public execute(id: string): Promise<void> {
+        return this.expenseRepository.deleteExpense(id);
     }
 }

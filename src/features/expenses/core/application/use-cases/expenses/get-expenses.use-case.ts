@@ -4,7 +4,7 @@ import { ExpenseEntity } from "src/features/expenses/core/domain/entities/expens
 export class GetExpensesUseCase {
     constructor(private readonly expenseRepository: ExpenseRepository) {}
 
-    public execute(): ExpenseEntity[] {
+    public execute(): Promise<ExpenseEntity[]> {
         return this.expenseRepository.getExpenses();
     }
 }

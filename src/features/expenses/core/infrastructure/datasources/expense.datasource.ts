@@ -10,14 +10,14 @@ export class ExpenseDataSourceImpl implements ExpenseDataSource {
 
     constructor(private readonly expenseMapper: ExpenseMapper) {}
 
-    public getExpenses(): ExpenseEntity[] {
+    public async getExpenses(): Promise<ExpenseEntity[]> {
         const stored = localStorage.getItem(this.storageKey);
         const rawData = stored ? JSON.parse(stored) : [];
         return this.expenseMapper.toArrayEntities(rawData);
     }
 
-    public saveExpense(dto: CreateExpenseDto): ExpenseEntity {
-        const expenses = this.getExpenses();
+    public async saveExpense(dto: CreateExpenseDto): Promise<ExpenseEntity> {
+        const expenses = await this.getExpenses();
         const newExpense = new ExpenseEntity(uuidv4(), dto.expenseName, dto.amount, dto.category, dto.date);
 
         expenses.push(newExpense);
@@ -25,8 +25,8 @@ export class ExpenseDataSourceImpl implements ExpenseDataSource {
         return newExpense;
     }
 
-    public updateExpense(dto: UpdateExpenseDto): ExpenseEntity {
-        const expenses = this.getExpenses();
+    public async updateExpense(dto: UpdateExpenseDto): Promise<ExpenseEntity> {
+        const expenses = await this.getExpenses();
         const index = expenses.findIndex((exp) => exp.id === dto.id);
 
         if (index === -1) throw new Error(`Expense with id ${dto.id} not found`);
@@ -38,8 +38,8 @@ export class ExpenseDataSourceImpl implements ExpenseDataSource {
         return updatedExpense;
     }
 
-    public deleteExpense(id: string): void {
-        const expenses = this.getExpenses();
+    public async deleteExpense(id: string): Promise<void> {
+        const expenses = await this.getExpenses();
         const filtered = expenses.filter((exp) => exp.id !== id);
         localStorage.setItem(this.storageKey, JSON.stringify(filtered));
     }

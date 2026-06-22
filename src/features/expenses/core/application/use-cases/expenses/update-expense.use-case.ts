@@ -5,7 +5,7 @@ import type { UpdateExpenseDto } from "src/features/expenses/core/domain/dtos/up
 export class UpdateExpenseUseCase {
     constructor(private readonly expenseRepository: ExpenseRepository) {}
 
-    public execute(dto: UpdateExpenseDto): ExpenseEntity {
+    public execute(dto: UpdateExpenseDto): Promise<ExpenseEntity> {
         return this.expenseRepository.updateExpense(dto);
     }
 }

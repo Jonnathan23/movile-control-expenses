@@ -16,13 +16,13 @@ import { GetBudgetUseCase } from "src/features/expenses/core/application/use-cas
 import { SaveBudgetUseCase } from "src/features/expenses/core/application/use-cases/budget/save-budget.use-case";
 import { ResetAppUseCase } from "src/features/expenses/core/application/use-cases/budget/reset-app.use-case";
 
-import { globalUuidGenerator } from "src/shared/adapters/uuid/di/uuid.dependencies";
 import { DefaultCategoriesFactory } from "src/features/expenses/core/domain/factories/default-categories.factory";
 import { CategoryDataSourceImpl } from "src/features/expenses/core/infrastructure/datasources/categories.datasource";
 import { CategoriesRepositoryImpl } from "src/features/expenses/core/infrastructure/repositories/categories.repository";
 import { GetCategoriesUseCase } from "src/features/expenses/core/application/use-cases/categories/get-categories.use-case";
 
 import { CategoryMapperImpl } from "src/features/expenses/core/infrastructure/mappers/category.mapper";
+import { globalUuidGenerator } from "src/shared/core/helpers/generators.helper";
 
 //* Factories
 export const defaultCategoriesFactory = new DefaultCategoriesFactory(globalUuidGenerator);

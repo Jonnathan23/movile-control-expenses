@@ -4,7 +4,7 @@ import { BudgetEntity } from "src/features/expenses/core/domain/entities/budget.
 export class SaveBudgetUseCase {
     constructor(private readonly budgetRepository: BudgetRepository) {}
 
-    public execute(amount: number): BudgetEntity {
+    public execute(amount: number): Promise<BudgetEntity> {
         return this.budgetRepository.saveBudget(amount);
     }
 }
