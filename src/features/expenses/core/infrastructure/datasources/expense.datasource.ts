@@ -6,12 +6,12 @@ import type { CreateExpenseDto } from "src/features/expenses/core/domain/dtos/cr
 import type { UpdateExpenseDto } from "src/features/expenses/core/domain/dtos/update-expense.dto";
 
 export class ExpenseDataSourceImpl implements ExpenseDataSource {
-    private readonly STORAGE_KEY = "expenses";
+    private readonly storageKey = "expenses";
 
     constructor(private readonly expenseMapper: ExpenseMapper) {}
 
     public getExpenses(): ExpenseEntity[] {
-        const stored = localStorage.getItem(this.STORAGE_KEY);
+        const stored = localStorage.getItem(this.storageKey);
         const rawData = stored ? JSON.parse(stored) : [];
         return this.expenseMapper.toArrayEntities(rawData);
     }
@@ -21,7 +21,7 @@ export class ExpenseDataSourceImpl implements ExpenseDataSource {
         const newExpense = new ExpenseEntity(uuidv4(), dto.expenseName, dto.amount, dto.category, dto.date);
 
         expenses.push(newExpense);
-        localStorage.setItem(this.STORAGE_KEY, JSON.stringify(expenses));
+        localStorage.setItem(this.storageKey, JSON.stringify(expenses));
         return newExpense;
     }
 
@@ -34,13 +34,13 @@ export class ExpenseDataSourceImpl implements ExpenseDataSource {
         const updatedExpense = new ExpenseEntity(dto.id, dto.expenseName, dto.amount, dto.category, dto.date);
 
         expenses[index] = updatedExpense;
-        localStorage.setItem(this.STORAGE_KEY, JSON.stringify(expenses));
+        localStorage.setItem(this.storageKey, JSON.stringify(expenses));
         return updatedExpense;
     }
 
     public deleteExpense(id: string): void {
         const expenses = this.getExpenses();
         const filtered = expenses.filter((exp) => exp.id !== id);
-        localStorage.setItem(this.STORAGE_KEY, JSON.stringify(filtered));
+        localStorage.setItem(this.storageKey, JSON.stringify(filtered));
     }
 }

@@ -19,7 +19,7 @@ import { ResetAppUseCase } from "src/features/expenses/core/application/use-case
 import { globalUuidGenerator } from "src/shared/adapters/uuid/di/uuid.dependencies";
 import { DefaultCategoriesFactory } from "src/features/expenses/core/domain/factories/default-categories.factory";
 
-export const defaultCategoriesFactory = new DefaultCategoriesFactory(globalUuidGenerator);
+export const defaultCategoriesFactory = new DefaultCategoriesFactory();
 export const defaultCategories = defaultCategoriesFactory.create();
 
 // 1. Mappers

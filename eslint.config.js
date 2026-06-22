@@ -75,6 +75,11 @@ export default defineConfig([
                     selector: "function",
                     format: ["camelCase"],
                 },
+                // 6. Propiedades y métodos de clases estrictamente en camelCase
+                {
+                    selector: ["classProperty", "classMethod"],
+                    format: ["camelCase"],
+                },
             ],
         },
     },

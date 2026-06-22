@@ -8,7 +8,7 @@ import { useBudget } from "src/features/expenses/presentation/hooks/use-budget.h
 import { saveExpenseUseCase, updateExpenseUseCase, defaultCategories } from "src/features/expenses/core/di/expense.dependency";
 import { CreateExpenseDtoImpl } from "src/features/expenses/core/domain/dtos/create-expense.dto";
 import { UpdateExpenseDtoImpl } from "src/features/expenses/core/domain/dtos/update-expense.dto";
-import ErrorMessage from "src/features/expenses/presentation/components/error-message";
+import ErrorMessage from "src/shared/presentation/errors/error-message";
 
 type ValuePiece = Date | null;
 type Value = ValuePiece | [ValuePiece, ValuePiece];
@@ -137,7 +137,7 @@ export default function ExpenseForm() {
                     id="expenseName"
                     name="expenseName"
                     placeholder="Añade el nombre del gasto"
-                    className="bg-slate-100 p-250"
+                    className="bg-slate-100 p-2"
                     value={expense.expenseName}
                     onChange={handleChange}
                 />
@@ -152,7 +152,7 @@ export default function ExpenseForm() {
                     id="amount"
                     name="amount"
                     placeholder="Añade la cantidad del gasto, ej: 300"
-                    className="bg-slate-100 p-250"
+                    className="bg-slate-100 p-2"
                     value={expense.amount}
                     onChange={handleChange}
                 />
@@ -165,7 +165,7 @@ export default function ExpenseForm() {
                 <select
                     id="category"
                     name="category"
-                    className="bg-slate-100 p-250"
+                    className="bg-slate-100 p-2"
                     value={expense.category}
                     onChange={handleChange}
                 >
