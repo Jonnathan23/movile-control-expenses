@@ -3,8 +3,8 @@ import type { UpdateExpenseDto } from "src/features/expenses/core/domain/dtos/up
 import { ExpenseEntity } from "src/features/expenses/core/domain/entities/expense.entity";
 
 export abstract class ExpenseDataSource {
-    abstract getExpenses(): Promise<ExpenseEntity[]>;
-    abstract saveExpense(dto: CreateExpenseDto): Promise<ExpenseEntity>;
-    abstract updateExpense(dto: UpdateExpenseDto): Promise<ExpenseEntity>;
-    abstract deleteExpense(id: string): Promise<void>;
+    public abstract getExpenses(): Promise<ExpenseEntity[]>;
+    public abstract saveExpense(createExpenseDto: CreateExpenseDto): Promise<ExpenseEntity>;
+    public abstract updateExpense(updateExpenseDto: UpdateExpenseDto): Promise<ExpenseEntity>;
+    public abstract deleteExpense(id: string): Promise<void>;
 }

@@ -15,7 +15,7 @@ export class UpdateExpenseDtoImpl implements UpdateExpenseDto {
         public readonly date: Date,
     ) {}
 
-    static create(data: UpdateExpenseDto): UpdateExpenseDto {
+    public static create(data: UpdateExpenseDto): UpdateExpenseDto {
         const { id, expenseName, amount, category, date } = data;
 
         if (!id || id.trim().length === 0) throw new Error("Missing or invalid id");

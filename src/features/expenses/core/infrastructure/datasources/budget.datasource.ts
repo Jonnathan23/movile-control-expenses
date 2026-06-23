@@ -1,6 +1,7 @@
 import { BudgetDataSource } from "src/features/expenses/core/domain/datasources/budget.datasource";
 import { BudgetEntity } from "src/features/expenses/core/domain/entities/budget.entity";
 import type { BudgetMapper } from "src/features/expenses/core/infrastructure/mappers/budget.mapper";
+import type { CreateBudgetDto } from "src/features/expenses/core/domain/dtos/create-budget.dto";
 
 export class BudgetDataSourceImpl implements BudgetDataSource {
     private readonly storageKey = "budget";
@@ -13,9 +14,9 @@ export class BudgetDataSourceImpl implements BudgetDataSource {
         return this.budgetMapper.toEntity(rawData);
     }
 
-    public async saveBudget(amount: number): Promise<BudgetEntity> {
-        localStorage.setItem(this.storageKey, JSON.stringify(amount));
-        return new BudgetEntity(amount);
+    public async saveBudget(createBudgetDto: CreateBudgetDto): Promise<BudgetEntity> {
+        localStorage.setItem(this.storageKey, JSON.stringify(createBudgetDto.amount));
+        return new BudgetEntity(createBudgetDto.amount);
     }
 
     public async resetAll(): Promise<void> {

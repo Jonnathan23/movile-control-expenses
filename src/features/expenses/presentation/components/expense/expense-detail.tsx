@@ -1,32 +1,22 @@
 import { LeadingActions, SwipeableList, SwipeableListItem, SwipeAction, TrailingActions } from "react-swipeable-list";
 import "react-swipeable-list/dist/styles.css";
 
-import { useMemo } from "react";
 import { globalDateFormatter } from "src/shared/core/helpers/format.helper";
 import { ExpenseEntity } from "src/features/expenses/core/domain/entities/expense.entity";
 
-import { useBudget } from "src/features/expenses/presentation/hooks/use-budget-context.hook";
-import { deleteExpenseUseCase } from "src/features/expenses/core/di/expense.dependency";
 import AmountDisplay from "src/features/expenses/presentation/components/budget/amount-display";
+import { useExpenseDetail } from "src/features/expenses/presentation/hooks/logic/expense/use-expense-detail.hook";
 
 type ExpenseDetailProps = {
     readonly expense: ExpenseEntity;
 };
 
 export default function ExpenseDetail({ expense }: ExpenseDetailProps) {
-    const { state, dispatch } = useBudget();
-    const categoryInfo = useMemo(() => state.categories.find((cat) => cat.id === expense.category), [expense, state.categories]);
-
-    const handleDelete = () => {
-        deleteExpenseUseCase.execute(expense.id);
-        dispatch({ type: "delete-expense", payload: { id: expense.id } });
-    };
+    const { categoryInfo, handleDelete, handleUpdate } = useExpenseDetail(expense);
 
     const leadeingActions = () => (
         <LeadingActions>
-            <SwipeAction onClick={() => dispatch({ type: "get-expense-by-id", payload: { id: expense.id } })}>
-                Actualizar
-            </SwipeAction>
+            <SwipeAction onClick={handleUpdate}>Actualizar</SwipeAction>
         </LeadingActions>
     );
 

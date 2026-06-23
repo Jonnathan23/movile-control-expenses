@@ -1,7 +1,8 @@
+import type { CreateBudgetDto } from "src/features/expenses/core/domain/dtos/create-budget.dto";
 import { BudgetEntity } from "src/features/expenses/core/domain/entities/budget.entity";
 
 export abstract class BudgetDataSource {
-    abstract getBudget(): Promise<BudgetEntity>;
-    abstract saveBudget(amount: number): Promise<BudgetEntity>;
-    abstract resetAll(): Promise<void>;
+    public abstract getBudget(): Promise<BudgetEntity>;
+    public abstract saveBudget(createBudgetDto: CreateBudgetDto): Promise<BudgetEntity>;
+    public abstract resetAll(): Promise<void>;
 }

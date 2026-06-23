@@ -4,7 +4,7 @@ import { budgetReducer, initialState } from "src/features/expenses/presentation/
 import { BudgetContext } from "src/features/expenses/presentation/context/budget.context";
 import { useGetBudget } from "src/features/expenses/presentation/hooks/use-cases/budget/get-budget.hook";
 import { useGetExpenses } from "src/features/expenses/presentation/hooks/use-cases/expenses/get-expenses.hook";
-import { useGetCategories } from "src/features/expenses/presentation/hooks/use-cases/cateories/get-categories.hook";
+import { useGetCategories } from "src/features/expenses/presentation/hooks/use-cases/categories/get-categories.hook";
 
 interface BudgetProviderProps {
     children: ReactNode;

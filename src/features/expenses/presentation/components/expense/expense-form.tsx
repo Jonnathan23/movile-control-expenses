@@ -1,124 +1,12 @@
-import { type ChangeEvent, type SyntheticEvent, useState } from "react";
 import DatePicker from "react-date-picker";
 
 import "react-calendar/dist/Calendar.css";
 import "react-date-picker/dist/DatePicker.css";
-import { useBudget } from "src/features/expenses/presentation/hooks/use-budget-context.hook";
-
-import { saveExpenseUseCase, updateExpenseUseCase } from "src/features/expenses/core/di/expense.dependency";
-import { CreateExpenseDtoImpl } from "src/features/expenses/core/domain/dtos/create-expense.dto";
-import { UpdateExpenseDtoImpl } from "src/features/expenses/core/domain/dtos/update-expense.dto";
+import { useExpenseForm } from "src/features/expenses/presentation/hooks/forms/expense/use-expense-form.hook";
 import ErrorMessage from "src/shared/ui/presentation/components/errors/error-message";
 
-type ValuePiece = Date | null;
-type Value = ValuePiece | [ValuePiece, ValuePiece];
-
 export default function ExpenseForm() {
-    const initialExpense = { amount: 0, expenseName: "", category: "", date: new Date() };
-
-    //* States
-    const [expense, setExpense] = useState(initialExpense);
-    const [previousAmount, setPreviousAmount] = useState(0);
-
-    const [error, setError] = useState("");
-    const { dispatch, state, remaininBudget } = useBudget();
-
-    const [prevEditingId, setPrevEditingId] = useState<string>("");
-
-    if (state.editingId !== prevEditingId) {
-        setPrevEditingId(state.editingId);
-        if (state.editingId) {
-            const editingExpense = state.expenses.find((expense) => expense.id === state.editingId);
-            if (editingExpense) {
-                setExpense({
-                    amount: editingExpense.amount,
-                    expenseName: editingExpense.expenseName,
-                    category: editingExpense.category,
-                    date: editingExpense.date,
-                });
-                setPreviousAmount(editingExpense.amount);
-            }
-        } else {
-            setExpense(initialExpense);
-            setPreviousAmount(0);
-        }
-    }
-
-    //* Funciones formulario
-    const handleChange = (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => {
-        const { name, value } = event.target;
-
-        const isAmountField = ["amount"].includes(name);
-
-        setExpense({
-            ...expense,
-            [name]: isAmountField ? +value : value,
-        });
-    };
-
-    const handleChangeDate = (value: Value) => {
-        setExpense({
-            ...expense,
-            date: value as Date,
-        });
-    };
-
-    const validForm = (): boolean => {
-        if (Object.values(expense).includes("")) {
-            setError("Todos los campos son obligatorios");
-            return false;
-        }
-
-        if (expense.amount - previousAmount > remaininBudget) {
-            setError("Ese gasto supera el presupuesto");
-            return false;
-        }
-
-        return true;
-    };
-
-    const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
-        e.preventDefault();
-
-        // Validar
-        if (!validForm()) return;
-
-        //Agregar un nuevo gasto
-        if (state.editingId) {
-            try {
-                const updateDto = UpdateExpenseDtoImpl.create({
-                    id: state.editingId,
-                    expenseName: expense.expenseName,
-                    amount: expense.amount,
-                    category: expense.category,
-                    date: expense.date,
-                });
-                const updatedExpense = updateExpenseUseCase.execute(updateDto);
-                dispatch({ type: "update-expense", payload: { expense: updatedExpense } });
-            } catch (e) {
-                setError(e instanceof Error ? e.message : "Un error inesperado ocurrió");
-                return;
-            }
-        } else {
-            try {
-                const createDto = CreateExpenseDtoImpl.create({
-                    expenseName: expense.expenseName,
-                    amount: expense.amount,
-                    category: expense.category,
-                    date: expense.date,
-                });
-                const newExpense = saveExpenseUseCase.execute(createDto);
-                dispatch({ type: "add-expense", payload: { expense: newExpense } });
-            } catch (e) {
-                setError(e instanceof Error ? e.message : "Un error inesperado ocurrió");
-                return;
-            }
-        }
-
-        //Reiniciar el state
-        setExpense(initialExpense);
-        setPreviousAmount(0);
-    };
+    const { expense, error, state, handleChange, handleChangeDate, handleSubmit } = useExpenseForm();
 
     return (
         <form action="" className="space-y-5" onSubmit={handleSubmit}>

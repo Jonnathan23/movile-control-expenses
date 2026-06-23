@@ -13,7 +13,7 @@ export class CreateExpenseDtoImpl implements CreateExpenseDto {
         public readonly date: Date,
     ) {}
 
-    static create(data: CreateExpenseDto): CreateExpenseDto {
+    public static create(data: CreateExpenseDto): CreateExpenseDto {
         const { expenseName, amount, category, date } = data;
 
         if (!expenseName || expenseName.trim().length === 0) throw new Error("Missing or invalid expenseName");

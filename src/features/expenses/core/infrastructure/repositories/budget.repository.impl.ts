@@ -9,8 +9,8 @@ export class BudgetRepositoryImpl implements BudgetRepository {
         return this.budgetDataSource.getBudget();
     }
 
-    public saveBudget(amount: number): Promise<BudgetEntity> {
-        return this.budgetDataSource.saveBudget(amount);
+    public saveBudget(createBudgetDto: CreateBudgetDto): Promise<BudgetEntity> {
+        return this.budgetDataSource.saveBudget(createBudgetDto);
     }
 
     public resetAll(): Promise<void> {

@@ -1,18 +1,18 @@
 import type { UuidStrategy } from "src/shared/core/adapters/uuid/domain/interface/uuid-strategy.interface";
 import type { Uuid } from "src/shared/core/types/uuid.type";
 
-export class UUIDGeneratorContext {
-    private uuidStrategy!: UuidStrategy;
+export class UuidGeneratorContext {
+    private strategy: UuidStrategy;
 
-    constructor(uuidStrategy: UuidStrategy) {
-        this.setUuidStrategy(uuidStrategy);
+    constructor(strategy: UuidStrategy) {
+        this.strategy = strategy;
     }
 
-    setUuidStrategy(uuidStrategy: UuidStrategy): void {
-        this.uuidStrategy = uuidStrategy;
+    public setUuidStrategy(strategy: UuidStrategy): void {
+        this.strategy = strategy;
     }
 
-    generateUuid(): Uuid {
-        return this.uuidStrategy.generateUuid();
+    public generateUuid(): Uuid {
+        return this.strategy.generateUuid();
     }
 }

@@ -4,7 +4,7 @@ import type { UuidStrategy } from "src/shared/core/adapters/uuid/domain/interfac
 import type { Uuid } from "src/shared/core/types/uuid.type";
 
 export class UuidLibraryStrategy implements UuidStrategy {
-    generateUuid(): Uuid {
+    public generateUuid(): Uuid {
         const sessionUniqueIdentifier = generateUniversallyUniqueIdentifier();
 
         return sessionUniqueIdentifier as Uuid;
