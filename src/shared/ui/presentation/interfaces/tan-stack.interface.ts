@@ -1,8 +1,7 @@
-import type { UseMutateFunction, UseMutateAsyncFunction, RefetchOptions, QueryObserverResult } from "@tanstack/react-query";
+import type { UseMutateFunction, RefetchOptions, QueryObserverResult } from "@tanstack/react-query";
 
 export interface MutationResult<TData, TError, TVariables> {
     executeMutation: UseMutateFunction<TData, TError, TVariables, unknown>;
-    executeMutationAsync: UseMutateAsyncFunction<TData, TError, TVariables, unknown>;
     isPending: boolean;
     hasError: boolean;
     errorDetails: TError | null;

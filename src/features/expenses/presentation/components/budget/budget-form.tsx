@@ -1,4 +1,4 @@
-import { useBudgetForm } from "src/features/expenses/presentation/hooks/forms/use-budget-form.hook";
+import { useBudgetForm } from "src/features/expenses/presentation/hooks/forms/budget/use-budget-form.hook";
 
 export default function BudgetForm() {
     const { budget, isValid, handleChange, handleSubmit } = useBudgetForm();

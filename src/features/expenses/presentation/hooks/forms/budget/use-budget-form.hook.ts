@@ -1,6 +1,6 @@
 import { useMemo, useState, type ChangeEvent, type SyntheticEvent } from "react";
-import { saveBudgetUseCase } from "src/features/expenses/core/di/expense.dependency";
 import { useBudget } from "src/features/expenses/presentation/hooks/use-budget-context.hook";
+import { useSaveBudget } from "src/features/expenses/presentation/hooks/use-cases/budget/save-budget.hook";
 
 export const useBudgetForm = () => {
     //* context
@@ -13,7 +13,7 @@ export const useBudgetForm = () => {
     const isValid = useMemo(() => Number.isNaN(budget) || budget <= 0, [budget]);
 
     //* use-cases
-    const saveBudget = () => saveBudgetUseCase.execute(budget);
+    const { executeMutation, isPending, isSuccessful } = useSaveBudget({ dispatch });
 
     //* handlers
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -22,13 +22,14 @@ export const useBudgetForm = () => {
 
     const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const savedBudget = saveBudget();
-        dispatch({ type: "add-budget", payload: { budget: savedBudget.amount } });
+        executeMutation(budget);
     };
 
     return {
         budget,
         isValid,
+        isPending,
+        isSuccessful,
         handleChange,
         handleSubmit,
     };
