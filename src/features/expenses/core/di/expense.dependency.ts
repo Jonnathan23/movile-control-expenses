@@ -30,7 +30,7 @@ const budgetMapper = new BudgetMapperImpl();
 const categoryMapper = new CategoryMapperImpl();
 
 //* 2. DataSources
-const expenseDataSource = new ExpenseDataSourceImpl(expenseMapper);
+const expenseDataSource = new ExpenseDataSourceImpl(expenseMapper, globalUuidGenerator);
 const budgetDataSource = new BudgetDataSourceImpl(budgetMapper);
 const categoriesDataSource = new CategoryDataSourceImpl(defaultCategoriesFactory, categoryMapper);
 
