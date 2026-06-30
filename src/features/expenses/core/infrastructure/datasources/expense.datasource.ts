@@ -1,14 +1,20 @@
-import { v4 as uuidv4 } from "uuid";
+import type { UuidStrategy } from "src/shared/core/adapters/uuid/domain/interface/uuid-strategy.interface";
+
 import { ExpenseDataSource } from "src/features/expenses/core/domain/datasources/expense.datasource";
 import { ExpenseEntity } from "src/features/expenses/core/domain/entities/expense.entity";
+
 import type { ExpenseMapper } from "src/features/expenses/core/infrastructure/mappers/expense.mapper";
-import type { CreateExpenseDto } from "src/features/expenses/core/domain/dtos/create-expense.dto";
-import type { UpdateExpenseDto } from "src/features/expenses/core/domain/dtos/update-expense.dto";
+
+import type { CreateExpenseDto } from "src/features/expenses/core/application/dtos/create-expense.dto";
+import type { UpdateExpenseDto } from "src/features/expenses/core/application/dtos/update-expense.dto";
 
 export class ExpenseDataSourceImpl implements ExpenseDataSource {
     private readonly storageKey = "expenses";
 
-    constructor(private readonly expenseMapper: ExpenseMapper) {}
+    public constructor(
+        private readonly expenseMapper: ExpenseMapper,
+        private readonly generatorUUID: UuidStrategy,
+    ) {}
 
     public async getExpenses(): Promise<ExpenseEntity[]> {
         const stored = localStorage.getItem(this.storageKey);
@@ -18,7 +24,13 @@ export class ExpenseDataSourceImpl implements ExpenseDataSource {
 
     public async saveExpense(dto: CreateExpenseDto): Promise<ExpenseEntity> {
         const expenses = await this.getExpenses();
-        const newExpense = new ExpenseEntity(uuidv4(), dto.expenseName, dto.amount, dto.category, dto.date);
+        const newExpense = new ExpenseEntity(
+            this.generatorUUID.generateUuid(),
+            dto.expenseName,
+            dto.amount,
+            dto.category,
+            dto.date,
+        );
 
         expenses.push(newExpense);
         localStorage.setItem(this.storageKey, JSON.stringify(expenses));

@@ -3,8 +3,8 @@ import type { DateFormatStrategy } from "src/shared/core/adapters/format/domain/
 export class DateFormatContext implements DateFormatStrategy {
     private strategy: DateFormatStrategy;
 
-    constructor(strategy: DateFormatStrategy) {
-        this.setStrategy(strategy);
+    public constructor(strategy: DateFormatStrategy) {
+        this.strategy = strategy;
     }
 
     public setStrategy(strategy: DateFormatStrategy): void {

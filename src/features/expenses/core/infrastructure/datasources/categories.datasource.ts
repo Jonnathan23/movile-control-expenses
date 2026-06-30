@@ -7,7 +7,7 @@ import type { CategoryMapper } from "src/features/expenses/core/infrastructure/m
 export class CategoryDataSourceImpl implements CategoryDatasource {
     private readonly storageKey = "categories";
 
-    constructor(
+    public constructor(
         private readonly defaultCategoriesFactory: DefaultCategoriesFactory,
         private readonly categoryMapper: CategoryMapper,
     ) {}

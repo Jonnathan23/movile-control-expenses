@@ -4,7 +4,7 @@ import type { Uuid } from "src/shared/core/types/uuid.type";
 export class UuidGeneratorContext {
     private strategy: UuidStrategy;
 
-    constructor(strategy: UuidStrategy) {
+    public constructor(strategy: UuidStrategy) {
         this.strategy = strategy;
     }
 

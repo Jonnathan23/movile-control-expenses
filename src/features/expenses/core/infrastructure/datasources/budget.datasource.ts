@@ -1,12 +1,14 @@
 import { BudgetDataSource } from "src/features/expenses/core/domain/datasources/budget.datasource";
 import { BudgetEntity } from "src/features/expenses/core/domain/entities/budget.entity";
+
 import type { BudgetMapper } from "src/features/expenses/core/infrastructure/mappers/budget.mapper";
-import type { CreateBudgetDto } from "src/features/expenses/core/domain/dtos/create-budget.dto";
+
+import type { CreateBudgetDto } from "src/features/expenses/core/application/dtos/create-budget.dto";
 
 export class BudgetDataSourceImpl implements BudgetDataSource {
     private readonly storageKey = "budget";
 
-    constructor(private readonly budgetMapper: BudgetMapper) {}
+    public constructor(private readonly budgetMapper: BudgetMapper) {}
 
     public async getBudget(): Promise<BudgetEntity> {
         const stored = localStorage.getItem(this.storageKey);
@@ -21,6 +23,6 @@ export class BudgetDataSourceImpl implements BudgetDataSource {
 
     public async resetAll(): Promise<void> {
         localStorage.removeItem(this.storageKey);
-        localStorage.removeItem("expenses"); // Clears both budget and expenses
+        localStorage.removeItem("expenses");
     }
 }

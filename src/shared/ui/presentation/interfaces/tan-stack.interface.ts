@@ -1,4 +1,4 @@
-import type { UseMutateFunction, RefetchOptions, QueryObserverResult } from "@tanstack/react-query";
+import type { QueryObserverResult, RefetchOptions, UseMutateFunction } from "@tanstack/react-query";
 
 export interface MutationResult<TData, TError, TVariables> {
     executeMutation: UseMutateFunction<TData, TError, TVariables, unknown>;

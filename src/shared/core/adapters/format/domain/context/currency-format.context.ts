@@ -3,8 +3,8 @@ import type { CurrencyFormatStrategy } from "src/shared/core/adapters/format/dom
 export class CurrencyFormatContext implements CurrencyFormatStrategy {
     private strategy: CurrencyFormatStrategy;
 
-    constructor(strategy: CurrencyFormatStrategy) {
-        this.setStrategy(strategy);
+    public constructor(strategy: CurrencyFormatStrategy) {
+        this.strategy = strategy;
     }
 
     public setStrategy(strategy: CurrencyFormatStrategy): void {

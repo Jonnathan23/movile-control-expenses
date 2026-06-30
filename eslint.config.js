@@ -1,14 +1,16 @@
 import js from "@eslint/js";
 import globals from "globals";
-import reactHooks from "eslint-plugin-react-hooks";
-import reactRefresh from "eslint-plugin-react-refresh";
-import reactPlugin from "eslint-plugin-react";
-import tseslint from "typescript-eslint";
+import reactHooksPlugin from "eslint-plugin-react-hooks";
+import reactRefreshPlugin from "eslint-plugin-react-refresh";
+import typescriptEslint from "typescript-eslint";
 import { defineConfig, globalIgnores } from "eslint/config";
-import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended";
+import prettierPluginRecommended from "eslint-plugin-prettier/recommended";
+import reactPlugin from "eslint-plugin-react";
+import tanstackQueryPlugin from "@tanstack/eslint-plugin-query";
+import simpleImportSort from "eslint-plugin-simple-import-sort";
 
 export default defineConfig([
-    eslintPluginPrettierRecommended,
+    prettierPluginRecommended,
     globalIgnores([
         "node_modules",
         "dist",
@@ -20,98 +22,85 @@ export default defineConfig([
         "**/*.json",
     ]),
     js.configs.recommended,
-    ...tseslint.configs.recommended,
-    reactHooks.configs.flat.recommended,
-    reactRefresh.configs.vite,
+    ...typescriptEslint.configs.recommended,
+    reactHooksPlugin.configs.flat.recommended,
+    reactRefreshPlugin.configs.vite,
+
+    ...tanstackQueryPlugin.configs["flat/recommended"],
+
     {
+        plugins: {
+            react: reactPlugin,
+            "react-hooks": reactHooksPlugin,
+            "@tanstack/query": tanstackQueryPlugin,
+            "simple-import-sort": simpleImportSort,
+        },
         files: ["**/*.{ts,tsx}"],
         languageOptions: {
             globals: globals.browser,
             parserOptions: {
-                project: ["./tsconfig.app.json", "./tsconfig.node.json"],
+                projectService: true,
                 tsconfigRootDir: import.meta.dirname,
             },
         },
-        plugins: {
-            react: reactPlugin,
-        },
         rules: {
-            "react/jsx-handler-names": [
-                "error",
-                {
-                    eventHandlerPrefix: "handle",
-                    eventHandlerPropPrefix: "on",
-                    checkLocalVariables: true,
-                    checkInlineFunction: true
-                }
-            ],
+            // Rutas relativas prohibidas
             "no-restricted-imports": [
                 "error",
                 {
                     patterns: [
                         {
                             group: ["../*", "./*", "..", "."],
-                            message: 'Las rutas relativas están prohibidas. Utiliza rutas absolutas comenzando con "src/".',
+                            message: 'Las rutas relativas estan prohibidas. Utiliza rutas absolutas comenzando con "src/".',
                         },
                     ],
                 },
             ],
-            "no-console": [
-                "error",
-                {
-                    allow: ["warn", "error"],
-                },
-            ],
-            // 🚫 Prohibir el uso de 'any'
-            "@typescript-eslint/no-explicit-any": "error",
-            // 🔒 Forzar modificadores de acceso en clases (public/private/protected)
+
             "@typescript-eslint/explicit-member-accessibility": [
                 "error",
                 {
                     accessibility: "explicit",
-                    overrides: {
-                        constructors: "no-public", // Opcional: no exigir 'public' en constructores
-                    }
-                }
+                },
             ],
-            // Reglas estrictas de nomenclatura
+
+            "@typescript-eslint/no-explicit-any": "error",
+
+            "@typescript-eslint/no-magic-numbers": [
+                "error",
+                {
+                    ignoreEnums: true,
+                    ignoreReadonlyClassProperties: true,
+                    ignore: [-1, 0, 1],
+                },
+            ],
+
             "@typescript-eslint/naming-convention": [
                 "error",
-                // 1. Clases, Interfaces, Types y Enums en PascalCase
                 {
-                    selector: ["class", "interface", "typeAlias", "typeParameter", "enum"],
+                    selector: ["class", "interface", "typeAlias", "typeParameter"],
                     format: ["PascalCase"],
                 },
-                // 2. Miembros de un Enum estrictamente en UPPER_CASE (UPPER_SNAKE_CASE)
                 {
-                    selector: "enumMember",
-                    format: ["UPPER_CASE"],
+                    selector: "import",
+                    format: null,
                 },
-                // 3. Variables booleanas deben usar prefijos específicos
                 {
                     selector: "variable",
                     types: ["boolean"],
                     format: ["PascalCase"],
                     prefix: ["is", "should", "has", "can", "did", "will"],
                 },
-                // 4. Ignorar variables que provengan de un import
-                {
-                    selector: "import",
-                    format: null,
-                },
-                // 5. Variables en el scope global (ej. componentes React) pueden ser PascalCase
                 {
                     selector: "variable",
                     modifiers: ["global"],
                     format: ["camelCase", "PascalCase", "UPPER_CASE"],
                 },
-                // 6. Funciones en el scope global pueden ser PascalCase
                 {
                     selector: "function",
                     modifiers: ["global"],
                     format: ["camelCase", "PascalCase"],
                 },
-                // 7. El resto de variables y funciones estrictamente en camelCase
                 {
                     selector: "variable",
                     format: ["camelCase"],
@@ -120,13 +109,60 @@ export default defineConfig([
                     selector: "function",
                     format: ["camelCase"],
                 },
-                // 8. Propiedades y métodos de clases estrictamente en camelCase
                 {
                     selector: ["classProperty", "classMethod"],
                     format: ["camelCase"],
                 },
             ],
+
+            "react/jsx-handler-names": [
+                "error",
+                {
+                    eventHandlerPrefix: "handle",
+                    eventHandlerPropPrefix: "on",
+                    checkLocalVariables: true,
+                    checkInlineFunction: true,
+                },
+            ],
+
+            "react-hooks/rules-of-hooks": "error",
+            "react-hooks/exhaustive-deps": "error",
+
+            "@tanstack/query/exhaustive-deps": "error",
+            "@tanstack/query/stable-query-client": "error",
+
+            "simple-import-sort/exports": "error",
+            "simple-import-sort/imports": [
+                "error",
+                {
+                    groups: [
+                        ["^react", "^@?\\w"],
+
+                        ["^src/shared/"],
+
+                        ["^src/features/.*/domain/"],
+
+                        ["^src/features/.*/infrastructure/"],
+
+                        ["^src/features/.*/application/"],
+
+                        ["^src/"],
+                    ],
+                },
+            ],
         },
     },
-    eslintPluginPrettierRecommended,
+    {
+        files: ["**/*.ts"],
+        rules: {
+            "@typescript-eslint/explicit-function-return-type": [
+                "error",
+                {
+                    allowTypedFunctionExpressions: true,
+                },
+            ],
+        },
+    },
+
+    prettierPluginRecommended,
 ]);
