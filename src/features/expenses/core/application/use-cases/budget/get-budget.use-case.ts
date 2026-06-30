@@ -1,8 +1,8 @@
-import { BudgetRepository } from "src/features/expenses/core/domain/repositories/budget.repository";
 import { BudgetEntity } from "src/features/expenses/core/domain/entities/budget.entity";
+import { BudgetRepository } from "src/features/expenses/core/domain/repositories/budget.repository";
 
 export class GetBudgetUseCase {
-    constructor(private readonly budgetRepository: BudgetRepository) {}
+    public constructor(private readonly budgetRepository: BudgetRepository) {}
 
     public execute(): Promise<BudgetEntity> {
         return this.budgetRepository.getBudget();

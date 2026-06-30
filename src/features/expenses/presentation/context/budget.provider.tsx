@@ -1,10 +1,10 @@
-import { useReducer, useEffect, type ReactNode, useMemo } from "react";
-import { budgetReducer, initialState } from "src/features/expenses/presentation/reducers/budget.reducer";
+import { type ReactNode, useEffect, useMemo, useReducer } from "react";
 
 import { BudgetContext } from "src/features/expenses/presentation/context/budget.context";
 import { useGetBudget } from "src/features/expenses/presentation/hooks/use-cases/budget/get-budget.hook";
-import { useGetExpenses } from "src/features/expenses/presentation/hooks/use-cases/expenses/get-expenses.hook";
 import { useGetCategories } from "src/features/expenses/presentation/hooks/use-cases/categories/get-categories.hook";
+import { useGetExpenses } from "src/features/expenses/presentation/hooks/use-cases/expenses/get-expenses.hook";
+import { budgetReducer, initialState } from "src/features/expenses/presentation/reducers/budget.reducer";
 
 interface BudgetProviderProps {
     children: ReactNode;

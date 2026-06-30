@@ -1,4 +1,5 @@
-import { useState, type ChangeEvent, type SyntheticEvent } from "react";
+import { type ChangeEvent, type SyntheticEvent, useState } from "react";
+
 import { useBudget } from "src/features/expenses/presentation/hooks/use-budget-context.hook";
 import { useSaveExpense } from "src/features/expenses/presentation/hooks/use-cases/expenses/save-expense.hook";
 import { useUpdateExpense } from "src/features/expenses/presentation/hooks/use-cases/expenses/update-expense.hook";
@@ -6,7 +7,16 @@ import { useUpdateExpense } from "src/features/expenses/presentation/hooks/use-c
 type ValuePiece = Date | null;
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 
-export const useExpenseForm = () => {
+interface ExpenseFormReturn {
+    expense: { amount: number; expenseName: string; category: string; date: Date };
+    error: string;
+    state: ReturnType<typeof useBudget>["state"];
+    handleChange: (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => void;
+    handleChangeDate: (value: Value) => void;
+    handleSubmit: (e: SyntheticEvent<HTMLFormElement>) => void;
+}
+
+export const useExpenseForm = (): ExpenseFormReturn => {
     const initialExpense = { amount: 0, expenseName: "", category: "", date: new Date() };
 
     const [expense, setExpense] = useState(initialExpense);
@@ -37,7 +47,7 @@ export const useExpenseForm = () => {
         }
     }
 
-    const handleChange = (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => {
+    const handleChange = (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>): void => {
         const { name, value } = event.target;
         const isAmountField = ["amount"].includes(name);
 
@@ -47,7 +57,7 @@ export const useExpenseForm = () => {
         });
     };
 
-    const handleChangeDate = (value: Value) => {
+    const handleChangeDate = (value: Value): void => {
         setExpense({
             ...expense,
             date: value as Date,
@@ -68,7 +78,7 @@ export const useExpenseForm = () => {
         return true;
     };
 
-    const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
+    const handleSubmit = (e: SyntheticEvent<HTMLFormElement>): void => {
         e.preventDefault();
 
         if (!validForm()) return;

@@ -1,7 +1,15 @@
 import { useMemo } from "react";
+
+import type { ExpenseEntity } from "src/features/expenses/core/domain/entities/expense.entity";
+
 import { useBudget } from "src/features/expenses/presentation/hooks/use-budget-context.hook";
 
-export const useExpenseList = () => {
+interface ExpenseListReturn {
+    filteredExpenses: ExpenseEntity[];
+    isEmpty: boolean;
+}
+
+export const useExpenseList = (): ExpenseListReturn => {
     const { state } = useBudget();
 
     const filteredExpenses = state.currentCategory

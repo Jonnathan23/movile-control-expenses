@@ -1,8 +1,9 @@
 import { Fragment } from "react";
-import { PlusCircleIcon } from "@heroicons/react/24/solid";
 import { Dialog, DialogPanel, Transition, TransitionChild } from "@headlessui/react";
-import { useExpenseModal } from "src/features/expenses/presentation/hooks/logic/expense/use-expense-modal.hook";
+import { PlusCircleIcon } from "@heroicons/react/24/solid";
+
 import ExpenseForm from "src/features/expenses/presentation/components/expense/expense-form";
+import { useExpenseModal } from "src/features/expenses/presentation/hooks/logic/expense/use-expense-modal.hook";
 
 export default function ExpenseModal() {
     const { isModalOpen, handleShowModal, handleCloseModal } = useExpenseModal();

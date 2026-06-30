@@ -1,5 +1,5 @@
-import { ExpenseEntity } from "src/features/expenses/core/domain/entities/expense.entity";
 import type { CategoryEntity } from "src/features/expenses/core/domain/entities/category.entity";
+import { ExpenseEntity } from "src/features/expenses/core/domain/entities/expense.entity";
 
 export type BudgetActions =
     | { type: "add-budget"; payload: { budget: number } }

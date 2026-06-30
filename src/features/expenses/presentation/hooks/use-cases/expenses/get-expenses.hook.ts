@@ -1,6 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
-import type { ExpenseEntity } from "src/features/expenses/core/domain/entities/expense.entity";
+
 import type { QueryResult } from "src/shared/ui/presentation/interfaces/tan-stack.interface";
+
+import type { ExpenseEntity } from "src/features/expenses/core/domain/entities/expense.entity";
+
 import { getExpensesUseCase } from "src/features/expenses/core/di/expense.dependency";
 
 export const useGetExpenses = (): QueryResult<ExpenseEntity[]> => {

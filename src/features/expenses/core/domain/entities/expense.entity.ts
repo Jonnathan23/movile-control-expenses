@@ -1,5 +1,5 @@
 export class ExpenseEntity {
-    constructor(
+    public constructor(
         public readonly id: string,
         public readonly expenseName: string,
         public readonly amount: number,

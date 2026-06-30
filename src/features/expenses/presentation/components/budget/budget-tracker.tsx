@@ -1,14 +1,18 @@
-import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
-import "react-circular-progressbar/dist/styles.css";
-import { useBudget } from "src/features/expenses/presentation/hooks/use-budget-context.hook";
+import { buildStyles, CircularProgressbar } from "react-circular-progressbar";
 
 import { resetAppUseCase } from "src/features/expenses/core/di/expense.dependency";
 import AmountDisplay from "src/features/expenses/presentation/components/budget/amount-display";
+import { useBudget } from "src/features/expenses/presentation/hooks/use-budget-context.hook";
+
+import "react-circular-progressbar/dist/styles.css";
 
 export default function BudgetTracker() {
     const { state, totalExpense, remaininBudget, dispatch } = useBudget();
 
-    const percentage = +((totalExpense / state.budget) * 100).toFixed(2);
+    const maxPercentage = 100;
+    const decimalPlaces = 2;
+    const dangerThreshold = 80;
+    const percentage = +((totalExpense / state.budget) * maxPercentage).toFixed(decimalPlaces);
 
     const handleResetApp = () => {
         resetAppUseCase.execute();
@@ -22,10 +26,10 @@ export default function BudgetTracker() {
                     <CircularProgressbar
                         value={percentage}
                         styles={buildStyles({
-                            pathColor: percentage > 80 ? "#DC2626" : "#3b82f6",
+                            pathColor: percentage > dangerThreshold ? "#DC2626" : "#3b82f6",
                             trailColor: "#F5F5F5",
                             textSize: 8,
-                            textColor: percentage > 80 ? "#DC2626" : "#3b82f6",
+                            textColor: percentage > dangerThreshold ? "#DC2626" : "#3b82f6",
                         })}
                         text={`${percentage}% Gastado`}
                     />

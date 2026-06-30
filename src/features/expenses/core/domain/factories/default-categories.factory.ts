@@ -1,8 +1,9 @@
-import { CategoryEntity } from "src/features/expenses/core/domain/entities/category.entity";
 import type { UuidStrategy } from "src/shared/core/adapters/uuid/domain/interface/uuid-strategy.interface";
 
+import { CategoryEntity } from "src/features/expenses/core/domain/entities/category.entity";
+
 export class DefaultCategoriesFactory {
-    constructor(private readonly uuidGenerator: UuidStrategy) {}
+    public constructor(private readonly uuidGenerator: UuidStrategy) {}
 
     public create(): CategoryEntity[] {
         return [

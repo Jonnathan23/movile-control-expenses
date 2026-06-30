@@ -1,8 +1,18 @@
-import { useMemo, useState, type ChangeEvent, type SyntheticEvent } from "react";
+import { type ChangeEvent, type SyntheticEvent, useMemo, useState } from "react";
+
 import { useBudget } from "src/features/expenses/presentation/hooks/use-budget-context.hook";
 import { useSaveBudget } from "src/features/expenses/presentation/hooks/use-cases/budget/save-budget.hook";
 
-export const useBudgetForm = () => {
+interface BudgetFormReturn {
+    budget: number;
+    isValid: boolean;
+    isPending: boolean;
+    isSuccessful: boolean;
+    handleChange: (e: ChangeEvent<HTMLInputElement>) => void;
+    handleSubmit: (e: SyntheticEvent<HTMLFormElement>) => void;
+}
+
+export const useBudgetForm = (): BudgetFormReturn => {
     //* context
     const { dispatch } = useBudget();
 
@@ -16,11 +26,11 @@ export const useBudgetForm = () => {
     const { executeMutation, isPending, isSuccessful } = useSaveBudget({ dispatch });
 
     //* handlers
-    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
         setBudget(e.target.valueAsNumber);
     };
 
-    const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
+    const handleSubmit = (e: SyntheticEvent<HTMLFormElement>): void => {
         e.preventDefault();
         executeMutation(budget);
     };

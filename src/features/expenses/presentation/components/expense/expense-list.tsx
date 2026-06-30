@@ -1,5 +1,5 @@
-import { useExpenseList } from "src/features/expenses/presentation/hooks/logic/expense/use-expense-list.hook";
 import ExpenseDetail from "src/features/expenses/presentation/components/expense/expense-detail";
+import { useExpenseList } from "src/features/expenses/presentation/hooks/logic/expense/use-expense-list.hook";
 
 export default function ExpenseList() {
     const { filteredExpenses, isEmpty } = useExpenseList();

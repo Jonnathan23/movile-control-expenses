@@ -1,11 +1,13 @@
 import { LeadingActions, SwipeableList, SwipeableListItem, SwipeAction, TrailingActions } from "react-swipeable-list";
-import "react-swipeable-list/dist/styles.css";
 
 import { globalDateFormatter } from "src/shared/core/helpers/format.helper";
+
 import { ExpenseEntity } from "src/features/expenses/core/domain/entities/expense.entity";
 
 import AmountDisplay from "src/features/expenses/presentation/components/budget/amount-display";
 import { useExpenseDetail } from "src/features/expenses/presentation/hooks/logic/expense/use-expense-detail.hook";
+
+import "react-swipeable-list/dist/styles.css";
 
 type ExpenseDetailProps = {
     readonly expense: ExpenseEntity;

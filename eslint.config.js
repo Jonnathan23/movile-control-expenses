@@ -44,7 +44,14 @@ export default defineConfig([
             },
         },
         rules: {
-            // Rutas relativas prohibidas
+            curly: ["error", "all"],
+
+            "@typescript-eslint/prefer-optional-chain": "error",
+
+            "@typescript-eslint/prefer-nullish-coalescing": "error",
+
+            "@typescript-eslint/prefer-for-of": "error",
+
             "no-restricted-imports": [
                 "error",
                 {
@@ -140,6 +147,12 @@ export default defineConfig([
 
                         ["^src/shared/"],
 
+                        ["^src/shared/.*/domain/"],
+
+                        ["^src/shared/.*/infrastructure/"],
+
+                        ["^src/shared/.*/application/"],
+
                         ["^src/features/.*/domain/"],
 
                         ["^src/features/.*/infrastructure/"],
@@ -148,6 +161,15 @@ export default defineConfig([
 
                         ["^src/"],
                     ],
+                },
+            ],
+
+            "@typescript-eslint/no-unused-vars": [
+                "error",
+                {
+                    argsIgnorePattern: "^_",
+                    varsIgnorePattern: "^_",
+                    caughtErrorsIgnorePattern: "^_",
                 },
             ],
         },

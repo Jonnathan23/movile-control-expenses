@@ -1,7 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import { getCategoriesUseCase } from "src/features/expenses/core/di/expense.dependency";
-import type { CategoryEntity } from "src/features/expenses/core/domain/entities/category.entity";
+
 import type { QueryResult } from "src/shared/ui/presentation/interfaces/tan-stack.interface";
+
+import type { CategoryEntity } from "src/features/expenses/core/domain/entities/category.entity";
+
+import { getCategoriesUseCase } from "src/features/expenses/core/di/expense.dependency";
 
 export const useGetCategories = (): QueryResult<CategoryEntity[]> => {
     const queryCategories = useQuery({
