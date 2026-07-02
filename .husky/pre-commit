@@ -1,5 +1,6 @@
 #!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
+# Aborta el script inmediatamente si algún comando falla
+set -e
 
 stagedFilesCount=$(git diff --cached --numstat | wc -l)
 maximumAllowedFiles=10
@@ -10,9 +11,16 @@ if [ "$stagedFilesCount" -gt "$maximumAllowedFiles" ]; then
     exit 1
 fi
 
-echo "Auditando la estructura de archivos..."
-echo "Validando reglas de arquitectura y dependencias..."
-# 1. Ejecutar ls-lint
+echo "Validando reglas de arquitectura y dependencias (Dependency Cruiser)..."
+# 1. Ejecutar dependency-cruiser
+if command -v bun >/dev/null 2>&1; then
+    bun run lint:deps
+else
+    pnpm run lint:deps
+fi
+
+echo "Auditando la estructura de archivos (ls-lint)..."
+# 2. Ejecutar ls-lint
 if command -v bun >/dev/null 2>&1; then
     bun run ls-lint
 else
