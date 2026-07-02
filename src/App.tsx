@@ -9,6 +9,7 @@ import { useBudget } from "src/features/expenses/presentation/hooks/use-budget-c
 
 function App() {
     const { state } = useBudget();
+    
     const isValidBudget = useMemo(() => state.budget > 0, [state]);
 
     return (
