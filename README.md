@@ -7,6 +7,9 @@ Aplicación web para el control de gastos personales. Desarrollada con React, Ty
 - Es **estrictamente necesario** tener instalado [pnpm](https://pnpm.io/) en tu sistema para la gestión de dependencias.
 - Es _opcional_ tener instalado [Bun](https://bun.sh/) en tu sistema para ejecutar los scripts, pero es **recomendado** para un mejor rendimiento.
 
+- **IMPORTANTE:** Para poder realizar contribuciones al proyecto, es **indispensable** leer el archivo [CONTRIBUTING.md](CONTRIBUTING.md) para conocer las convenciones del proyecto.
+- En caso de que necesites informacion adicional acerca de los commits y las ramas, leer el archivo [Guia-Contribucion-Branches-Commits.md](Guia-Contribucion-Branches-Commits.md).
+
 ## Instalación y Ejecución
 
 1. Instala las dependencias del proyecto:

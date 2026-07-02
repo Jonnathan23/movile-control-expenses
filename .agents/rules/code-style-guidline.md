@@ -4,7 +4,7 @@ trigger: always_on
 
 # Strict Code Style & Formatting Rules
 
-When generating or modifying code, you MUST adhere to the following constraints:
+When generating or modifying code, you MUST adhere to the following constraints based on our ESLint configuration:
 
 ## 1. General Style & Kernighan and Ritchie (K&R)
 
@@ -17,7 +17,7 @@ When generating or modifying code, you MUST adhere to the following constraints:
 
 - **Variables & Properties:** Use English nouns. NO abbreviations. Use `camelCase`.
 - **Functions & Methods:** Start with a verb (e.g., `get`, `create`, `validate`). Use `camelCase`.
-- **Booleans:** Must start with a prefix like `is`, `has`, `should`, `can` (e.g., `isVerified`).
+- **Booleans:** Must start with a prefix like `is`, `has`, `should`, `can`, `did`, `will` (e.g., `isVerified`, `didFetch`).
 - **Arrays/Collections:** Use plural nouns (e.g., `users`, `activeAccounts`).
 - **Classes, Interfaces, & Types:** Use English nouns. Use `PascalCase`. Interfaces should not contain implementation details.
 - **Enums:** Use `PascalCase` for the Enum name, and `UPPER_SNAKE_CASE` for its members.
@@ -28,6 +28,9 @@ When generating or modifying code, you MUST adhere to the following constraints:
 - **No `any`:** The `any` type is strictly prohibited. Use `unknown` or define proper interfaces/types.
 - **Access Modifiers:** All class properties and methods MUST have explicit access modifiers (`public`, `private`, `protected`).
 - **Separation of Concerns:** Strictly separate DTOs (Data Transfer Objects) from Entity models. Do not assume their structures; ask the user for the Entity if needed.
+- **Return Types:** Explicit function return types are mandatory in `.ts` files.
+- **Modern TypeScript Features:** Prefer optional chaining (`?.`), nullish coalescing (`??`), and `for-of` loops over older alternatives.
+- **Unused Variables:** Any unused variables, arguments, or caught errors must be prefixed with an underscore (`_`).
 
 ## 4. React Specific Rules
 
@@ -35,6 +38,15 @@ When generating or modifying code, you MUST adhere to the following constraints:
 - **Event Handlers:**
     - Functions passed as props must start with `on` (e.g., `onClick`, `onClose`).
     - Internal component functions handling events must start with `handle` (e.g., `handleButtonClick`, `handleModalClose`).
+
+## 5. Imports Structure
+
+- Imports must be sorted automatically and cleanly. The established order is:
+    1. React and third-party libraries (e.g., `react`, `@tanstack/react-query`).
+    2. `src/shared/` global resources.
+    3. `src/shared/` scoped resources by Clean Architecture layers (`domain`, `infrastructure`, `application`).
+    4. `src/features/` scoped resources by Clean Architecture layers (`domain`, `infrastructure`, `application`).
+    5. Other internal imports (`src/`).
 
 # Code Example
 
@@ -47,7 +59,7 @@ interface UserProfileProps {
     onUpdateComplete: () => void;
 }
 
-export const UserProfile = ({ onUpdateComplete }: UserProfileProps) => {
+export const UserProfile = ({ onUpdateComplete }: UserProfileProps): JSX.Element => {
     // Relying on TanStack/Custom hooks, no useState for data
     const { data: userEntity, isFetching } = useUserProfile();
 
@@ -62,7 +74,7 @@ export const UserProfile = ({ onUpdateComplete }: UserProfileProps) => {
     return (
         <div className="profile-container">
             <button onClick={handleProfileEditClick}>Edit Profile</button>
-            <UserModal onClose="{onUpdateComplete}" />
+            <UserModal onClose={onUpdateComplete} />
         </div>
     );
 };
