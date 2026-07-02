@@ -1,6 +1,15 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
+stagedFilesCount=$(git diff --cached --numstat | wc -l)
+maximumAllowedFiles=10
+
+if [ "$stagedFilesCount" -gt "$maximumAllowedFiles" ]; then
+    echo "Error: estás intentando hacer commit de $stagedFilesCount archivos."
+    echo "Por favor, mantén los commits en menos de $maximumAllowedFiles archivos para mantener un historial limpio."
+    exit 1
+fi
+
 echo "Auditando la estructura de archivos..."
 echo "Validando reglas de arquitectura y dependencias..."
 # 1. Ejecutar ls-lint
