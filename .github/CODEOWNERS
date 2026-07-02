@@ -15,3 +15,7 @@
 /lint-staged.config.js      @Jonnathan23
 /tsconfig*.json             @Jonnathan23
 /vite.config.ts             @Jonnathan23
+/commitlint.config.ts       @Jonnathan23
+/CONTRIBUTING.md            @Jonnathan23
+/Guia-Contribucion-Branches-Commits.md @Jonnathan23
+/.husky/                    @Jonnathan23
