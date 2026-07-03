@@ -2,9 +2,9 @@ import { uuidHelper } from "src/shared/core/helpers/generators.helper";
 
 import { DefaultCategoriesFactory } from "src/features/expenses/core/domain/factories/default-categories.factory";
 
-import { BudgetDataSourceImpl } from "src/features/expenses/core/infrastructure/datasources/budget.datasource";
-import { CategoryDataSourceImpl } from "src/features/expenses/core/infrastructure/datasources/categories.datasource";
-import { ExpenseDataSourceImpl } from "src/features/expenses/core/infrastructure/datasources/expense.datasource";
+import { BudgetDataSourceLocalStorage } from "src/features/expenses/core/infrastructure/datasources/local-storage/budget.datasource";
+import { CategoryDataSourceLocalStorage } from "src/features/expenses/core/infrastructure/datasources/local-storage/categories.datasource";
+import { ExpenseDataSourceLocalStorage } from "src/features/expenses/core/infrastructure/datasources/local-storage/expense.datasource";
 import { BudgetMapperImpl } from "src/features/expenses/core/infrastructure/mappers/budget.mapper";
 import { CategoryMapperImpl } from "src/features/expenses/core/infrastructure/mappers/category.mapper";
 import { ExpenseMapperImpl } from "src/features/expenses/core/infrastructure/mappers/expense.mapper";
@@ -30,9 +30,9 @@ const budgetMapper = new BudgetMapperImpl();
 const categoryMapper = new CategoryMapperImpl();
 
 //* 2. DataSources
-const expenseDataSource = new ExpenseDataSourceImpl(expenseMapper, uuidHelper);
-const budgetDataSource = new BudgetDataSourceImpl(budgetMapper);
-const categoriesDataSource = new CategoryDataSourceImpl(defaultCategoriesFactory, categoryMapper);
+const expenseDataSource = new ExpenseDataSourceLocalStorage(expenseMapper, uuidHelper);
+const budgetDataSource = new BudgetDataSourceLocalStorage(budgetMapper);
+const categoriesDataSource = new CategoryDataSourceLocalStorage(defaultCategoriesFactory, categoryMapper);
 
 //* 3. Repositories
 const expenseRepository = new ExpenseRepositoryImpl(expenseDataSource);
