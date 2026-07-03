@@ -5,9 +5,12 @@ const dependencyCruiserConfiguration = {
         {
             name: "domain-must-be-pure",
             severity: "error",
-            comment: "El Domain no debe depender de ninguna capa externa (application, infrastructure, presentation, di).",
+            comment: "El Domain no debe depender de ninguna capa externa, excepto los dtos de application.",
             from: { path: "domain" },
-            to: { path: "(application|infrastructure|presentation|di)" },
+            to: {
+                path: "(application|infrastructure|presentation|di)",
+                pathNot: "application/.*dtos",
+            },
         },
 
         /* REGLA 2: Aislamiento de la Aplicación */
@@ -23,9 +26,12 @@ const dependencyCruiserConfiguration = {
         {
             name: "infrastructure-cannot-depend-on-application",
             severity: "error",
-            comment: "Infrastructure no debe conocer los casos de uso ni la UI.",
+            comment: "Infrastructure no debe conocer los casos de uso ni la UI, excepto los dtos de application.",
             from: { path: "infrastructure" },
-            to: { path: "(application|presentation|di)" },
+            to: {
+                path: "(application|presentation|di)",
+                pathNot: "application/.*dtos",
+            },
         },
 
         /* REGLA 4: El Dominio no usa librerías externas (Opcional pero recomendado) */

@@ -1,8 +1,36 @@
-echo "Auditando la estructura de archivos..."
-bun run lint:fs
+#!/bin/sh
+# Aborta el script inmediatamente si algún comando falla
+set -e
 
-echo "Validando reglas de arquitectura y dependencias..."
-bun run lint:deps
+stagedFilesCount=$(git diff --cached --numstat | wc -l)
+maximumAllowedFiles=10
+
+if [ "$stagedFilesCount" -gt "$maximumAllowedFiles" ]; then
+    echo "Error: estás intentando hacer commit de $stagedFilesCount archivos."
+    echo "Por favor, mantén los commits en menos de $maximumAllowedFiles archivos para mantener un historial limpio."
+    exit 1
+fi
+
+echo "Validando reglas de arquitectura y dependencias (Dependency Cruiser)..."
+# 1. Ejecutar dependency-cruiser
+if command -v bun >/dev/null 2>&1; then
+    bun run lint:deps
+else
+    pnpm run lint:deps
+fi
+
+echo "Auditando la estructura de archivos (ls-lint)..."
+# 2. Ejecutar ls-lint
+if command -v bun >/dev/null 2>&1; then
+    bun run ls-lint
+else
+    pnpm exec ls-lint
+fi
 
 echo "Ejecutando validaciones de código (Lint-staged)..."
-bunx lint-staged
+# 2. Ejecutar lint-staged
+if command -v bun >/dev/null 2>&1; then
+    bun run lint-staged
+else
+    pnpm exec lint-staged
+fi

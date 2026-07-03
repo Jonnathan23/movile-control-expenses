@@ -1,3 +1,3 @@
 export class BudgetEntity {
-    constructor(public readonly amount: number) {}
+    public constructor(public readonly amount: number) {}
 }

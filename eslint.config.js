@@ -1,13 +1,16 @@
 import js from "@eslint/js";
 import globals from "globals";
-import reactHooks from "eslint-plugin-react-hooks";
-import reactRefresh from "eslint-plugin-react-refresh";
-import tseslint from "typescript-eslint";
+import reactHooksPlugin from "eslint-plugin-react-hooks";
+import reactRefreshPlugin from "eslint-plugin-react-refresh";
+import typescriptEslint from "typescript-eslint";
 import { defineConfig, globalIgnores } from "eslint/config";
-import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended";
+import prettierPluginRecommended from "eslint-plugin-prettier/recommended";
+import reactPlugin from "eslint-plugin-react";
+import tanstackQueryPlugin from "@tanstack/eslint-plugin-query";
+import simpleImportSort from "eslint-plugin-simple-import-sort";
 
 export default defineConfig([
-    eslintPluginPrettierRecommended,
+    prettierPluginRecommended,
     globalIgnores([
         "node_modules",
         "dist",
@@ -19,54 +22,92 @@ export default defineConfig([
         "**/*.json",
     ]),
     js.configs.recommended,
-    ...tseslint.configs.recommended,
-    reactHooks.configs.flat.recommended,
-    reactRefresh.configs.vite,
+    ...typescriptEslint.configs.recommended,
+    reactHooksPlugin.configs.flat.recommended,
+    reactRefreshPlugin.configs.vite,
+
+    ...tanstackQueryPlugin.configs["flat/recommended"],
+
     {
+        plugins: {
+            react: reactPlugin,
+            "react-hooks": reactHooksPlugin,
+            "@tanstack/query": tanstackQueryPlugin,
+            "simple-import-sort": simpleImportSort,
+        },
         files: ["**/*.{ts,tsx}"],
         languageOptions: {
             globals: globals.browser,
+            parserOptions: {
+                projectService: true,
+                tsconfigRootDir: import.meta.dirname,
+            },
         },
         rules: {
+            curly: ["error", "all"],
+
+            "@typescript-eslint/prefer-optional-chain": "error",
+
+            "@typescript-eslint/prefer-nullish-coalescing": "error",
+
+            "@typescript-eslint/prefer-for-of": "error",
+
             "no-restricted-imports": [
                 "error",
                 {
                     patterns: [
                         {
-                            // Bloquea cualquier ruta que intente subir un nivel (../),
-                            // referenciar el nivel actual (./), o referenciar el index del directorio (. o ..)
                             group: ["../*", "./*", "..", "."],
                             message: 'Las rutas relativas estan prohibidas. Utiliza rutas absolutas comenzando con "src/".',
                         },
                     ],
                 },
             ],
-            // Reglas estrictas de nomenclatura
+
+            "@typescript-eslint/explicit-member-accessibility": [
+                "error",
+                {
+                    accessibility: "explicit",
+                },
+            ],
+
+            "@typescript-eslint/no-explicit-any": "error",
+
+            "@typescript-eslint/no-magic-numbers": [
+                "error",
+                {
+                    ignoreEnums: true,
+                    ignoreReadonlyClassProperties: true,
+                    ignore: [-1, 0, 1],
+                },
+            ],
+
             "@typescript-eslint/naming-convention": [
                 "error",
-                // 1. Clases, Interfaces y Types en PascalCase
                 {
                     selector: ["class", "interface", "typeAlias", "typeParameter"],
                     format: ["PascalCase"],
                 },
-                // 2. Ignorar variables que provengan de un import para evitar errores con dependencias externas
                 {
                     selector: "import",
                     format: null,
                 },
-                // 3. Variables en el scope global (ej. componentes React) pueden ser PascalCase
+                {
+                    selector: "variable",
+                    types: ["boolean"],
+                    format: ["PascalCase"],
+                    prefix: ["is", "should", "has", "can", "did", "will"],
+                },
                 {
                     selector: "variable",
                     modifiers: ["global"],
                     format: ["camelCase", "PascalCase", "UPPER_CASE"],
                 },
-                // 4. Funciones en el scope global pueden ser PascalCase
                 {
                     selector: "function",
                     modifiers: ["global"],
                     format: ["camelCase", "PascalCase"],
                 },
-                // 5. El resto de variables y funciones (locales/internas) estrictamente en camelCase
                 {
                     selector: "variable",
                     format: ["camelCase"],
@@ -75,13 +116,75 @@ export default defineConfig([
                     selector: "function",
                     format: ["camelCase"],
                 },
-                // 6. Propiedades y métodos de clases estrictamente en camelCase
                 {
                     selector: ["classProperty", "classMethod"],
                     format: ["camelCase"],
                 },
             ],
+
+            "react/jsx-handler-names": [
+                "error",
+                {
+                    eventHandlerPrefix: "handle",
+                    eventHandlerPropPrefix: "on",
+                    checkLocalVariables: true,
+                    checkInlineFunction: true,
+                },
+            ],
+
+            "react-hooks/rules-of-hooks": "error",
+            "react-hooks/exhaustive-deps": "error",
+
+            "@tanstack/query/exhaustive-deps": "error",
+            "@tanstack/query/stable-query-client": "error",
+
+            "simple-import-sort/exports": "error",
+            "simple-import-sort/imports": [
+                "error",
+                {
+                    groups: [
+                        ["^react", "^@?\\w"],
+
+                        ["^src/shared/"],
+
+                        ["^src/shared/.*/domain/"],
+
+                        ["^src/shared/.*/infrastructure/"],
+
+                        ["^src/shared/.*/application/"],
+
+                        ["^src/features/.*/domain/"],
+
+                        ["^src/features/.*/infrastructure/"],
+
+                        ["^src/features/.*/application/"],
+
+                        ["^src/"],
+                    ],
+                },
+            ],
+
+            "@typescript-eslint/no-unused-vars": [
+                "error",
+                {
+                    argsIgnorePattern: "^_",
+                    varsIgnorePattern: "^_",
+                    caughtErrorsIgnorePattern: "^_",
+                },
+            ],
         },
     },
-    eslintPluginPrettierRecommended,
+    {
+        files: ["**/*.ts"],
+        rules: {
+            "@typescript-eslint/explicit-function-return-type": [
+                "error",
+                {
+                    allowTypedFunctionExpressions: true,
+                },
+            ],
+        },
+    },
+
+    prettierPluginRecommended,
 ]);
