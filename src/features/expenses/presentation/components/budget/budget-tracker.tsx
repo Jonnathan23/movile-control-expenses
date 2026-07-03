@@ -1,23 +1,19 @@
 import { buildStyles, CircularProgressbar } from "react-circular-progressbar";
 
-import { resetAppUseCase } from "src/features/expenses/core/di/expense.dependency";
 import AmountDisplay from "src/features/expenses/presentation/components/budget/amount-display";
-import { useBudget } from "src/features/expenses/presentation/hooks/use-budget-context.hook";
+import { useBudgetTrack } from "src/features/expenses/presentation/hooks/logic/budget/budget-track.hook";
+import { useBudgetContext } from "src/features/expenses/presentation/hooks/use-budget-context.hook";
 
 import "react-circular-progressbar/dist/styles.css";
 
 export default function BudgetTracker() {
-    const { state, totalExpense, remaininBudget, dispatch } = useBudget();
+    const { state, totalExpense, remaininBudget, dispatch } = useBudgetContext();
 
-    const maxPercentage = 100;
-    const decimalPlaces = 2;
-    const dangerThreshold = 80;
-    const percentage = +((totalExpense / state.budget) * maxPercentage).toFixed(decimalPlaces);
-
-    const handleResetApp = () => {
-        resetAppUseCase.execute();
-        dispatch({ type: "reset-app" });
-    };
+    const { percentage, dangerThreshold, handleResetApp } = useBudgetTrack({
+        totalExpense,
+        budget: state.budget,
+        dispatch,
+    });
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">

@@ -4,7 +4,7 @@ import type { DefaultCategoriesFactory } from "src/features/expenses/core/domain
 
 import type { CategoryMapper } from "src/features/expenses/core/infrastructure/mappers/category.mapper";
 
-export class CategoryDataSourceImpl implements CategoryDatasource {
+export class CategoryDataSourceLocalStorage implements CategoryDatasource {
     private readonly storageKey = "categories";
 
     public constructor(

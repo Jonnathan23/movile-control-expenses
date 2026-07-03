@@ -1,4 +1,4 @@
-import { useBudget } from "src/features/expenses/presentation/hooks/use-budget-context.hook";
+import { useBudgetContext } from "src/features/expenses/presentation/hooks/use-budget-context.hook";
 
 interface ExpenseModalReturn {
     isModalOpen: boolean;
@@ -7,7 +7,7 @@ interface ExpenseModalReturn {
 }
 
 export const useExpenseModal = (): ExpenseModalReturn => {
-    const { state, dispatch } = useBudget();
+    const { state, dispatch } = useBudgetContext();
 
     const handleShowModal = (): void => {
         dispatch({ type: "show-modal" });

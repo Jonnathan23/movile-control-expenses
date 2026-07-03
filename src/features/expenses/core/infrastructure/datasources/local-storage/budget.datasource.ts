@@ -5,7 +5,7 @@ import type { BudgetMapper } from "src/features/expenses/core/infrastructure/map
 
 import type { CreateBudgetDto } from "src/features/expenses/core/application/dtos/create-budget.dto";
 
-export class BudgetDataSourceImpl implements BudgetDataSource {
+export class BudgetDataSourceLocalStorage implements BudgetDataSource {
     private readonly storageKey = "budget";
 
     public constructor(private readonly budgetMapper: BudgetMapper) {}

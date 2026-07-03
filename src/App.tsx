@@ -5,10 +5,10 @@ import BudgetTracker from "src/features/expenses/presentation/components/budget/
 import FilterByCategory from "src/features/expenses/presentation/components/category/filter-by-category";
 import ExpenseList from "src/features/expenses/presentation/components/expense/expense-list";
 import ExpenseModal from "src/features/expenses/presentation/components/expense/expense-modal";
-import { useBudget } from "src/features/expenses/presentation/hooks/use-budget-context.hook";
+import { useBudgetContext } from "src/features/expenses/presentation/hooks/use-budget-context.hook";
 
 function App() {
-    const { state } = useBudget();
+    const { state } = useBudgetContext();
 
     const isValidBudget = useMemo(() => state.budget > 0, [state]);
 

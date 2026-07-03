@@ -1,6 +1,6 @@
 import { type ChangeEvent, type SyntheticEvent, useMemo, useState } from "react";
 
-import { useBudget } from "src/features/expenses/presentation/hooks/use-budget-context.hook";
+import { useBudgetContext } from "src/features/expenses/presentation/hooks/use-budget-context.hook";
 import { useSaveBudget } from "src/features/expenses/presentation/hooks/use-cases/budget/save-budget.hook";
 
 interface BudgetFormReturn {
@@ -14,7 +14,7 @@ interface BudgetFormReturn {
 
 export const useBudgetForm = (): BudgetFormReturn => {
     //* context
-    const { dispatch } = useBudget();
+    const { dispatch } = useBudgetContext();
 
     //* states
     const [budget, setBudget] = useState(0);

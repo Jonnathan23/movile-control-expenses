@@ -8,7 +8,7 @@ import type { ExpenseMapper } from "src/features/expenses/core/infrastructure/ma
 import type { CreateExpenseDto } from "src/features/expenses/core/application/dtos/create-expense.dto";
 import type { UpdateExpenseDto } from "src/features/expenses/core/application/dtos/update-expense.dto";
 
-export class ExpenseDataSourceImpl implements ExpenseDataSource {
+export class ExpenseDataSourceLocalStorage implements ExpenseDataSource {
     private readonly storageKey = "expenses";
 
     public constructor(

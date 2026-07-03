@@ -2,7 +2,7 @@ import { useMemo } from "react";
 
 import type { ExpenseEntity } from "src/features/expenses/core/domain/entities/expense.entity";
 
-import { useBudget } from "src/features/expenses/presentation/hooks/use-budget-context.hook";
+import { useBudgetContext } from "src/features/expenses/presentation/hooks/use-budget-context.hook";
 
 interface ExpenseListReturn {
     filteredExpenses: ExpenseEntity[];
@@ -10,7 +10,7 @@ interface ExpenseListReturn {
 }
 
 export const useExpenseList = (): ExpenseListReturn => {
-    const { state } = useBudget();
+    const { state } = useBudgetContext();
 
     const filteredExpenses = state.currentCategory
         ? state.expenses.filter((expense) => expense.category === state.currentCategory)

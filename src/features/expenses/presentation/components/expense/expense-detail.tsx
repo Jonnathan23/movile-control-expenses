@@ -1,6 +1,6 @@
 import { LeadingActions, SwipeableList, SwipeableListItem, SwipeAction, TrailingActions } from "react-swipeable-list";
 
-import { globalDateFormatter } from "src/shared/core/helpers/format.helper";
+import { dateFormatter } from "src/shared/core/helpers/format.helper";
 
 import { ExpenseEntity } from "src/features/expenses/core/domain/entities/expense.entity";
 
@@ -43,7 +43,7 @@ export default function ExpenseDetail({ expense }: ExpenseDetailProps) {
                             {categoryInfo?.name ?? "Categoría eliminada"}
                         </p>
                         <p>{expense.expenseName}</p>
-                        <p className="text-slate-600 text-sm">{globalDateFormatter.formatDate(expense.date)}</p>
+                        <p className="text-slate-600 text-sm">{dateFormatter.formatDate(expense.date)}</p>
                     </div>
 
                     <AmountDisplay amount={expense.amount} />
