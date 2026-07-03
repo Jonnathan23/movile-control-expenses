@@ -28,11 +28,31 @@ export const BudgetProvider = ({ children }: BudgetProviderProps) => {
     const remaininBudget = state.budget - totalExpense;
 
     useEffect(() => {
-        dispatch({
-            type: "set-categories",
-            payload: { categories: categories ?? [] },
-        });
+        if (categories) {
+            dispatch({
+                type: "set-categories",
+                payload: { categories },
+            });
+        }
     }, [categories]);
+
+    useEffect(() => {
+        if (budget) {
+            dispatch({
+                type: "add-budget",
+                payload: { budget: budget.amount },
+            });
+        }
+    }, [budget]);
+
+    useEffect(() => {
+        if (expenses) {
+            dispatch({
+                type: "set-expenses",
+                payload: { expenses },
+            });
+        }
+    }, [expenses]);
 
     return (
         <BudgetContext.Provider
