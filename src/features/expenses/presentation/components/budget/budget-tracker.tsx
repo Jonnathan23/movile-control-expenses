@@ -1,6 +1,6 @@
 import { buildStyles, CircularProgressbar } from "react-circular-progressbar";
 
-import { resetAppUseCase } from "src/features/expenses/core/di/expense.dependency";
+import { ExecuteResetAppUseCase } from "src/features/expenses/core/di/expense.dependency";
 import AmountDisplay from "src/features/expenses/presentation/components/budget/amount-display";
 import { useBudget } from "src/features/expenses/presentation/hooks/use-budget-context.hook";
 
@@ -15,7 +15,7 @@ export default function BudgetTracker() {
     const percentage = +((totalExpense / state.budget) * maxPercentage).toFixed(decimalPlaces);
 
     const handleResetApp = () => {
-        resetAppUseCase.execute();
+        ExecuteResetAppUseCase();
         dispatch({ type: "reset-app" });
     };
 
