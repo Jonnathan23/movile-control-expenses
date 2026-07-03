@@ -1,9 +1,9 @@
 import type { ChangeEvent } from "react";
 
-import { useBudget } from "src/features/expenses/presentation/hooks/use-budget-context.hook";
+import { useBudgetContext } from "src/features/expenses/presentation/hooks/use-budget-context.hook";
 
 export default function FilterByCategory() {
-    const { dispatch, state } = useBudget();
+    const { dispatch, state } = useBudgetContext();
 
     const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
         dispatch({ type: "add-filter-category", payload: { id: e.target.value } });

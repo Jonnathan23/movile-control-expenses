@@ -2,12 +2,12 @@ import { buildStyles, CircularProgressbar } from "react-circular-progressbar";
 
 import { ExecuteResetAppUseCase } from "src/features/expenses/core/di/expense.dependency";
 import AmountDisplay from "src/features/expenses/presentation/components/budget/amount-display";
-import { useBudget } from "src/features/expenses/presentation/hooks/use-budget-context.hook";
+import { useBudgetContext } from "src/features/expenses/presentation/hooks/use-budget-context.hook";
 
 import "react-circular-progressbar/dist/styles.css";
 
 export default function BudgetTracker() {
-    const { state, totalExpense, remaininBudget, dispatch } = useBudget();
+    const { state, totalExpense, remaininBudget, dispatch } = useBudgetContext();
 
     const maxPercentage = 100;
     const decimalPlaces = 2;
