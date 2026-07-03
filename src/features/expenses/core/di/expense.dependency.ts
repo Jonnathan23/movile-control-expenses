@@ -1,4 +1,4 @@
-import { globalUuidGenerator } from "src/shared/core/helpers/generators.helper";
+import { uuidHelper } from "src/shared/core/helpers/generators.helper";
 
 import { DefaultCategoriesFactory } from "src/features/expenses/core/domain/factories/default-categories.factory";
 
@@ -22,7 +22,7 @@ import { SaveExpenseUseCase } from "src/features/expenses/core/application/use-c
 import { UpdateExpenseUseCase } from "src/features/expenses/core/application/use-cases/expenses/update-expense.use-case";
 
 //* Factories
-export const defaultCategoriesFactory = new DefaultCategoriesFactory(globalUuidGenerator);
+export const defaultCategoriesFactory = new DefaultCategoriesFactory(uuidHelper);
 
 //* 1. Mappers
 const expenseMapper = new ExpenseMapperImpl();
@@ -30,7 +30,7 @@ const budgetMapper = new BudgetMapperImpl();
 const categoryMapper = new CategoryMapperImpl();
 
 //* 2. DataSources
-const expenseDataSource = new ExpenseDataSourceImpl(expenseMapper, globalUuidGenerator);
+const expenseDataSource = new ExpenseDataSourceImpl(expenseMapper, uuidHelper);
 const budgetDataSource = new BudgetDataSourceImpl(budgetMapper);
 const categoriesDataSource = new CategoryDataSourceImpl(defaultCategoriesFactory, categoryMapper);
 
