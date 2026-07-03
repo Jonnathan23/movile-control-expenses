@@ -4,12 +4,12 @@ import type { QueryResult } from "src/shared/ui/presentation/interfaces/tan-stac
 
 import type { ExpenseEntity } from "src/features/expenses/core/domain/entities/expense.entity";
 
-import { getExpensesUseCase } from "src/features/expenses/core/di/expense.dependency";
+import { ExecuteGetExpensesUseCase } from "src/features/expenses/core/di/expense.dependency";
 
 export const useGetExpenses = (): QueryResult<ExpenseEntity[]> => {
     const { data, isLoading, isFetching, isError, error, isSuccess, refetch } = useQuery({
         queryKey: ["expenses"],
-        queryFn: () => getExpensesUseCase.execute(),
+        queryFn: ExecuteGetExpensesUseCase,
     });
 
     return {

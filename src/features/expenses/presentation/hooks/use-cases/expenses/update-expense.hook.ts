@@ -7,7 +7,7 @@ import type { ExpenseEntity } from "src/features/expenses/core/domain/entities/e
 import type { UpdateExpenseDto } from "src/features/expenses/core/application/dtos/update-expense.dto";
 import { UpdateExpenseDtoImpl } from "src/features/expenses/core/application/dtos/update-expense.dto";
 
-import { updateExpenseUseCase } from "src/features/expenses/core/di/expense.dependency";
+import { ExecuteUpdateExpenseUseCase } from "src/features/expenses/core/di/expense.dependency";
 import type { BudgetActions } from "src/features/expenses/presentation/reducers/budget.reducer";
 
 interface UseUpdateExpenseProps {
@@ -20,7 +20,7 @@ export const useUpdateExpense = ({ dispatch }: UseUpdateExpenseProps): MutationR
     const { mutate, isPending, isError, error } = useMutation({
         mutationFn: async (expenseDto: UpdateExpenseDto) => {
             const validDto = UpdateExpenseDtoImpl.create(expenseDto);
-            return await updateExpenseUseCase.execute(validDto);
+            return await ExecuteUpdateExpenseUseCase(validDto);
         },
         onSuccess(data) {
             dispatch({ type: "update-expense", payload: { expense: data } });

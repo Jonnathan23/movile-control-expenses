@@ -4,12 +4,12 @@ import type { QueryResult } from "src/shared/ui/presentation/interfaces/tan-stac
 
 import type { BudgetEntity } from "src/features/expenses/core/domain/entities/budget.entity";
 
-import { getBudgetUseCase } from "src/features/expenses/core/di/expense.dependency";
+import { ExecuteGetBudgetUseCase } from "src/features/expenses/core/di/expense.dependency";
 
 export const useGetBudget = (): QueryResult<BudgetEntity, Error> => {
     const budgetQuery = useQuery({
         queryKey: ["budget"],
-        queryFn: () => getBudgetUseCase.execute(),
+        queryFn: ExecuteGetBudgetUseCase,
     });
 
     return {

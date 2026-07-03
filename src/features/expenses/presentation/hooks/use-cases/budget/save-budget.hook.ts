@@ -6,7 +6,7 @@ import type { BudgetEntity } from "src/features/expenses/core/domain/entities/bu
 
 import { CreateBudgetDtoImpl } from "src/features/expenses/core/application/dtos/create-budget.dto";
 
-import { saveBudgetUseCase } from "src/features/expenses/core/di/expense.dependency";
+import { ExecuteSaveBudgetUseCase } from "src/features/expenses/core/di/expense.dependency";
 import type { BudgetActions } from "src/features/expenses/presentation/reducers/budget.reducer";
 
 interface UseSaveBudgetProps {
@@ -19,7 +19,7 @@ export const useSaveBudget = ({ dispatch }: UseSaveBudgetProps): MutationResult<
     const { mutate, isPending, isError, error } = useMutation({
         mutationFn: async (budgetAmount: number) => {
             const validDto = CreateBudgetDtoImpl.create({ amount: budgetAmount });
-            return await saveBudgetUseCase.execute(validDto);
+            return await ExecuteSaveBudgetUseCase(validDto);
         },
         onSuccess(data) {
             const { amount } = data;

@@ -41,15 +41,30 @@ const categoriesRepository = new CategoriesRepositoryImpl(categoriesDataSource);
 
 //* 4. Use Cases
 // Expense Use Cases
-export const getExpensesUseCase = new GetExpensesUseCase(expenseRepository);
-export const saveExpenseUseCase = new SaveExpenseUseCase(expenseRepository);
-export const updateExpenseUseCase = new UpdateExpenseUseCase(expenseRepository);
-export const deleteExpenseUseCase = new DeleteExpenseUseCase(expenseRepository);
+const getExpensesUseCase = new GetExpensesUseCase(expenseRepository);
+const saveExpenseUseCase = new SaveExpenseUseCase(expenseRepository);
+const updateExpenseUseCase = new UpdateExpenseUseCase(expenseRepository);
+const deleteExpenseUseCase = new DeleteExpenseUseCase(expenseRepository);
 
 // Budget Use Cases
-export const getBudgetUseCase = new GetBudgetUseCase(budgetRepository);
-export const saveBudgetUseCase = new SaveBudgetUseCase(budgetRepository);
-export const resetAppUseCase = new ResetAppUseCase(budgetRepository);
+const getBudgetUseCase = new GetBudgetUseCase(budgetRepository);
+const saveBudgetUseCase = new SaveBudgetUseCase(budgetRepository);
+const resetAppUseCase = new ResetAppUseCase(budgetRepository);
 
 // Categories Use Cases
-export const getCategoriesUseCase = new GetCategoriesUseCase(categoriesRepository);
+const getCategoriesUseCase = new GetCategoriesUseCase(categoriesRepository);
+
+//* 5. Use Cases Actions
+// Expenses actions
+export const ExecuteGetExpensesUseCase = getExpensesUseCase.execute.bind(getExpensesUseCase);
+export const ExecuteSaveExpenseUseCase = saveExpenseUseCase.execute.bind(saveExpenseUseCase);
+export const ExecuteUpdateExpenseUseCase = updateExpenseUseCase.execute.bind(updateExpenseUseCase);
+export const ExecuteDeleteExpenseUseCase = deleteExpenseUseCase.execute.bind(deleteExpenseUseCase);
+
+// Budget actions
+export const ExecuteGetBudgetUseCase = getBudgetUseCase.execute.bind(getBudgetUseCase);
+export const ExecuteSaveBudgetUseCase = saveBudgetUseCase.execute.bind(saveBudgetUseCase);
+export const ExecuteResetAppUseCase = resetAppUseCase.execute.bind(resetAppUseCase);
+
+// Categories actions
+export const ExecuteGetCategoriesUseCase = getCategoriesUseCase.execute.bind(getCategoriesUseCase);
