@@ -2,4 +2,4 @@ import { adapterUuidGenerator } from "src/shared/core/adapters/uuid/di/uuid.depe
 
 import type { UuidStrategy } from "src/shared/core/adapters/uuid/domain/interface/uuid-strategy.interface";
 
-export const globalUuidGenerator: UuidStrategy = adapterUuidGenerator;
+export const uuidHelper: UuidStrategy = adapterUuidGenerator;
