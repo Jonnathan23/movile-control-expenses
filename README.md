@@ -92,3 +92,20 @@ pnpm run typecheck
 bun run lint:deps
 bun run lint
 ```
+
+---
+
+## 📱 Soporte para plataformas móviles
+
+Para construir la aplicación y sincronizarla con el emulador de android:
+
+```bash
+bun run build
+bunx cap sync
+```
+
+Para ejecutar la aplicación en un emulador de android:
+
+```bash
+bunx cap run android
+```
