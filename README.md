@@ -97,14 +97,31 @@ bun run lint
 
 ## 📱 Soporte para plataformas móviles
 
-Para construir la aplicación y sincronizarla con el emulador de android:
+El proyecto utiliza Capacitor para integrarse nativamente en dispositivos Android.
+
+### Crear conexion con el movil (fisico en Linux)
+
+Para probar la aplicación en un dispositivo físico conectado, es necesario verificar que el sistema reconozca el equipo mediante ADB. Ejecuta los siguientes comandos:
+
+```bash
+# Reinicia el servidor ADB con permisos (útil en entornos Linux)
+adb kill-server
+sudo $(which adb) start-server
+
+# Verifica que tu dispositivo (ej. Infinix) aparezca en la lista
+adb devices
+```
+
+### Compilacion
+
+Para construir la aplicación y sincronizarla con el emulador de android (o el entorno nativo de tu dispositivo físico):
 
 ```bash
 bun run build
 bunx cap sync
 ```
 
-Para ejecutar la aplicación en un emulador de android:
+Para ejecutar la aplicación en un emulador de android (o instalarla directamente en tu celular físico conectado por USB):
 
 ```bash
 bunx cap run android
