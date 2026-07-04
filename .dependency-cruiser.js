@@ -45,7 +45,7 @@ const dependencyCruiserConfiguration = {
     ],
     options: {
         doNotFollow: {
-            path: "node_modules",
+            path: "(node_modules|android)",
         },
         tsPreCompilationDeps: true,
         tsConfig: {
