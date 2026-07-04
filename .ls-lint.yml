@@ -43,6 +43,7 @@ ignore:
   - .git
   - dist
   - build
+  - android
   - docs
   - .vscode
   - scripts
