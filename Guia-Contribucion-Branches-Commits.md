@@ -110,6 +110,8 @@ Scope Ubicación
 
 `ci` `.github/`, `.husky/`
 
+`android` `android/`
+
 ---
 
 ### ✅ Ejemplos válidos
