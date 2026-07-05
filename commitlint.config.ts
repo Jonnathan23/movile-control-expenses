@@ -16,10 +16,11 @@ const commitlintConfiguration: UserConfig = {
                 "expenses", // Para src/features/expenses/
                 "root", // Para App.tsx, main.tsx, vite.config.ts, package.json
                 "ci", // Para .github/, .husky/, y flujos de trabajo
+                "android", // Para android/
             ],
         ],
         "scope-case": [2, "always", "kebab-case"],
-        "scope-empty": [1, "never"],
+        "scope-empty": [2, "never"],
 
         "subject-case": [2, "always", "lower-case"],
         "subject-empty": [2, "never"],
