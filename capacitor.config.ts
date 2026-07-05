@@ -8,6 +8,11 @@ const config: CapacitorConfig = {
         androidScheme: "https",
         cleartext: true,
     },
+    plugins: {
+        SplashScreen: {
+            launchAutoHide: true,
+        },
+    },
 };
 
 export default config;
