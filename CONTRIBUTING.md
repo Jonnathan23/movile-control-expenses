@@ -82,7 +82,7 @@ type(scope): imperative description
 
 Todo el mensaje debe estar:
 
-- en inglés
+- en inglés o español
 - en minúsculas
 - sin punto final
 
@@ -92,12 +92,12 @@ Tipo Uso
 
 ---
 
-feat Nueva funcionalidad
-fix Corrección de errores
-docs Documentación
-style Formato
-refactor Refactorización
-chore Mantenimiento
+- **feat**: Nueva funcionalidad
+- **fix**: Corrección de errores
+- **docs**: Documentación
+- **style**: Formato
+- **refactor**: Refactorización
+- **chore**: Mantenimiento
 
 ## Scopes permitidos
 
@@ -105,11 +105,13 @@ Scope Carpeta
 
 ---
 
-expenses src/features/expenses
-shared src/shared
-config src/config
-root Configuración principal
-ci GitHub Actions, Husky, CI
+- **expenses**: `src/features/expenses`
+- **shared**: `src/shared`
+- **config**: `src/config`
+- **android**: `android/`
+- **md**: `.md`
+- **root**: Configuración principal
+- **ci**: GitHub Actions, Husky, CI
 
 ## Ejemplos válidos
 
@@ -179,7 +181,6 @@ git push origin feat/expenses-modal
 - Hacer push directamente a `production`.
 - Crear ramas fuera de una rama épica.
 - Utilizar nombres con espacios o mayúsculas.
-- Escribir commits en español.
 - Utilizar scopes no permitidos.
 
 ---
