@@ -5,44 +5,60 @@
 .swipeable-list-item__trailing-actions {
     @apply text-white text-lg uppercase font-bold;
 }
+
 .swipeable-list-item__leading-actions {
     @apply bg-primary;
 }
+
 .swipeable-list-item__trailing-actions {
     @apply bg-secondary;
 }
+
 .swipeable-list .swipe-action {
     @apply flex justify-center items-center;
 }
 
 :root {
-    /* Colors */
-    --primary: #2563eb;
-    --primary-hover: #1d4ed8;
-    --primary-border: #3b82f6;
-    --secondary: #db2777;
-    --error: #dc2626;
-    --text-main: #475569;
-    --text-sub: #64748b;
-    --border-main: #e5e7eb;
-    --bg-input: #f1f5f9;
-    --tracker-primary: #3b82f6;
-    --tracker-danger: #dc2626;
-    --tracker-trail: #f5f5f5;
+    /* Nueva paleta de colores base (Teal/Mint) */
+    --teal-900: #0c3c46;
+    --teal-800: #1a5862;
+    --teal-600: #1c8586;
+    --teal-500: #26a09b;
+    --teal-400: #39b8a2;
+    --teal-300: #52caa6;
+    --teal-200: #6cdab2;
+    --teal-100: #85e9cf;
+    --teal-50: #dde8e6;
 
-    /* Margins */
+    /* Mapeo de Variables Semánticas (Recomendaciones de Diseño) */
 
-    /* Paddings */
+    /* Acciones Principales */
+    --primary: var(--teal-600);
+    --primary-hover: var(--teal-900);
+    --primary-border: var(--teal-400);
 
-    /* Font sizes */
+    /* Acciones Secundarias (Usamos un tono vibrante de la paleta para reset/acciones alternas) */
+    --secondary: var(--teal-300);
 
-    /* Font weights */
+    /* Errores (Se recomienda mantener un tono rojo/rosado para semántica de peligro) */
+    --error: #ef4444;
 
-    /* Fonts */
+    /* Textos (Usamos los tonos más oscuros de la paleta para mejor contraste) */
+    --text-main: var(--teal-900);
+    --text-sub: var(--teal-800);
 
-    /* Border radii */
+    /* Bordes y Fondos */
+    --border-main: var(--teal-50);
 
-    /* Shadows */
+    /* Para fondos de inputs y tarjetas (surface) lo ideal en UI es blanco puro o un tono extremandamente claro
+       para asegurar que el texto sea legible. El tono #85e9cf es demasiado vibrante para ser fondo principal. */
+    --bg-input: #ffffff;
+    --bg-surface: #ffffff;
+
+    /* Tracker (Circular Progress) */
+    --tracker-primary: var(--teal-400);
+    --tracker-danger: var(--error);
+    --tracker-trail: var(--teal-50);
 }
 
 @theme {
@@ -55,4 +71,5 @@
     --color-text-sub: var(--text-sub);
     --color-border-main: var(--border-main);
     --color-bg-input: var(--bg-input);
+    --color-bg-surface: var(--bg-surface);
 }

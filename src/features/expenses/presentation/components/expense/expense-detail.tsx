@@ -33,7 +33,7 @@ export default function ExpenseDetail({ expense }: ExpenseDetailProps) {
     return (
         <SwipeableList>
             <SwipeableListItem maxSwipe={1} leadingActions={leadeingActions()} trailingActions={trailingActions()}>
-                <div className="bg-white shadow-lg p-5 w-full border-b border-border-main flex gap-5 items-center">
+                <div className="bg-bg-surface shadow-lg p-5 w-full border-b border-border-main flex gap-5 items-center">
                     <div>
                         <img src={`/icono_${categoryInfo?.icon ?? "gastos"}.svg`} alt="icono gasto" className="w-20" />
                     </div>

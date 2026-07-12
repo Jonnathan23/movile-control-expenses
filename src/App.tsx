@@ -18,7 +18,7 @@ function App() {
                 <h1 className="uppercase text-center font-black text-4xl text-white">Planificador de Gastos</h1>
             </header>
 
-            <div className="max-w-3xl mx-auto bg-white shadow-lg rounded-lg mt-10 p-10">
+            <div className="max-w-3xl mx-auto bg-bg-surface shadow-lg rounded-lg mt-10 p-10">
                 {isValidBudget ? <BudgetTracker /> : <BudgetForm />}
             </div>
 

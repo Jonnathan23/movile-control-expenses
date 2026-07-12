@@ -5,7 +5,7 @@ export default function ExpenseList() {
     const { filteredExpenses, isEmpty } = useExpenseList();
 
     return (
-        <div className="mt-10 bg-white shadow-lg rounded-lg p-10">
+        <div className="mt-10 bg-bg-surface shadow-lg rounded-lg p-10">
             {isEmpty ? (
                 <p className="text-text-main text-2xl  font-bold">No hay gastos</p>
             ) : (
