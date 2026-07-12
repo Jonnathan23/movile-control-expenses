@@ -12,7 +12,7 @@ export default function ExpenseForm() {
 
     return (
         <form action="" className="space-y-5" onSubmit={handleSubmit}>
-            <legend className="uppercase text-2xl text-center font-black border-b-4 border-blue-500 py-2">
+            <legend className="uppercase text-2xl text-center font-black border-b-4 border-primary-border py-2">
                 {state.editingId ? "Editar Gasto" : "Nuevo Gasto"}
             </legend>
 
@@ -27,7 +27,7 @@ export default function ExpenseForm() {
                     id="expenseName"
                     name="expenseName"
                     placeholder="Añade el nombre del gasto"
-                    className="bg-slate-100 p-2"
+                    className="bg-bg-input p-2"
                     value={expense.expenseName}
                     onChange={handleChange}
                 />
@@ -42,7 +42,7 @@ export default function ExpenseForm() {
                     id="amount"
                     name="amount"
                     placeholder="Añade la cantidad del gasto, ej: 300"
-                    className="bg-slate-100 p-2"
+                    className="bg-bg-input p-2"
                     value={expense.amount}
                     onChange={handleChange}
                 />
@@ -55,7 +55,7 @@ export default function ExpenseForm() {
                 <select
                     id="category"
                     name="category"
-                    className="bg-slate-100 p-2"
+                    className="bg-bg-input p-2"
                     value={expense.category}
                     onChange={handleChange}
                 >
@@ -74,11 +74,11 @@ export default function ExpenseForm() {
                 <label htmlFor="expenseName" className="text-xl">
                     Fecha Gasto:
                 </label>
-                <DatePicker className="bg-slate-100 p-2 border-0" value={expense.date} onChange={handleChangeDate} />
+                <DatePicker className="bg-bg-input p-2 border-0" value={expense.date} onChange={handleChangeDate} />
             </div>
 
             <input
-                className="bg-blue-600 cursor-pointer w-full p-2 text-white uppercase font-bold rounded-lg"
+                className="bg-primary cursor-pointer w-full p-2 text-white uppercase font-bold rounded-lg"
                 type="submit"
                 value={state.editingId ? "Guardar Cambios" : "Agregar Gasto"}
             />

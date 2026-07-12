@@ -12,7 +12,7 @@ export default function ExpenseModal() {
         <>
             <div className="fixed right-5 bottom-5 flex items-center justify-center">
                 <button type="button" onClick={handleShowModal}>
-                    <PlusCircleIcon className="w-16 h-16 text-blue-600 rounded-full" />
+                    <PlusCircleIcon className="w-16 h-16 text-primary rounded-full" />
                 </button>
             </div>
 
