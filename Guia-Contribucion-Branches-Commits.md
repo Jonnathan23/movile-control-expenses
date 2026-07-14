@@ -144,7 +144,18 @@ Scope Ubicación
 
 ---
 
-## 🚀 3. Flujo de Trabajo Cotidiano
+## 📝 3. Convención para Títulos de Pull Requests
+
+El título del PR debe resumir el valor o la característica principal que se está entregando, usando la convención `tipo[(scope_opcional)]: descripción`.
+
+- El **scope es opcional** si el PR es transversal y afecta a múltiples partes del sistema (ej. `feat: setup initial clean architecture`).
+- Si el PR se centra predominantemente en un dominio, usa ese scope (ej. `fix(shared): resolve timezone bug in date formatters`).
+- El **tipo sigue siendo obligatorio** (`feat`, `fix`, `chore`, `refactor`, etc.).
+- La **descripción** debe enfocarse en qué valor se entrega, no en los archivos técnicos modificados.
+
+---
+
+## 🚀 4. Flujo de Trabajo Cotidiano
 
 1.  Cambiar a la rama épica correspondiente.
 

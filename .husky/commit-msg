@@ -1,1 +1,8 @@
-npx --no -- commitlint --edit ${1}
+#!/bin/sh
+# Validando el mensaje del commit con el entorno correcto
+echo "Validando el mensaje del commit con el entorno correcto..."
+if command -v bun >/dev/null 2>&1; then
+    bunx commitlint --edit "${1}"
+else
+    pnpm exec commitlint --edit "${1}"
+fi
