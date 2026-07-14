@@ -132,6 +132,13 @@ fix(expenses): Fix bug.
 
 ---
 
+# 📝 Convención de Pull Requests
+
+El título del PR debe resumir la característica principal usando la convención `tipo[(scope_opcional)]: descripción`.
+El tipo es obligatorio (`feat`, `fix`, `chore`, etc.) y el scope es opcional si el cambio abarca múltiples módulos.
+
+---
+
 # 🔀 Flujo de trabajo
 
 1.  Actualizar la rama épica.
