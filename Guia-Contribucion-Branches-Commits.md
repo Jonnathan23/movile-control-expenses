@@ -99,54 +99,63 @@ Scope Ubicación
 
 ---
 
-`expenses` `src/features/expenses/`
-
-`shared` `src/shared/`
-
-`config` `src/config/`
-
-`root` Archivos base (`App.tsx`, `package.json`,
-`vite.config.ts`, etc.)
-
-`ci` `.github/`, `.husky/`
+- **`expenses`**: `src/features/expenses/`
+- **`shared`**: `src/shared/`
+- **`config`**: `src/config/`
+- **`android`**: `android/`
+- **`public`**: `public/`
+- **`deps`**: `package.json`, `pnpm-lock.yaml`
+- **`tools`**: `vite.config.ts`, `eslint.config.js`, `commitlint...`, `tsconfig...`
+- **`root`**: Archivos base de la app (`App.tsx`, `main.tsx`, `index.html`)
+- **`ci`**: `.github/`, `.husky/`
 
 ---
 
 ### ✅ Ejemplos válidos
 
-```bash
-git commit -m "feat(expenses): create budget form component"
-git commit -m "fix(shared): resolve timezone issue in date format"
-git commit -m "chore(root): update lockfile dependencies"
-git commit -m "refactor(expenses): clean up save expense use case"
-```
+- ✅ `git commit -m "feat(expenses): create budget form component"`
+- ✅ `git commit -m "fix(shared): resolve timezone issue in date format"`
+- ✅ `git commit -m "chore(deps): update lockfile dependencies"`
+- ✅ `git commit -m "refactor(tools): migrate config to typescript"`
+- ✅ `git commit -m "feat(android): add push notification permissions"`
 
 ### ❌ Ejemplos inválidos
 
-```bash
-git commit -m "Actualice el formulario"
-```
+- ❌ `git commit -m "Actualice el formulario"`
+    - **Error:** Falta el tipo y el scope.
+- ❌ `git commit -m "feat(UI): add button"`
+    - **Error:** `UI` no es un scope permitido y contiene mayúsculas.
+- ❌ `git commit -m "fix(expenses): Fix bug."`
+    - **Error:** La descripción inicia con mayúscula y termina con punto final.
+- ❌ `git commit -m "chore(root): update package.json"`
+    - **Error:** El scope `root` ya no debe usarse para dependencias, se debe usar `deps`.
 
-- Falta el tipo y el scope.
-- Está escrito en español.
+### Explicacion de scopes
 
-```bash
-git commit -m "feat(UI): add button"
-```
-
-- `UI` no es un scope permitido.
-- Contiene mayúsculas.
-
-```bash
-git commit -m "fix(expenses): Fix bug."
-```
-
-- La descripción inicia con mayúscula.
-- Termina con punto final.
+- **`expenses`**: Cambios exclusivos relacionados con la funcionalidad de gastos, presupuestos y su lógica de negocio.
+- **`shared`**: Componentes de UI comunes, utilidades, helpers y lógica compartida entre múltiples módulos de la aplicación.
+- **`config`**: Configuraciones e inicializaciones globales del proyecto (por ejemplo, configuración de QueryClient o Axios).
+- **`android`**: Ajustes nativos específicos para la plataforma Android (archivos gradle, manifest, permisos, etc.).
+- **`public`**: Manejo de recursos estáticos, imágenes, íconos y fuentes expuestos públicamente.
+- **`deps`**: Modificaciones relacionadas exclusivamente con la adición, actualización o eliminación de dependencias.
+- **`tools`**: Actualización de reglas, plugins y configuraciones de herramientas de desarrollo (Vite, TypeScript, linters, formateadores).
+- **`root`**: Modificaciones en los puntos de entrada y montaje principales de la aplicación en React.
+- **`ci`**: Cambios en la integración continua, flujos de trabajo de GitHub Actions o automatizaciones de Husky.
 
 ---
 
-## 🚀 3. Flujo de Trabajo Cotidiano
+## 📝 3. Convención para Títulos de Pull Requests
+
+El título del PR debe resumir el valor o la característica principal que se está entregando, usando la convención `tipo[(scope_opcional)]: descripción`.
+
+- El **scope es opcional** si el PR es transversal y afecta a múltiples partes del sistema (ej. `feat: setup initial clean architecture`).
+- Si el PR se centra predominantemente en un dominio, usa ese scope (ej. `fix(shared): resolve timezone bug in date formatters`).
+- El **tipo sigue siendo obligatorio** (`feat`, `fix`, `chore`, `refactor`, etc.).
+- La **descripción** debe enfocarse en qué valor se entrega, no en los archivos técnicos modificados.
+
+---
+
+## 🚀 4. Flujo de Trabajo Cotidiano
 
 1.  Cambiar a la rama épica correspondiente.
 

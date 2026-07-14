@@ -14,7 +14,11 @@ const commitlintConfiguration: UserConfig = {
                 "config", // Para src/config/
                 "shared", // Para src/shared/
                 "expenses", // Para src/features/expenses/
-                "root", // Para App.tsx, main.tsx, vite.config.ts, package.json
+                "android", // Para android/
+                "public", // Para public/
+                "deps", // Para dependencias (package.json, pnpm-lock.yaml)
+                "tools", // Para herramientas (vite, eslint, tsconfig, commitlint, etc.)
+                "root", // Para App.tsx, main.tsx, index.html y assets base
                 "ci", // Para .github/, .husky/, y flujos de trabajo
             ],
         ],
