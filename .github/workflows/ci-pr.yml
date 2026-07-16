@@ -69,6 +69,11 @@ jobs:
       - name: Code Linting (ESLint)
         run: bun run lint
 
+      - name: Dead Code & Dependency Analysis (Knip)
+        # Solo se ejecuta si el PR va dirigido a develop o production
+        if: github.base_ref == 'develop' || github.base_ref == 'production'
+        run: bun run lint:knip
+
       # Etiquetado Automático de Carpetas
       - name: Add Folder Labels
         uses: actions/labeler@v5

@@ -83,6 +83,7 @@ El proyecto cuenta con los siguientes scripts para asegurar la calidad del códi
 3. **Validación de Estructura y Arquitectura**
     - `lint:fs`: Ejecuta `ls-lint` para verificar que los nombres de archivos y carpetas cumplan con las convenciones (kebab-case).
     - `lint:deps`: Ejecuta `dependency-cruiser` para validar que se respeten las reglas de dependencias de la Clean Architecture.
+    - `lint:knip`: Ejecuta `knip` para auditar el proyecto y detectar archivos, dependencias o exportaciones que no se están utilizando (código muerto).
 
 Puedes ejecutar cualquiera de estos scripts usando `pnpm` o `bun`:
 
