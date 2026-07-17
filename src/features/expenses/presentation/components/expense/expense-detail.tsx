@@ -1,6 +1,6 @@
 import { LeadingActions, SwipeableList, SwipeableListItem, SwipeAction, TrailingActions } from "react-swipeable-list";
 
-import { dateFormatter } from "src/shared/core/helpers/format.helper";
+import { dateFormatHelper } from "src/shared/core/helpers/format.helper";
 
 import { ExpenseEntity } from "src/features/expenses/core/domain/entities/expense.entity";
 
@@ -41,7 +41,7 @@ export default function ExpenseDetail({ expense }: ExpenseDetailProps) {
                     <div className="flex-1 space-y-2">
                         <p className="text-sm font-bold uppercase text-text-sub">{categoryInfo?.name ?? "Categoría eliminada"}</p>
                         <p>{expense.expenseName}</p>
-                        <p className="text-text-main text-sm">{dateFormatter.formatDate(expense.date)}</p>
+                        <p className="text-text-main text-sm">{dateFormatHelper(expense.date)}</p>                        
                     </div>
 
                     <AmountDisplay amount={expense.amount} />

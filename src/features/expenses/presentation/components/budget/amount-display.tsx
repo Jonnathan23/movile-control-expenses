@@ -1,4 +1,4 @@
-import { currencyFormatter } from "src/shared/core/helpers/format.helper";
+import { currencyFormatHelper } from "src/shared/core/helpers/format.helper";
 
 type AmountDisplayProps = {
     readonly label?: string;
@@ -10,7 +10,7 @@ export default function AmountDisplay({ label, amount }: AmountDisplayProps) {
         <div>
             <p className="text-2xl text-primary font-bold">
                 {label && `${label}: `}
-                <span className="font-black text-black">{currencyFormatter.formatCurrency(amount)}</span>
+                <span className="font-black text-black">{currencyFormatHelper(amount)}</span>
             </p>
         </div>
     );
