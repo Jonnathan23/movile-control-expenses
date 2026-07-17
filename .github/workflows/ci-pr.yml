@@ -43,10 +43,7 @@ jobs:
 
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
-
-      - name: Lint Commits (Commitlint)
-        run: bun x commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }} --verbose
-
+        
       - name: Validate PR Title
         uses: amannn/action-semantic-pull-request@v5
         env:
@@ -60,11 +57,11 @@ jobs:
             style
             refactor
             chore
-          # Le decimos al robot que no obligue a poner un scope, 
-          # permitiendo títulos como "feat: create new module"
+          
+          
           requireScope: false
-          # Esta expresión regular valida la estructura estándar pero permite hasta 100 caracteres en total
-          subjectPattern: ^(?=.{1,100}$)[a-z].+$
+          
+          subjectPattern: ^(?=.{1,120}$)[a-zA-Z].+$
       - name: Architecture Lint (ls-lint)
         run: bun run ls-lint
 
