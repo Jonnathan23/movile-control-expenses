@@ -1,4 +1,4 @@
-import { uuidHelper } from "src/shared/core/helpers/generators.helper";
+import { adapterUuidGenerator } from "src/shared/core/adapters/uuid/di/uuid.dependencies";
 
 import { DefaultCategoriesFactory } from "src/features/expenses/core/domain/factories/default-categories.factory";
 
@@ -22,7 +22,7 @@ import { SaveExpenseUseCase } from "src/features/expenses/core/application/use-c
 import { UpdateExpenseUseCase } from "src/features/expenses/core/application/use-cases/expenses/update-expense.use-case";
 
 //* Factories
-export const defaultCategoriesFactory = new DefaultCategoriesFactory(uuidHelper);
+export const defaultCategoriesFactory = new DefaultCategoriesFactory(adapterUuidGenerator);
 
 //* 1. Mappers
 const expenseMapper = new ExpenseMapperImpl();
@@ -30,7 +30,7 @@ const budgetMapper = new BudgetMapperImpl();
 const categoryMapper = new CategoryMapperImpl();
 
 //* 2. DataSources
-const expenseDataSource = new ExpenseDataSourceLocalStorage(expenseMapper, uuidHelper);
+const expenseDataSource = new ExpenseDataSourceLocalStorage(expenseMapper, adapterUuidGenerator);
 const budgetDataSource = new BudgetDataSourceLocalStorage(budgetMapper);
 const categoriesDataSource = new CategoryDataSourceLocalStorage(defaultCategoriesFactory, categoryMapper);
 
