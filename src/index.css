@@ -59,6 +59,9 @@
     --tracker-primary: var(--teal-400);
     --tracker-danger: var(--error);
     --tracker-trail: var(--teal-50);
+
+    /* Background Global */
+    --bg-body: #f4f9f8;
 }
 
 @theme {
@@ -72,4 +75,38 @@
     --color-border-main: var(--border-main);
     --color-bg-input: var(--bg-input);
     --color-bg-surface: var(--bg-surface);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        /* Invertimos y ajustamos contrastes para el modo oscuro */
+        --primary: var(--teal-400);
+        --primary-hover: var(--teal-300);
+        --primary-border: var(--teal-500);
+
+        --secondary: var(--teal-300);
+
+        --error: #f87171; /* Rojo más suave para fondos oscuros */
+
+        --text-main: #f8fafc;
+        --text-sub: var(--teal-100);
+
+        --border-main: var(--teal-800);
+
+        --bg-input: var(--teal-900);
+        --bg-surface: #0a1f24; /* Teal casi negro para las tarjetas */
+        --bg-body: #051316; /* Fondo principal aún más oscuro */
+
+        --tracker-primary: var(--teal-400);
+        --tracker-danger: var(--error);
+        --tracker-trail: var(--teal-900);
+    }
+}
+
+body {
+    background-color: var(--bg-body);
+    color: var(--text-main);
+    transition:
+        background-color 0.3s ease,
+        color 0.3s ease;
 }
