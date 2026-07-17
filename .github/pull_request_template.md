@@ -1,14 +1,17 @@
 ## 📝 Descripción
 <!-- Describe brevemente el propósito de este PR. ¿Qué problema resuelve o qué nueva funcionalidad aporta al sistema? -->
 
+## 🔗 Ticket Relacionado
+<!-- Reemplaza las 'XX' con el número del ticket que esta rama resuelve. -->
+<!-- (Usa el sub-ticket para ramas feat/fix, o la Épica si es el PR final de integración a develop). -->
+Closes #XX
 
-## 🔗 Épica o Contexto
+## 🌳 Épica o Develop
 <!-- ¿De qué rama épica se desprende esto? (Ej: epic/expenses) -->
 - **Épica:** 
 
 ## 🛠️ Tipo de Cambio
 <!-- Marca con una [x] las opciones que apliquen a este PR -->
-Mira loco, soy un crack acabo de:
 
 - [ ] ✨ Nueva funcionalidad (feat)
 - [ ] 🐛 Corrección de error (fix)

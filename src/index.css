@@ -5,12 +5,108 @@
 .swipeable-list-item__trailing-actions {
     @apply text-white text-lg uppercase font-bold;
 }
+
 .swipeable-list-item__leading-actions {
-    @apply bg-blue-600;
+    @apply bg-primary;
 }
+
 .swipeable-list-item__trailing-actions {
-    @apply bg-pink-600;
+    @apply bg-secondary;
 }
+
 .swipeable-list .swipe-action {
     @apply flex justify-center items-center;
+}
+
+:root {
+    /* Nueva paleta de colores base (Teal/Mint) */
+    --teal-900: #0c3c46;
+    --teal-800: #1a5862;
+    --teal-600: #1c8586;
+    --teal-500: #26a09b;
+    --teal-400: #39b8a2;
+    --teal-300: #52caa6;
+    --teal-200: #6cdab2;
+    --teal-100: #85e9cf;
+    --teal-50: #dde8e6;
+
+    /* Mapeo de Variables Semánticas (Recomendaciones de Diseño) */
+
+    /* Acciones Principales */
+    --primary: var(--teal-600);
+    --primary-hover: var(--teal-900);
+    --primary-border: var(--teal-400);
+
+    /* Acciones Secundarias (Usamos un tono vibrante de la paleta para reset/acciones alternas) */
+    --secondary: var(--teal-300);
+
+    /* Errores (Se recomienda mantener un tono rojo/rosado para semántica de peligro) */
+    --error: #ef4444;
+
+    /* Textos (Usamos los tonos más oscuros de la paleta para mejor contraste) */
+    --text-main: var(--teal-900);
+    --text-sub: var(--teal-800);
+
+    /* Bordes y Fondos */
+    --border-main: var(--teal-50);
+
+    /* Para fondos de inputs y tarjetas (surface) lo ideal en UI es blanco puro o un tono extremandamente claro
+       para asegurar que el texto sea legible. El tono #85e9cf es demasiado vibrante para ser fondo principal. */
+    --bg-input: #ffffff;
+    --bg-surface: #ffffff;
+
+    /* Tracker (Circular Progress) */
+    --tracker-primary: var(--teal-400);
+    --tracker-danger: var(--error);
+    --tracker-trail: var(--teal-50);
+
+    /* Background Global */
+    --bg-body: #f4f9f8;
+}
+
+@theme {
+    --color-primary: var(--primary);
+    --color-primary-hover: var(--primary-hover);
+    --color-primary-border: var(--primary-border);
+    --color-secondary: var(--secondary);
+    --color-error: var(--error);
+    --color-text-main: var(--text-main);
+    --color-text-sub: var(--text-sub);
+    --color-border-main: var(--border-main);
+    --color-bg-input: var(--bg-input);
+    --color-bg-surface: var(--bg-surface);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        /* Invertimos y ajustamos contrastes para el modo oscuro */
+        --primary: var(--teal-400);
+        --primary-hover: var(--teal-300);
+        --primary-border: var(--teal-500);
+
+        --secondary: var(--teal-300);
+
+        --error: #f87171; /* Rojo más suave para fondos oscuros */
+
+        --text-main: #f8fafc;
+        --text-sub: var(--teal-100);
+
+        --border-main: var(--teal-800);
+
+        --bg-input: var(--teal-900);
+        --bg-surface: #0a1f24; /* Teal casi negro para las tarjetas */
+        --bg-body: #051316; /* Fondo principal aún más oscuro */
+
+        --tracker-primary: var(--teal-400);
+        --tracker-danger: var(--error);
+        --tracker-trail: var(--teal-900);
+    }
+}
+
+body {
+    background-color: var(--bg-body);
+    color: var(--text-main);
+    transition:
+        background-color 0.3s ease,
+        color 0.3s ease;
 }

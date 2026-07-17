@@ -22,10 +22,10 @@ export default function BudgetTracker() {
                     <CircularProgressbar
                         value={percentage}
                         styles={buildStyles({
-                            pathColor: percentage > dangerThreshold ? "#DC2626" : "#3b82f6",
-                            trailColor: "#F5F5F5",
+                            pathColor: percentage > dangerThreshold ? "var(--tracker-danger)" : "var(--tracker-primary)",
+                            trailColor: "var(--tracker-trail)",
                             textSize: 8,
-                            textColor: percentage > dangerThreshold ? "#DC2626" : "#3b82f6",
+                            textColor: percentage > dangerThreshold ? "var(--tracker-danger)" : "var(--tracker-primary)",
                         })}
                         text={`${percentage}% Gastado`}
                     />
@@ -35,7 +35,7 @@ export default function BudgetTracker() {
             <div className="flex flex-col justify-center items-center gap-8">
                 <button
                     type="button"
-                    className="bg-pink-600 w-full p-2 text-white uppercase font-bold rounded-lg"
+                    className="bg-secondary w-full p-2 text-white uppercase font-bold rounded-lg"
                     onClick={handleResetApp}
                 >
                     Resetear App
