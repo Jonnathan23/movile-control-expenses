@@ -63,6 +63,8 @@ jobs:
           # Le decimos al robot que no obligue a poner un scope, 
           # permitiendo títulos como "feat: create new module"
           requireScope: false
+          # Esta expresión regular valida la estructura estándar pero permite hasta 100 caracteres en total
+          subjectPattern: ^(?=.{1,100}$)[a-z].+$
       - name: Architecture Lint (ls-lint)
         run: bun run ls-lint
 
