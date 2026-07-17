@@ -1,16 +1,16 @@
-config:
+module:config:
   - changed-files:
     - any-glob-to-any-file: 'src/config/**/*'
 
-shared:
+module:shared:
   - changed-files:
     - any-glob-to-any-file: 'src/shared/**/*'
 
-expenses:
+module:expenses:
   - changed-files:
     - any-glob-to-any-file: 'src/features/expenses/**/*'
 
-android:
+platform:android:
   - changed-files:
     - any-glob-to-any-file: 'android/**/*'
 
