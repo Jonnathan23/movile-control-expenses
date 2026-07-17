@@ -23,7 +23,7 @@ const commitlintConfiguration: UserConfig = {
             ],
         ],
         "scope-case": [2, "always", "kebab-case"],
-        "scope-empty": [1, "never"],
+        "scope-empty": [2, "never"],
 
         "subject-case": [2, "always", "lower-case"],
         "subject-empty": [2, "never"],

@@ -186,6 +186,66 @@ export default defineConfig([
             ],
         },
     },
+    {
+        files: ["**/domain/**/*.{ts,tsx}"],
+        rules: {
+            "no-restricted-imports": [
+                "error",
+                {
+                    patterns: [
+                        {
+                            group: ["**/infrastructure/**", "**/presentation/**", "**/di/**"],
+                            message: "El Domain no debe depender de Infrastructure, Presentation o DI.",
+                        },
+                        {
+                            group: ["../*", "./*", "..", "."],
+                            message: 'Las rutas relativas estan prohibidas. Utiliza rutas absolutas comenzando con "src/".',
+                        },
+                    ],
+                },
+            ],
+        },
+    },
+    {
+        files: ["**/application/**/*.{ts,tsx}"],
+        rules: {
+            "no-restricted-imports": [
+                "error",
+                {
+                    patterns: [
+                        {
+                            group: ["**/infrastructure/**", "**/presentation/**", "**/di/**"],
+                            message: "Application solo debe interactuar con el Domain, no con Infrastructure o Presentation.",
+                        },
+                        {
+                            group: ["../*", "./*", "..", "."],
+                            message: 'Las rutas relativas estan prohibidas. Utiliza rutas absolutas comenzando con "src/".',
+                        },
+                    ],
+                },
+            ],
+        },
+    },
+    {
+        files: ["**/infrastructure/**/*.{ts,tsx}"],
+        rules: {
+            "no-restricted-imports": [
+                "error",
+                {
+                    patterns: [
+                        {
+                            group: ["**/presentation/**", "**/di/**"],
+                            message: "Infrastructure no debe conocer la UI (Presentation) ni DI.",
+                        },
+                        {
+                            group: ["../*", "./*", "..", "."],
+                            message: 'Las rutas relativas estan prohibidas. Utiliza rutas absolutas comenzando con "src/".',
+                        },
+                    ],
+                },
+            ],
+        },
+    },
 
     prettierPluginRecommended,
 ]);

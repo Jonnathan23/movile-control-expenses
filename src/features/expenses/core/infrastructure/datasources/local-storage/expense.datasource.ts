@@ -1,4 +1,4 @@
-import type { UuidStrategy } from "src/shared/core/adapters/uuid/domain/interface/uuid-strategy.interface";
+import type { UUIDHelper } from "src/shared/core/helpers/generators.helper";
 
 import { ExpenseDataSource } from "src/features/expenses/core/domain/datasources/expense.datasource";
 import { ExpenseEntity } from "src/features/expenses/core/domain/entities/expense.entity";
@@ -13,7 +13,7 @@ export class ExpenseDataSourceLocalStorage implements ExpenseDataSource {
 
     public constructor(
         private readonly expenseMapper: ExpenseMapper,
-        private readonly generatorUUID: UuidStrategy,
+        private readonly generatorUUID: UUIDHelper,
     ) {}
 
     public async getExpenses(): Promise<ExpenseEntity[]> {
@@ -24,13 +24,7 @@ export class ExpenseDataSourceLocalStorage implements ExpenseDataSource {
 
     public async saveExpense(dto: CreateExpenseDto): Promise<ExpenseEntity> {
         const expenses = await this.getExpenses();
-        const newExpense = new ExpenseEntity(
-            this.generatorUUID.generateUuid(),
-            dto.expenseName,
-            dto.amount,
-            dto.category,
-            dto.date,
-        );
+        const newExpense = new ExpenseEntity(this.generatorUUID(), dto.expenseName, dto.amount, dto.category, dto.date);
 
         expenses.push(newExpense);
         localStorage.setItem(this.storageKey, JSON.stringify(expenses));
