@@ -1,5 +1,16 @@
 # Global
-* @Jonnathan23 @anthonymoya246@gmail.com
+* @Jonnathan23
+
+# Code Owners
+/android                 @Jonnathan23 @anthonymoya246@gmail.com
+/public                  @Jonnathan23 @anthonymoya246@gmail.com
+/src                     @Jonnathan23 @anthonymoya246@gmail.com
+/index.html              @Jonnathan23 @anthonymoya246@gmail.com
+/.agents                 @Jonnathan23 @anthonymoya246@gmail.com
+/.docs                   @Jonnathan23 @anthonymoya246@gmail.com
+/README.md               @Jonnathan23 @anthonymoya246@gmail.com
+/README_ES.md            @Jonnathan23 @anthonymoya246@gmail.com
+
 
 # Private
 /.github/                   @Jonnathan23
