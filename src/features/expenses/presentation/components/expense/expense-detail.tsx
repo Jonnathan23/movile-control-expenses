@@ -33,17 +33,15 @@ export default function ExpenseDetail({ expense }: ExpenseDetailProps) {
     return (
         <SwipeableList>
             <SwipeableListItem maxSwipe={1} leadingActions={leadeingActions()} trailingActions={trailingActions()}>
-                <div className="bg-white shadow-lg p-5 w-full border-b border-gray-200 flex gap-5 items-center">
+                <div className="bg-bg-surface shadow-lg p-5 w-full border-b border-border-main flex gap-5 items-center">
                     <div>
                         <img src={`/icono_${categoryInfo?.icon ?? "gastos"}.svg`} alt="icono gasto" className="w-20" />
                     </div>
 
                     <div className="flex-1 space-y-2">
-                        <p className="text-sm font-bold uppercase text-slate-500">
-                            {categoryInfo?.name ?? "Categoría eliminada"}
-                        </p>
+                        <p className="text-sm font-bold uppercase text-text-sub">{categoryInfo?.name ?? "Categoría eliminada"}</p>
                         <p>{expense.expenseName}</p>
-                        <p className="text-slate-600 text-sm">{dateFormatHelper(expense.date)}</p>
+                        <p className="text-text-main text-sm">{dateFormatHelper(expense.date)}</p>                        
                     </div>
 
                     <AmountDisplay amount={expense.amount} />
