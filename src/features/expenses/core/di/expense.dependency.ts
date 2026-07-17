@@ -2,9 +2,9 @@ import { uuidHelper } from "src/shared/core/helpers/generators.helper";
 
 import { DefaultCategoriesFactory } from "src/features/expenses/core/domain/factories/default-categories.factory";
 
-import { BudgetDataSourceLocalStorage } from "src/features/expenses/core/infrastructure/datasources/local-storage/budget.datasource";
-import { CategoryDataSourceLocalStorage } from "src/features/expenses/core/infrastructure/datasources/local-storage/categories.datasource";
-import { ExpenseDataSourceLocalStorage } from "src/features/expenses/core/infrastructure/datasources/local-storage/expense.datasource";
+import { BudgetDataSourcePreferences } from "src/features/expenses/core/infrastructure/datasources/preferences/budget.datasource";
+import { CategoryDataSourcePreferences } from "src/features/expenses/core/infrastructure/datasources/preferences/categories.datasource";
+import { ExpenseDataSourcePreferences } from "src/features/expenses/core/infrastructure/datasources/preferences/expense.datasource";
 import { BudgetMapperImpl } from "src/features/expenses/core/infrastructure/mappers/budget.mapper";
 import { CategoryMapperImpl } from "src/features/expenses/core/infrastructure/mappers/category.mapper";
 import { ExpenseMapperImpl } from "src/features/expenses/core/infrastructure/mappers/expense.mapper";
@@ -30,9 +30,9 @@ const budgetMapper = new BudgetMapperImpl();
 const categoryMapper = new CategoryMapperImpl();
 
 //* 2. DataSources
-const expenseDataSource = new ExpenseDataSourceLocalStorage(expenseMapper, uuidHelper);
-const budgetDataSource = new BudgetDataSourceLocalStorage(budgetMapper);
-const categoriesDataSource = new CategoryDataSourceLocalStorage(defaultCategoriesFactory, categoryMapper);
+const expenseDataSource = new ExpenseDataSourcePreferences(expenseMapper, uuidHelper);
+const budgetDataSource = new BudgetDataSourcePreferences(budgetMapper);
+const categoriesDataSource = new CategoryDataSourcePreferences(defaultCategoriesFactory, categoryMapper);
 
 //* 3. Repositories
 const expenseRepository = new ExpenseRepositoryImpl(expenseDataSource);

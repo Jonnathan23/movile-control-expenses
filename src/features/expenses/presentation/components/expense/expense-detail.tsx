@@ -41,7 +41,7 @@ export default function ExpenseDetail({ expense }: ExpenseDetailProps) {
                     <div className="flex-1 space-y-2">
                         <p className="text-sm font-bold uppercase text-text-sub">{categoryInfo?.name ?? "Categoría eliminada"}</p>
                         <p>{expense.expenseName}</p>
-                        <p className="text-text-main text-sm">{dateFormatHelper(expense.date)}</p>                        
+                        <p className="text-text-main text-sm">{dateFormatHelper(expense.date)}</p>
                     </div>
 
                     <AmountDisplay amount={expense.amount} />
