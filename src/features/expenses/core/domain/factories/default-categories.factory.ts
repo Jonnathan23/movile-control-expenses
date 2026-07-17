@@ -1,19 +1,19 @@
-import type { UuidStrategy } from "src/shared/core/adapters/uuid/domain/interface/uuid-strategy.interface";
+import type { UUIDHelper } from "src/shared/core/helpers/generators.helper";
 
 import { CategoryEntity } from "src/features/expenses/core/domain/entities/category.entity";
 
 export class DefaultCategoriesFactory {
-    public constructor(private readonly uuidGenerator: UuidStrategy) {}
+    public constructor(private readonly uuidGenerator: UUIDHelper) {}
 
     public create(): CategoryEntity[] {
         return [
-            new CategoryEntity(this.uuidGenerator.generateUuid(), "Ahorro", "ahorro"),
-            new CategoryEntity(this.uuidGenerator.generateUuid(), "Comida", "comida"),
-            new CategoryEntity(this.uuidGenerator.generateUuid(), "Casa", "casa"),
-            new CategoryEntity(this.uuidGenerator.generateUuid(), "Gastos Varios", "gastos"),
-            new CategoryEntity(this.uuidGenerator.generateUuid(), "Ocio", "ocio"),
-            new CategoryEntity(this.uuidGenerator.generateUuid(), "Salud", "salud"),
-            new CategoryEntity(this.uuidGenerator.generateUuid(), "Suscripciones", "suscripciones"),
+            new CategoryEntity(this.uuidGenerator(), "Ahorro", "ahorro"),
+            new CategoryEntity(this.uuidGenerator(), "Comida", "comida"),
+            new CategoryEntity(this.uuidGenerator(), "Casa", "casa"),
+            new CategoryEntity(this.uuidGenerator(), "Gastos Varios", "gastos"),
+            new CategoryEntity(this.uuidGenerator(), "Ocio", "ocio"),
+            new CategoryEntity(this.uuidGenerator(), "Salud", "salud"),
+            new CategoryEntity(this.uuidGenerator(), "Suscripciones", "suscripciones"),
         ];
     }
 }

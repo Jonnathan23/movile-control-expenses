@@ -63,11 +63,18 @@ jobs:
           # Le decimos al robot que no obligue a poner un scope, 
           # permitiendo títulos como "feat: create new module"
           requireScope: false
+          # Esta expresión regular valida la estructura estándar pero permite hasta 100 caracteres en total
+          subjectPattern: ^(?=.{1,100}$)[a-z].+$
       - name: Architecture Lint (ls-lint)
         run: bun run ls-lint
 
       - name: Code Linting (ESLint)
         run: bun run lint
+
+      - name: Dead Code & Dependency Analysis (Knip)
+        # Solo se ejecuta si el PR va dirigido a develop o production
+        if: github.base_ref == 'develop' || github.base_ref == 'production'
+        run: bun run lint:knip
 
       # Etiquetado Automático de Carpetas
       - name: Add Folder Labels

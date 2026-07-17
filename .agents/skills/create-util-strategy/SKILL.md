@@ -16,8 +16,11 @@ adapters/
       │   ├── context/
       │   │   └── [feature].context.ts
       │   └── interface/
-      │       └── [feature]-strategy.interface.ts
+      │       ├── [feature]-strategy.interface.ts
+      │       └── [feature]-generator.interface.ts
       └── infrastructure/
+          ├── generator/
+          │   └── [feature].generator.ts
           └── strategies/
               └── [implementation]-[feature].strategy.ts
 ```
@@ -35,9 +38,22 @@ export interface FeatureStrategy {
 }
 ```
 
-### 2. Crear el Contexto (Domain)
+### 2. Definir la Interfaz del Generador (Domain)
 
-El contexto mantiene una referencia a la estrategia y delega la ejecución. **Nota importante:** En el constructor se debe utilizar el método `setStrategy` para la asignación.
+Crea la interfaz que define el contrato para el generador, el cual debe extender la estrategia e incluir métodos adicionales como cambiar la estrategia en tiempo de ejecución.
+
+```typescript
+// src/shared/core/adapters/[feature]/domain/interface/[feature]-generator.interface.ts
+import type { FeatureStrategy } from "./[feature]-strategy.interface";
+
+export interface FeatureGenerator extends FeatureStrategy {
+    changeStrategy(strategy: FeatureStrategy): void;
+}
+```
+
+### 3. Crear el Contexto (Domain)
+
+El contexto mantiene una referencia a la estrategia y delega la ejecución. **Nota importante:** En el constructor se debe utilizar el método de seteo (ej. `setStrategy`) para la asignación.
 
 ```typescript
 // src/shared/core/adapters/[feature]/domain/context/[feature].context.ts
@@ -60,7 +76,7 @@ export class FeatureContext implements FeatureStrategy {
 }
 ```
 
-### 3. Implementar la Estrategia Concreta (Infrastructure)
+### 4. Implementar la Estrategia Concreta (Infrastructure)
 
 Crea las implementaciones reales (usando librerías específicas o código nativo) en `infrastructure/strategies/`.
 
@@ -76,36 +92,71 @@ export class CustomFeatureStrategy implements FeatureStrategy {
 }
 ```
 
-### 4. Configurar la Inyección de Dependencias (DI)
+### 5. Crear el Generador Singleton (Infrastructure)
 
-Instancia la estrategia, envuélvela en el contexto y expórtala en la capa de `di/`.
+Crea una clase Singleton que actúe como proxy hacia el contexto. Ésta será la única forma de acceder a las funcionalidades del feature desde otras partes del sistema, garantizando un punto de control centralizado y un patrón Singleton por cada contexto.
+
+```typescript
+// src/shared/core/adapters/[feature]/infrastructure/generator/[feature].generator.ts
+import type { FeatureStrategy } from "../../domain/interface/[feature]-strategy.interface";
+import type { FeatureGenerator } from "../../domain/interface/[feature]-generator.interface";
+import { FeatureContext } from "../../domain/context/[feature].context";
+import { CustomFeatureStrategy } from "../strategies/custom-[feature].strategy";
+
+export class FeatureGeneratorSingleton implements FeatureGenerator {
+    private static instance: FeatureGeneratorSingleton;
+    private readonly featureContext: FeatureContext;
+
+    private constructor(strategy: FeatureStrategy) {
+        this.featureContext = new FeatureContext(strategy);
+    }
+
+    public static getInstance(): FeatureGeneratorSingleton {
+        if (!FeatureGeneratorSingleton.instance) {
+            const defaultStrategy = new CustomFeatureStrategy();
+            FeatureGeneratorSingleton.instance = new FeatureGeneratorSingleton(defaultStrategy);
+        }
+        return FeatureGeneratorSingleton.instance;
+    }
+
+    public executeMethod(param: string): string {
+        return this.featureContext.executeMethod(param);
+    }
+
+    public changeStrategy(strategy: FeatureStrategy): void {
+        this.featureContext.setStrategy(strategy);
+    }
+}
+```
+
+### 6. Configurar la Inyección de Dependencias (DI)
+
+Instancia el generador y expórtalo en la capa de `di/`. No olvides tiparlo explícitamente con su interfaz de dominio para no filtrar tipos de la infraestructura.
 
 ```typescript
 // src/shared/core/adapters/[feature]/di/[feature].dependencies.ts
-import { FeatureContext } from "../domain/context/[feature].context";
-import type { FeatureStrategy } from "../domain/interface/[feature]-strategy.interface";
-import { CustomFeatureStrategy } from "../infrastructure/strategies/custom-[feature].strategy";
+import type { FeatureGenerator } from "../domain/interface/[feature]-generator.interface";
+import { FeatureGeneratorSingleton } from "../infrastructure/generator/[feature].generator";
 
-const customStrategy = new CustomFeatureStrategy();
-const featureContext = new FeatureContext(customStrategy);
-
-export const adapterFeature: FeatureStrategy = featureContext;
+export const adapterFeatureGenerator: FeatureGenerator = FeatureGeneratorSingleton.getInstance();
 ```
 
-### 5. Exponer Globalmente mediante un Helper
+### 7. Exponer Globalmente mediante un Helper
 
-Finalmente, para facilitar su uso en toda la aplicación (componentes, casos de uso, etc.), crea un helper en `src/shared/core/helpers/` que re-exporte la instancia configurada.
+Finalmente, para facilitar su uso en la capa de presentación u otros lugares que solo requieran invocar funciones, crea un helper en `src/shared/core/helpers/` que encapsule las llamadas al método.
 
 ```typescript
 // src/shared/core/helpers/[feature].helper.ts
-import { adapterFeature } from "src/shared/core/adapters/[feature]/di/[feature].dependencies";
-import type { FeatureStrategy } from "src/shared/core/adapters/[feature]/domain/interface/[feature]-strategy.interface";
+import { adapterFeatureGenerator } from "src/shared/core/adapters/[feature]/di/[feature].dependencies";
 
-export const globalFeatureHelper: FeatureStrategy = adapterFeature;
+export const featureHelper = (param: string): string => {
+    return adapterFeatureGenerator.executeMethod(param);
+};
 ```
 
 ## Beneficios
 
 - **Desacoplamiento:** Los componentes no saben qué librería se utiliza internamente.
-- **Flexibilidad:** Cambiar la implementación (ej. de una librería A a una librería B) solo requiere crear una nueva estrategia concreta e inyectarla en el archivo de dependencias.
-- **Mantenibilidad:** Sigue una arquitectura limpia y estandarizada en todo el proyecto (como se hace con generadores UUID, formateo de divisas y fechas, etc).
+- **Flexibilidad:** Cambiar la implementación (ej. de una librería A a una librería B) solo requiere crear una nueva estrategia concreta e inyectarla por defecto en el Singleton.
+- **Instancia Única:** Garantiza a través del patrón Singleton que solo haya una instancia del contexto a lo largo de toda la aplicación.
+- **Mantenibilidad:** Sigue una arquitectura limpia y estandarizada en todo el proyecto.

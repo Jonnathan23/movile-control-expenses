@@ -1,16 +1,8 @@
-import { CurrencyFormatContext } from "src/shared/core/adapters/format/domain/context/currency-format.context";
-import { DateFormatContext } from "src/shared/core/adapters/format/domain/context/date-format.context";
-import type { CurrencyFormatStrategy } from "src/shared/core/adapters/format/domain/interface/currency-format-strategy.interface";
-import type { DateFormatStrategy } from "src/shared/core/adapters/format/domain/interface/date-format-strategy.interface";
+import type { CurrencyFormatGenerator } from "src/shared/core/adapters/format/domain/interface/currency-format-generator.interface";
+import type { DateFormatGenerator } from "src/shared/core/adapters/format/domain/interface/date-format-generator.interface";
 
-import { IntlCurrencyFormatStrategy } from "src/shared/core/adapters/format/infrastructure/strategies/intl-currency-format.strategy";
-import { IntlDateFormatStrategy } from "src/shared/core/adapters/format/infrastructure/strategies/intl-date-format.strategy";
+import { CurrencyFormatGeneratorSingleton } from "src/shared/core/adapters/format/infrastructure/generator/currency-format.generator";
+import { DateFormatGeneratorSingleton } from "src/shared/core/adapters/format/infrastructure/generator/date-format.generator";
 
-const intlCurrencyFormatStrategy = new IntlCurrencyFormatStrategy();
-const currencyFormatContext = new CurrencyFormatContext(intlCurrencyFormatStrategy);
-
-const intlDateFormatStrategy = new IntlDateFormatStrategy();
-const dateFormatContext = new DateFormatContext(intlDateFormatStrategy);
-
-export const adapterCurrencyFormatter: CurrencyFormatStrategy = currencyFormatContext;
-export const adapterDateFormatter: DateFormatStrategy = dateFormatContext;
+export const adapterCurrencyFormatter: CurrencyFormatGenerator = CurrencyFormatGeneratorSingleton.getInstance();
+export const adapterDateFormatter: DateFormatGenerator = DateFormatGeneratorSingleton.getInstance();
