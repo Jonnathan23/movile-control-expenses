@@ -1,10 +1,8 @@
 import { uuidHelper } from "src/shared/core/helpers/generators.helper";
 
-import { DefaultCategoriesFactory } from "src/features/expenses/core/domain/factories/default-categories.factory";
+import { DefaultCategoriesFactoryImpl } from "src/features/expenses/core/domain/factories/default-categories.factory";
 
-import { BudgetDataSourcePreferences } from "src/features/expenses/core/infrastructure/datasources/preferences/budget.datasource";
-import { CategoryDataSourcePreferences } from "src/features/expenses/core/infrastructure/datasources/preferences/categories.datasource";
-import { ExpenseDataSourcePreferences } from "src/features/expenses/core/infrastructure/datasources/preferences/expense.datasource";
+import { DataSourceFactoryImpl } from "src/features/expenses/core/infrastructure/factories/create-all-datasource.factory";
 import { BudgetMapperImpl } from "src/features/expenses/core/infrastructure/mappers/budget.mapper";
 import { CategoryMapperImpl } from "src/features/expenses/core/infrastructure/mappers/category.mapper";
 import { ExpenseMapperImpl } from "src/features/expenses/core/infrastructure/mappers/expense.mapper";
@@ -22,7 +20,7 @@ import { SaveExpenseUseCase } from "src/features/expenses/core/application/use-c
 import { UpdateExpenseUseCase } from "src/features/expenses/core/application/use-cases/expenses/update-expense.use-case";
 
 //* Factories
-export const defaultCategoriesFactory = new DefaultCategoriesFactory(uuidHelper);
+export const defaultCategoriesFactory = new DefaultCategoriesFactoryImpl(uuidHelper);
 
 //* 1. Mappers
 const expenseMapper = new ExpenseMapperImpl();
@@ -30,9 +28,17 @@ const budgetMapper = new BudgetMapperImpl();
 const categoryMapper = new CategoryMapperImpl();
 
 //* 2. DataSources
-const expenseDataSource = new ExpenseDataSourcePreferences(expenseMapper, uuidHelper);
-const budgetDataSource = new BudgetDataSourcePreferences(budgetMapper);
-const categoriesDataSource = new CategoryDataSourcePreferences(defaultCategoriesFactory, categoryMapper);
+const dataSourceFactory = new DataSourceFactoryImpl(
+    expenseMapper,
+    budgetMapper,
+    categoryMapper,
+    defaultCategoriesFactory,
+    uuidHelper,
+);
+
+const expenseDataSource = dataSourceFactory.createExpenseDataSource();
+const budgetDataSource = dataSourceFactory.createBudgetDataSource();
+const categoriesDataSource = dataSourceFactory.createCategoryDataSource();
 
 //* 3. Repositories
 const expenseRepository = new ExpenseRepositoryImpl(expenseDataSource);
