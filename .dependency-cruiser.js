@@ -6,10 +6,10 @@ const dependencyCruiserConfiguration = {
             name: "domain-must-be-pure",
             severity: "error",
             comment: "El Domain no debe depender de ninguna capa externa, excepto los dtos de application.",
-            from: { path: "domain" },
+            from: { path: "(^|/)domain($|/)" },
             to: {
-                path: "(application|infrastructure|presentation|di)",
-                pathNot: "application/.*dtos",
+                path: "(^|/)(application|infrastructure|presentation|di)($|/)",
+                pathNot: "(^|/)application/.*dtos",
             },
         },
 
@@ -18,8 +18,8 @@ const dependencyCruiserConfiguration = {
             name: "application-cannot-depend-on-infrastructure",
             severity: "error",
             comment: "Application (Casos de uso) solo debe interactuar con el Domain.",
-            from: { path: "application" },
-            to: { path: "(infrastructure|presentation|di)" },
+            from: { path: "(^|/)application($|/)" },
+            to: { path: "(^|/)(infrastructure|presentation|di)($|/)" },
         },
 
         /* REGLA 3: Aislamiento de la Infraestructura */
@@ -27,10 +27,10 @@ const dependencyCruiserConfiguration = {
             name: "infrastructure-cannot-depend-on-application",
             severity: "error",
             comment: "Infrastructure no debe conocer los casos de uso ni la UI, excepto los dtos de application.",
-            from: { path: "infrastructure" },
+            from: { path: "(^|/)infrastructure($|/)" },
             to: {
-                path: "(application|presentation|di)",
-                pathNot: "application/.*dtos",
+                path: "(^|/)(application|presentation|di)($|/)",
+                pathNot: "(^|/)application/.*dtos",
             },
         },
 
@@ -39,8 +39,8 @@ const dependencyCruiserConfiguration = {
             name: "domain-cannot-depend-on-external-modules",
             severity: "warn", // Lo dejamos en warn por si necesitas alguna utilidad nativa
             comment: "El Domain debe ser agnóstico a librerías de terceros.",
-            from: { path: "domain" },
-            to: { path: "node_modules" },
+            from: { path: "(^|/)domain($|/)" },
+            to: { path: "(^|/)node_modules($|/)" },
         },
     ],
     options: {

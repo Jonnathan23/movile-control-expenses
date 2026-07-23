@@ -2,7 +2,11 @@ import type { UUIDHelper } from "src/shared/core/helpers/generators.helper";
 
 import { CategoryEntity } from "src/features/expenses/core/domain/entities/category.entity";
 
-export class DefaultCategoriesFactory {
+export interface DefaultCategoriesFactory {
+    create(): CategoryEntity[];
+}
+
+export class DefaultCategoriesFactoryImpl implements DefaultCategoriesFactory {
     public constructor(private readonly uuidGenerator: UUIDHelper) {}
 
     public create(): CategoryEntity[] {

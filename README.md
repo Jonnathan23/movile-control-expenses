@@ -98,7 +98,7 @@ bun run lint
 
 ## 📱 Soporte para plataformas móviles
 
-El proyecto utiliza Capacitor para integrarse nativamente en dispositivos Android.
+El proyecto utiliza Capacitor para integrarse nativamente en dispositivos Android. Por lo que si deseas probar la aplicacion desde el celular es necesario tener instalado [Android Studio](https://developer.android.com/studio) en tu sistema y Java `openjdk 21.0.11`
 
 ### Crear conexion con el movil (fisico en Linux)
 
