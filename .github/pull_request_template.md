@@ -32,5 +32,6 @@ Closes #XX
 - [ ] He utilizado los patrones de diseño acordados (ej. Patrón Strategy) donde era necesario.
 - [ ] Ejecuté localmente `bun run lint` y mi código pasó sin errores.
 - [ ] Si agregué paquetes nuevos, utilicé `pnpm` para mantener sincronizado el lockfile.
+- [ ] Mantengo la documentacion actualizada 
 - [ ] Mi rama sigue el estándar de nombres (`tipo/modulo-funcionalidad`).
 
