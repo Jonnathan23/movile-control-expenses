@@ -1,5 +1,6 @@
 localBranchName=$(git rev-parse --abbrev-ref HEAD)
-validBranchRegex="^(production|develop|epic\/[a-z0-9-]+|(feat|fix|docs|style|refactor|chore)\/[a-z0-9-]+)$"
+
+validBranchRegex="^(production|develop|epic\/[a-z0-9-]+-[0-9]+|(feat|fix|docs|style|refactor|chore)\/[a-z0-9-]+(-[0-9]+)?)$"
 
 # Ignorar si estamos en un estado de 'detached HEAD'
 if [ "$localBranchName" = "HEAD" ]; then
@@ -7,9 +8,13 @@ if [ "$localBranchName" = "HEAD" ]; then
 fi
 
 if ! echo "$localBranchName" | grep -Eq "$validBranchRegex"; then
-    echo "Error: Nombre de rama inválido '$localBranchName'"
+    echo "======================================================="H
+    echo "🚨 Error: Nombre de rama inválido '$localBranchName'"
     echo "Los nombres de las ramas deben seguir el estándar:"
-    echo "  - epic/nombre-del-modulo[-ticket]"
-    echo "  - type/modulo-funcionalidad[-ticket] (ejemplo: feat/admin-desk-login-123)"
+    echo "  - Épicas (Ticket OBLIGATORIO): epic/modulo-funcionalidad-ticket"
+    echo "    (ejemplo: epic/admin-desk-12)"
+    echo "  - Tareas (Ticket OPCIONAL): type/modulo-funcionalidad[-ticket]"
+    echo "    (ejemplo: feat/admin-desk-login o feat/admin-desk-login-12)"
+    echo "======================================================="
     exit 1
 fi
