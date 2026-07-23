@@ -20,10 +20,10 @@ Antes de comenzar:
 ```text
 production
 └── develop
-    └── epic/<module>
-        ├── feat/<module>-feature
-        ├── fix/<module>-bug
-        ├── refactor/<module>-task
+    └── epic/<modulo>-<funcionalidad>-<ticket>
+        ├── feat/<modulo>-<funcionalidad>[-ticket]
+        ├── fix/<modulo>-<bug>[-ticket]
+        ├── refactor/<modulo>-<tarea>[-ticket]
         └── ...
 ```
 
@@ -40,32 +40,33 @@ production
 - Rama principal de integración.
 - Desde aquí nacen todas las ramas épicas.
 
-## Ramas épicas
+## Ramas épicas (Ticket OBLIGATORIO)
 
 Formato:
 
 ```text
-epic/<module>
+epic/<modulo>-<funcionalidad>-<ticket>
 ```
 
 Ejemplo:
 
 ```text
-epic/expenses
+epic/admin-desk-12
 ```
 
-## Ramas de trabajo
+## Ramas de trabajo (Ticket OPCIONAL)
 
 Formato:
 
 ```text
-<type>/<module>-short-description
+<type>/<modulo>-<funcionalidad>[-ticket]
 ```
 
 Ejemplos:
 
 ```text
 feat/expenses-budget-form
+feat/admin-desk-login-12
 fix/shared-currency-format
 refactor/config-query-client
 ```
@@ -144,14 +145,14 @@ El tipo es obligatorio (`feat`, `fix`, `chore`, etc.) y el scope es opcional si 
 1.  Actualizar la rama épica.
 
 ```bash
-git checkout epic/expenses
-git pull origin epic/expenses
+git checkout epic/expenses-dashboard-40
+git pull origin epic/expenses-dashboard-40
 ```
 
 2.  Crear una rama nueva.
 
 ```bash
-git checkout -b feat/expenses-modal
+git checkout -b feat/expenses-modal-40
 ```
 
 3.  Desarrollar la funcionalidad.
@@ -165,7 +166,7 @@ git commit -m "feat(expenses): add expense modal"
 5.  Subir la rama.
 
 ```bash
-git push origin feat/expenses-modal
+git push origin feat/expenses-modal-40
 ```
 
 6.  Abrir un Pull Request hacia la rama épica correspondiente.
@@ -198,20 +199,20 @@ git push origin feat/expenses-modal
 git checkout develop
 git pull origin develop
 
-git checkout -b epic/expenses
-git push -u origin epic/expenses
+git checkout -b epic/expenses-dashboard-40
+git push -u origin epic/expenses-dashboard-40
 
-git checkout -b feat/expenses-budget-form
+git checkout -b feat/expenses-budget-form-40
 
 # desarrollar...
 
 git add .
 git commit -m "feat(expenses): create budget form"
 
-git push origin feat/expenses-budget-form
+git push origin feat/expenses-budget-form-40
 
 # abrir Pull Request:
-# feat/expenses-budget-form -> epic/expenses
+# feat/expenses-budget-form-40 -> epic/expenses-dashboard-40
 ```
 
 Gracias por ayudar a mantener el proyecto limpio, consistente y fácil de
