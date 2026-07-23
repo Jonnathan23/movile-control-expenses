@@ -1,0 +1,119 @@
+# Arquitectura del Proyecto: Clean Architecture
+
+Este proyecto está construido siguiendo los principios de **Clean Architecture** y una organización modular orientada a características (Feature-Sliced Design / Screaming Architecture). El objetivo es separar las responsabilidades, mantener el dominio aislado de las herramientas externas (como React, LocalStorage, etc.) y facilitar la escalabilidad y el testing.
+
+## Estructura General
+
+El código fuente (`src/`) se divide principalmente en dos grandes bloques:
+
+- **`features/`**: Contiene los distintos módulos o características de la aplicación (ej. `budget`). Cada característica está aislada y estructurada en capas siguiendo Clean Architecture.
+- **`shared/`**: Contiene código compartido, utilidades transversales, adaptadores y componentes UI genéricos que pueden ser utilizados por cualquier característica.
+
+---
+
+## Estructura de una Característica (`features/[nombre-feature]/`)
+
+Cada característica se divide internamente en dos carpetas principales (`core` y `ui`), separando de forma estricta la lógica agnóstica de negocio y la interfaz de usuario (tal cual como está estructurada la feature de expenses):
+
+### A. `core/` (Lógica e Infraestructura)
+Contiene las capas internas (Dominio, Aplicación, Infraestructura y DI). Esta carpeta no debe tener ninguna dependencia de React ni de herramientas de UI.
+
+#### 1. Dominio (`domain/`)
+Es el corazón de la aplicación. Contiene la lógica de negocio pura.
+- **`entities/`**: Modelos de negocio (ej. `budget.entity.ts`, `expense.entity.ts`).
+- **`repositories/`**: Interfaces que definen los contratos para acceder y guardar datos de las entidades.
+- **`datasources/`**: Interfaces que definen los contratos para las fuentes de datos (origen de los datos).
+- **`factories/`**: Clases o funciones para crear instancias complejas de dominio.
+
+#### 2. Aplicación (`application/`)
+Contiene los casos de uso (Use Cases) de la aplicación. Orquestan el flujo de datos hacia y desde las entidades, utilizando los repositorios.
+- **`use-cases/`**: Clases o funciones que representan una acción específica que el usuario puede realizar (ej. `get-budget.use-case.ts`, `save-expense.use-case.ts`). Dependen de las interfaces del dominio, no de sus implementaciones.
+
+#### 3. Infraestructura (`infrastructure/`)
+Contiene las implementaciones concretas de las interfaces definidas en la capa de Dominio. Es la capa que interactúa con el "mundo exterior" (APIs, LocalStorage, bases de datos).
+- **`datasources/`**: Implementaciones concretas de obtención de datos (ej. usando `local-storage` o `preferences`).
+- **`repositories/`**: Implementaciones concretas de los repositorios. Usualmente toman un datasource y mapean los datos al dominio.
+- **`mappers/`**: Clases o funciones encargadas de transformar los datos de un formato externo (DTO o JSON de la base de datos) a Entidades de dominio.
+- **`factories/`**: Factories para crear instancias de la infraestructura (ej. `create-all-datasource.factory.ts`).
+
+#### 4. Inyección de Dependencias (`di/`)
+- Contiene los archivos (ej. `expense.dependency.ts`) encargados de instanciar las dependencias concretas de infraestructura y pasárselas a los casos de uso, preparándolas para ser consumidas por la UI.
+
+### B. `ui/` (Presentación)
+Es la capa de interfaz de usuario (React) orientada a esta característica en particular.
+
+#### 1. Presentación (`presentation/`)
+- **`components/`**: Componentes visuales organizados por sub-dominio (ej. `budget`, `expense`).
+- **`hooks/`**: Custom hooks de React para manejar la lógica de estado y conectar la UI con los casos de uso de la aplicación que provienen de la capa `core` (ej. `use-budget-form.hook.ts`, `get-expenses.hook.ts`). Aquí se suele integrar TanStack Query.
+- **`context/` & `provider/`**: Manejo de estado global específico de la característica.
+- **`reducers/`**: Funciones para manejar estados complejos locales o de contexto.
+
+---
+
+## Módulo Compartido (`shared/`)
+
+Diseñado para contener elementos reutilizables que no pertenecen a una característica específica.
+
+### 1. Core (`core/`)
+- **`adapters/`**: Implementaciones de librerías de terceros envueltas en interfaces propias. Frecuentemente utiliza el patrón **Strategy** y **Context** para desacoplar implementaciones (ej. formateo de moneda con `Intl` y generación de UUIDs).
+- **`errors/`**: Clases de errores personalizados y enumeraciones genéricas de la aplicación.
+- **`helpers/`**: Funciones utilitarias transversales.
+- **`interfaces/` & `types/`**: Definiciones de tipos globales.
+
+### 2. UI (`ui/`)
+- **`presentation/components/`**: Componentes visuales genéricos y agnósticos al negocio (ej. botones genéricos, modales, `error-message.tsx`).
+
+## Reglas Clave
+
+- **Regla de Dependencia**: El código en las capas internas no debe conocer nada sobre las capas externas. El dominio no sabe nada de React ni de LocalStorage.
+- **Screaming Architecture**: Al ver la carpeta `features/`, el desarrollador debe saber inmediatamente de qué trata la aplicación (Gastos, Presupuesto, Categorías), en lugar de ver primero un montón de carpetas técnicas (`controllers/`, `views/`, etc.).
+- **Desacoplamiento con Patrones**: El uso intensivo de abstracciones e Inyección de Dependencias, así como patrones como `Strategy` en adaptadores externos (como se ve en `shared/core/adapters`), garantiza que cualquier herramienta pueda ser reemplazada en el futuro con un impacto mínimo o nulo en el código de negocio.
+
+---
+
+## Diagrama de Arquitectura
+
+El siguiente gráfico ilustra la regla de dependencia (las flechas indican "depende de"):
+
+```mermaid
+graph TD
+    %% Las flechas indican qué capa conoce/depende de cuál otra
+
+    subgraph Feature [features / nombre-feature]
+        direction TB
+        
+        subgraph UI [ui/]
+            P["Presentación<br/>(React, Components, Hooks)"]
+        end
+        
+        subgraph CORE [core/]
+            DI["Inyección de Dependencias<br/>(di/)"]
+            INFRA["Infraestructura<br/>(Local Storage, Mappers, Repos)"]
+            APP["Aplicación<br/>(Casos de Uso)"]
+            DOM["Dominio<br/>(Entidades, Interfaces)"]
+            
+            INFRA --> DOM
+            APP --> DOM
+            DI -. "inyecta en" .-> INFRA
+            DI -. "inyecta en" .-> APP
+        end
+        
+        P --> APP
+        P -. "consume de" .-> DI
+    end
+
+    subgraph Shared [shared/]
+        S_CORE["core/ (Adapters, Helpers)"]
+        S_UI["ui/ (Generic Components)"]
+    end
+
+    Feature --> Shared
+
+    classDef core fill:#e3f2fd,stroke:#1976d2,stroke-width:2px,color:#000;
+    classDef ui fill:#fce4ec,stroke:#c2185b,stroke-width:2px,color:#000;
+    classDef domain fill:#c8e6c9,stroke:#388e3c,stroke-width:2px,color:#000;
+    
+    class UI ui;
+    class CORE core;
+    class DOM domain;
+```
