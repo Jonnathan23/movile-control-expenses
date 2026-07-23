@@ -23,32 +23,35 @@ de ramas y mensajes de commits.
 
 Se utiliza **kebab-case** (minúsculas y palabras separadas por guiones).
 
-#### Ramas Épicas (`epic/<modulo>`)
+#### Ramas Épicas (`epic/<modulo>-<funcionalidad>-<ticket>`)
 
 - Nacen desde `develop`.
 - Agrupan múltiples tareas de un mismo módulo.
+- **El ticket es OBLIGATORIO.**
 
 **Ejemplo:**
 
 ```text
-epic/expenses
+epic/admin-desk-12
 ```
 
-#### Ramas de Tareas (`<tipo>/<modulo>-<funcionalidad>`)
+#### Ramas de Tareas (`<tipo>/<modulo>-<funcionalidad>[-ticket]`)
 
 - Nacen desde una rama épica.
 - Se fusionan nuevamente a la rama épica mediante un Pull Request.
+- **El ticket es OPCIONAL.**
 
 **Formato:**
 
 ```text
-tipo/modulo-breve-descripcion
+tipo/modulo-breve-descripcion[-ticket]
 ```
 
 **Ejemplos:**
 
 ```text
 feat/expenses-budget-form
+feat/admin-desk-login-12
 fix/shared-currency-format
 refactor/config-query-client
 ```
@@ -160,19 +163,19 @@ El título del PR debe resumir el valor o la característica principal que se es
 1.  Cambiar a la rama épica correspondiente.
 
 ```bash
-git checkout epic/expenses
+git checkout epic/expenses-dashboard-40
 ```
 
 2.  Actualizar la rama.
 
 ```bash
-git pull origin epic/expenses
+git pull origin epic/expenses-dashboard-40
 ```
 
 3.  Crear una nueva rama de tarea.
 
 ```bash
-git checkout -b feat/expenses-modal
+git checkout -b feat/expenses-modal-40
 ```
 
 4.  Realizar los cambios y crear el commit.
@@ -184,11 +187,11 @@ git commit -m "feat(expenses): add new expense modal"
 5.  Subir la rama al repositorio remoto.
 
 ```bash
-git push origin feat/expenses-modal
+git push origin feat/expenses-modal-40
 ```
 
 6.  Abrir un **Pull Request** hacia la rama:
 
 ```text
-epic/expenses
+epic/expenses-dashboard-40
 ```
