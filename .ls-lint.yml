@@ -36,6 +36,8 @@ ls:
   # Shared & Others
   "src/**/helpers/**":
     .ts: regex:^[a-z0-9-]+.helper$
+  "src/**/enums/**":
+    .ts: regex:^[a-z0-9-]+.enum$
   "src/**/utils/**":
     .ts: regex:^[a-z0-9-]+.util$
   "src/**/configs/**":

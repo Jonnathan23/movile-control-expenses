@@ -72,6 +72,14 @@ export default defineConfig([
                 },
             ],
 
+            "no-restricted-syntax": [
+                "error",
+                {
+                    selector: "TSEnumDeclaration",
+                    message: "No utilices el enum nativo. Usa un objeto (POJO) con 'as const' en su lugar.",
+                },
+            ],
+
             "@typescript-eslint/no-explicit-any": "error",
 
             "@typescript-eslint/no-magic-numbers": [
@@ -242,6 +250,23 @@ export default defineConfig([
                             message: 'Las rutas relativas estan prohibidas. Utiliza rutas absolutas comenzando con "src/".',
                         },
                     ],
+                },
+            ],
+        },
+    },
+    {
+        files: ["**/*.enum.ts"],
+        rules: {
+            "@typescript-eslint/naming-convention": [
+                "error",
+                {
+                    selector: "variable",
+                    modifiers: ["exported"],
+                    format: ["UPPER_CASE"],
+                },
+                {
+                    selector: ["typeAlias", "interface"],
+                    format: ["PascalCase"],
                 },
             ],
         },
