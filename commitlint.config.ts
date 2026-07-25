@@ -13,7 +13,8 @@ const commitlintConfiguration: UserConfig = {
             [
                 "config", // Para src/config/
                 "shared", // Para src/shared/
-                "expenses", // Para src/features/expenses/
+                "trans", // Para src/features/transactions/
+                "new-feat", // Para nuevas features src/features/news-feat/
                 "android", // Para android/
                 "public", // Para public/
                 "deps", // Para dependencias (package.json, pnpm-lock.yaml)
