@@ -16,8 +16,10 @@ adapters/
       │   ├── context/
       │   │   └── [feature].context.ts
       │   └── interface/
-      │       ├── [feature]-strategy.interface.ts
-      │       └── [feature]-generator.interface.ts
+      │       ├── strategies/
+      │       │   └── [feature]-strategy.interface.ts
+      │       └── generators/
+      │           └── [feature]-generator.interface.ts
       └── infrastructure/
           ├── generator/
           │   └── [feature].generator.ts
