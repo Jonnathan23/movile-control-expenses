@@ -6,7 +6,7 @@ import type { BudgetDataSource } from "src/features/transactions/core/domain/dat
 import type { CategoryDatasource } from "src/features/transactions/core/domain/datasources/category.datasource";
 import type { TransactionDataSource } from "src/features/transactions/core/domain/datasources/transaction.datasource";
 import type { TransactionsDataSourceFactory } from "src/features/transactions/core/domain/factories/data-source.factory";
-import type { DefaultCategoriesFactory } from "src/features/transactions/core/domain/factories/default-categories.factory";
+import type { DefaultCategoriesGenerator } from "src/features/transactions/core/domain/generators/default-categories.generator";
 
 import { BudgetDataSourceLocalStorage } from "src/features/transactions/core/infrastructure/datasources/local-storage/budget.datasource";
 import { CategoryDataSourceLocalStorage } from "src/features/transactions/core/infrastructure/datasources/local-storage/categories.datasource";
@@ -23,7 +23,7 @@ export class DataSourceFactoryImpl implements TransactionsDataSourceFactory {
         private readonly transactionMapper: TransactionMapper,
         private readonly budgetMapper: BudgetMapper,
         private readonly categoryMapper: CategoryMapper,
-        private readonly defaultCategoriesFactory: DefaultCategoriesFactory,
+        private readonly defaultCategoriesGenerator: DefaultCategoriesGenerator,
         private readonly uuidGen: UUIDHelper,
     ) {}
 
@@ -31,6 +31,7 @@ export class DataSourceFactoryImpl implements TransactionsDataSourceFactory {
         if (Capacitor.isNativePlatform()) {
             return new TransactionDataSourcePreferences(this.transactionMapper, this.uuidGen);
         }
+
         return new TransactionDataSourceLocalStorage(this.transactionMapper, this.uuidGen);
     }
 
@@ -43,8 +44,8 @@ export class DataSourceFactoryImpl implements TransactionsDataSourceFactory {
 
     public createCategoryDataSource(): CategoryDatasource {
         if (Capacitor.isNativePlatform()) {
-            return new CategoryDataSourcePreferences(this.defaultCategoriesFactory, this.categoryMapper);
+            return new CategoryDataSourcePreferences(this.defaultCategoriesGenerator, this.categoryMapper);
         }
-        return new CategoryDataSourceLocalStorage(this.defaultCategoriesFactory, this.categoryMapper);
+        return new CategoryDataSourceLocalStorage(this.defaultCategoriesGenerator, this.categoryMapper);
     }
 }

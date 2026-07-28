@@ -1,6 +1,6 @@
 import { uuidHelper } from "src/shared/core/helpers/generators.helper";
 
-import { DefaultCategoriesFactoryImpl } from "src/features/transactions/core/domain/factories/default-categories.factory";
+import { DefaultCategoriesFactoryImpl } from "src/features/transactions/core/domain/generators/default-categories.generator";
 
 import { DataSourceFactoryImpl } from "src/features/transactions/core/infrastructure/factories/create-all-datasource.factory";
 import { BudgetMapperImpl } from "src/features/transactions/core/infrastructure/mappers/budget.mapper";
