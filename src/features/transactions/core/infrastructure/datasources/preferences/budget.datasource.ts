@@ -5,7 +5,7 @@ import { BudgetEntity } from "src/features/transactions/core/domain/entities/bud
 
 import type { BudgetMapper } from "src/features/transactions/core/infrastructure/mappers/budget.mapper";
 
-import type { CreateBudgetDto } from "src/features/transactions/core/application/dtos/create-budget.dto";
+import type { CreateBudgetDto } from "src/features/transactions/core/application/dtos/budget/create-budget.dto";
 
 export class BudgetDataSourcePreferences implements BudgetDataSource {
     private readonly storageKey = "budget";

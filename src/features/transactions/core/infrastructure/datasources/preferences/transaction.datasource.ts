@@ -1,5 +1,6 @@
 import { Preferences } from "@capacitor/preferences";
 
+import { CustomError } from "src/shared/core/errors/custom-error.error";
 import type { UUIDHelper } from "src/shared/core/helpers/generators.helper";
 
 import { TransactionDataSource } from "src/features/transactions/core/domain/datasources/transaction.datasource";
@@ -7,8 +8,8 @@ import { TransactionEntity } from "src/features/transactions/core/domain/entitie
 
 import type { TransactionMapper } from "src/features/transactions/core/infrastructure/mappers/transaction.mapper";
 
-import type { CreateTransactionDto } from "src/features/transactions/core/application/dtos/create-transaction.dto";
-import type { UpdateTransactionDto } from "src/features/transactions/core/application/dtos/update-transaction.dto";
+import type { CreateTransactionDto } from "src/features/transactions/core/application/dtos/transactions/create-transaction.dto";
+import type { UpdateTransactionDto } from "src/features/transactions/core/application/dtos/transactions/update-transaction.dto";
 
 export class TransactionDataSourcePreferences implements TransactionDataSource {
     private readonly storageKey = "transactions";
@@ -18,53 +19,87 @@ export class TransactionDataSourcePreferences implements TransactionDataSource {
         private readonly generatorUUID: UUIDHelper,
     ) {}
 
+    public async getTransactionsById(id: string): Promise<TransactionEntity> {
+        const { value } = await Preferences.get({ key: this.storageKey });
+        const rawData: Record<string, unknown>[] = value ? JSON.parse(value) : [];
+
+        const rawTransaction = rawData.find((transaction) => transaction.id === id);
+        if (!rawTransaction)
+            throw CustomError.notFound({
+                message: "Transaction not found",
+                path: "search transaction",
+            });
+
+        return this.transactionMapper.toEntity(rawTransaction);
+    }
+
     public async getTransactions(): Promise<TransactionEntity[]> {
         const { value } = await Preferences.get({ key: this.storageKey });
         const rawData = value ? JSON.parse(value) : [];
         return this.transactionMapper.toArrayEntities(rawData);
     }
 
-    public async saveTransaction(dto: CreateTransactionDto): Promise<TransactionEntity> {
-        const transactions = await this.getTransactions();
-        const newTransaction = new TransactionEntity(
-            this.generatorUUID(),
-            dto.type,
-            dto.amount,
-            dto.category,
-            dto.description,
-            dto.accountId,
-            dto.date,
-        );
+    public async saveTransaction(transaction: TransactionEntity): Promise<void> {
+        try {
+            const transactions = await this.getTransactions();
+            const index = transactions.findIndex((t) => t.id === transaction.id);
 
-        transactions.push(newTransaction);
-        await Preferences.set({
-            key: this.storageKey,
-            value: JSON.stringify(transactions),
+            const newTransaction = new TransactionEntity({
+                id: transaction.id,
+                type: transaction.type,
+                amount: transaction.amount,
+                categoryId: transaction.categoryId,
+                categoryName: transaction.categoryName,
+                description: transaction.description,
+                accountId: transaction.accountId,
+                date: transaction.date,
+            });
+
+            if (index !== -1) {
+                transactions[index] = newTransaction;
+            } else {
+                transactions.push(newTransaction);
+            }
+
+            await Preferences.set({
+                key: this.storageKey,
+                value: JSON.stringify(transactions),
+            });
+        } catch {
+            throw CustomError.internalServer({
+                message: "Error saving transaction",
+                path: "saveTransaction",
+            });
+        }
+    }
+
+    public async createTransaction(dto: CreateTransactionDto): Promise<TransactionEntity> {
+        const newTransaction = new TransactionEntity({
+            id: this.generatorUUID(),
+            type: dto.type,
+            amount: dto.amount,
+            categoryId: dto.categoryId,
+            categoryName: dto.categoryName,
+            description: dto.description,
+            accountId: dto.accountId,
+            date: dto.date,
         });
+
         return newTransaction;
     }
 
-    public async updateTransaction(dto: UpdateTransactionDto): Promise<TransactionEntity> {
-        const transactions = await this.getTransactions();
-        const index = transactions.findIndex((exp) => exp.id === dto.id);
-
-        if (index === -1) throw new Error(`Transaction with id ${dto.id} not found`);
-
-        const updatedTransaction = new TransactionEntity(
-            dto.id,
-            dto.type,
-            dto.amount,
-            dto.category,
-            dto.description,
-            dto.accountId,
-            dto.date,
-        );
-
-        transactions[index] = updatedTransaction;
-        await Preferences.set({
-            key: this.storageKey,
-            value: JSON.stringify(transactions),
+    public async updateTransaction(id: string, dto: UpdateTransactionDto): Promise<TransactionEntity> {
+        const updatedTransaction = new TransactionEntity({
+            id,
+            type: dto.type,
+            amount: dto.amount,
+            categoryId: dto.categoryId,
+            categoryName: dto.categoryName,
+            description: dto.description,
+            accountId: dto.accountId,
+            date: dto.date,
         });
+
         return updatedTransaction;
     }
 

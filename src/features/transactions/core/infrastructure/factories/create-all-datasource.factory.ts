@@ -1,5 +1,3 @@
-import { Capacitor } from "@capacitor/core";
-
 import type { UUIDHelper } from "src/shared/core/helpers/generators.helper";
 
 import type { BudgetDataSource } from "src/features/transactions/core/domain/datasources/budget.datasource";
@@ -8,9 +6,6 @@ import type { TransactionDataSource } from "src/features/transactions/core/domai
 import type { TransactionsDataSourceFactory } from "src/features/transactions/core/domain/factories/data-source.factory";
 import type { DefaultCategoriesGenerator } from "src/features/transactions/core/domain/generators/default-categories.generator";
 
-import { BudgetDataSourceLocalStorage } from "src/features/transactions/core/infrastructure/datasources/local-storage/budget.datasource";
-import { CategoryDataSourceLocalStorage } from "src/features/transactions/core/infrastructure/datasources/local-storage/categories.datasource";
-import { TransactionDataSourceLocalStorage } from "src/features/transactions/core/infrastructure/datasources/local-storage/transaction.datasource";
 import { BudgetDataSourcePreferences } from "src/features/transactions/core/infrastructure/datasources/preferences/budget.datasource";
 import { CategoryDataSourcePreferences } from "src/features/transactions/core/infrastructure/datasources/preferences/categories.datasource";
 import { TransactionDataSourcePreferences } from "src/features/transactions/core/infrastructure/datasources/preferences/transaction.datasource";
@@ -28,24 +23,14 @@ export class DataSourceFactoryImpl implements TransactionsDataSourceFactory {
     ) {}
 
     public createTransactionDataSource(): TransactionDataSource {
-        if (Capacitor.isNativePlatform()) {
-            return new TransactionDataSourcePreferences(this.transactionMapper, this.uuidGen);
-        }
-
-        return new TransactionDataSourceLocalStorage(this.transactionMapper, this.uuidGen);
+        return new TransactionDataSourcePreferences(this.transactionMapper, this.uuidGen);
     }
 
     public createBudgetDataSource(): BudgetDataSource {
-        if (Capacitor.isNativePlatform()) {
-            return new BudgetDataSourcePreferences(this.budgetMapper);
-        }
-        return new BudgetDataSourceLocalStorage(this.budgetMapper);
+        return new BudgetDataSourcePreferences(this.budgetMapper);
     }
 
     public createCategoryDataSource(): CategoryDatasource {
-        if (Capacitor.isNativePlatform()) {
-            return new CategoryDataSourcePreferences(this.defaultCategoriesGenerator, this.categoryMapper);
-        }
-        return new CategoryDataSourceLocalStorage(this.defaultCategoriesGenerator, this.categoryMapper);
+        return new CategoryDataSourcePreferences(this.defaultCategoriesGenerator, this.categoryMapper);
     }
 }
