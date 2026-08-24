@@ -1,4 +1,4 @@
-import type { CurrencyFormatStrategy } from "src/shared/core/adapters/format/domain/interface/currency-format-strategy.interface";
+import type { CurrencyFormatStrategy } from "src/shared/core/adapters/format/domain/interface/currency/currency-format-strategy.interface";
 
 export class CurrencyFormatContext implements CurrencyFormatStrategy {
     private strategy: CurrencyFormatStrategy;

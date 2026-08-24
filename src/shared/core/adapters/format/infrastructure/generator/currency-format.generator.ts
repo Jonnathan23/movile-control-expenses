@@ -1,6 +1,6 @@
 import { CurrencyFormatContext } from "src/shared/core/adapters/format/domain/context/currency-format.context";
-import type { CurrencyFormatGenerator } from "src/shared/core/adapters/format/domain/interface/currency-format-generator.interface";
-import type { CurrencyFormatStrategy } from "src/shared/core/adapters/format/domain/interface/currency-format-strategy.interface";
+import type { CurrencyFormatGenerator } from "src/shared/core/adapters/format/domain/interface/currency/currency-format-generator.interface";
+import type { CurrencyFormatStrategy } from "src/shared/core/adapters/format/domain/interface/currency/currency-format-strategy.interface";
 
 import { IntlCurrencyFormatStrategy } from "src/shared/core/adapters/format/infrastructure/strategies/intl-currency-format.strategy";
 

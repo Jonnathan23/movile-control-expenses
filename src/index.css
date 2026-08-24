@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
 /*** SWIPE LIST OVERRIDES **/
 .swipeable-list-item__leading-actions,
@@ -11,102 +12,143 @@
 }
 
 .swipeable-list-item__trailing-actions {
-    @apply bg-secondary;
+    @apply bg-danger;
 }
 
 .swipeable-list .swipe-action {
     @apply flex justify-center items-center;
 }
 
-:root {
-    /* Nueva paleta de colores base (Teal/Mint) */
-    --teal-900: #0c3c46;
-    --teal-800: #1a5862;
-    --teal-600: #1c8586;
-    --teal-500: #26a09b;
-    --teal-400: #39b8a2;
-    --teal-300: #52caa6;
-    --teal-200: #6cdab2;
-    --teal-100: #85e9cf;
-    --teal-50: #dde8e6;
+@theme inline {
+    --font-sans: "Inter", "Inter Fallback", ui-sans-serif, system-ui, sans-serif;
 
-    /* Mapeo de Variables Semánticas (Recomendaciones de Diseño) */
+    /* PocketCap Design Tokens */
+    --color-background: #0c3c46;
+    --color-surface: #1a5862;
+    --color-surface-elevated: #1f6875;
+    --color-surface-overlay: #0a3240;
 
-    /* Acciones Principales */
-    --primary: var(--teal-600);
-    --primary-hover: var(--teal-900);
-    --primary-border: var(--teal-400);
+    --color-primary: #26a09b;
+    --color-primary-light: #39b8a2;
+    --color-primary-muted: rgba(38, 160, 155, 0.15);
 
-    /* Acciones Secundarias (Usamos un tono vibrante de la paleta para reset/acciones alternas) */
-    --secondary: var(--teal-300);
+    --color-danger: #ef4444;
+    --color-danger-muted: rgba(239, 68, 68, 0.15);
 
-    /* Errores (Se recomienda mantener un tono rojo/rosado para semántica de peligro) */
-    --error: #ef4444;
+    --color-success: #39b8a2;
+    --color-success-muted: rgba(57, 184, 162, 0.15);
 
-    /* Textos (Usamos los tonos más oscuros de la paleta para mejor contraste) */
-    --text-main: var(--teal-900);
-    --text-sub: var(--teal-800);
+    --color-foreground: #ffffff;
+    --color-foreground-secondary: #dde8e6;
+    --color-foreground-muted: #85c9c0;
 
-    /* Bordes y Fondos */
-    --border-main: var(--teal-50);
+    --color-border: rgba(38, 160, 155, 0.2);
+    --color-border-strong: rgba(38, 160, 155, 0.4);
 
-    /* Para fondos de inputs y tarjetas (surface) lo ideal en UI es blanco puro o un tono extremandamente claro
-       para asegurar que el texto sea legible. El tono #85e9cf es demasiado vibrante para ser fondo principal. */
-    --bg-input: #ffffff;
-    --bg-surface: #ffffff;
-
-    /* Tracker (Circular Progress) */
-    --tracker-primary: var(--teal-400);
-    --tracker-danger: var(--error);
-    --tracker-trail: var(--teal-50);
-
-    /* Background Global */
-    --bg-body: #f4f9f8;
+    --radius: 1rem;
+    --radius-sm: 0.5rem;
+    --radius-md: 0.75rem;
+    --radius-lg: 1rem;
+    --radius-xl: 1.25rem;
+    --radius-2xl: 1.5rem;
+    --radius-full: 9999px;
 }
 
-@theme {
-    --color-primary: var(--primary);
-    --color-primary-hover: var(--primary-hover);
-    --color-primary-border: var(--primary-border);
-    --color-secondary: var(--secondary);
-    --color-error: var(--error);
-    --color-text-main: var(--text-main);
-    --color-text-sub: var(--text-sub);
-    --color-border-main: var(--border-main);
-    --color-bg-input: var(--bg-input);
-    --color-bg-surface: var(--bg-surface);
-}
+@layer base {
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+    }
 
-@media (prefers-color-scheme: dark) {
-    :root {
-        /* Invertimos y ajustamos contrastes para el modo oscuro */
-        --primary: var(--teal-400);
-        --primary-hover: var(--teal-300);
-        --primary-border: var(--teal-500);
+    html {
+        background-color: var(--color-background);
+        color: var(--color-foreground);
+        font-family: var(--font-sans);
+        height: 100%;
+        overscroll-behavior: none;
+    }
 
-        --secondary: var(--teal-300);
-
-        --error: #f87171; /* Rojo más suave para fondos oscuros */
-
-        --text-main: #f8fafc;
-        --text-sub: var(--teal-100);
-
-        --border-main: var(--teal-800);
-
-        --bg-input: var(--teal-900);
-        --bg-surface: #0a1f24; /* Teal casi negro para las tarjetas */
-        --bg-body: #051316; /* Fondo principal aún más oscuro */
-
-        --tracker-primary: var(--teal-400);
-        --tracker-danger: var(--error);
-        --tracker-trail: var(--teal-900);
+    body {
+        @apply antialiased;
+        background-color: var(--color-background);
+        color: var(--color-foreground);
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overscroll-behavior: none;
     }
 }
 
-body {
-    background-color: var(--bg-body);
-    color: var(--text-main);
-    transition:
-        background-color 0.3s ease,
-        color 0.3s ease;
+/* Scrollbar styling */
+::-webkit-scrollbar {
+    width: 4px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: var(--color-surface-elevated);
+    border-radius: 9999px;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Smooth slide-in animation for sidebar */
+@keyframes slideInLeft {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+@keyframes slideOutLeft {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+}
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+@keyframes slideUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.animate-slide-in-left {
+    animation: slideInLeft 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+.animate-slide-out-left {
+    animation: slideOutLeft 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+.animate-fade-in {
+    animation: fadeIn 0.2s ease forwards;
+}
+.animate-slide-up {
+    animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }

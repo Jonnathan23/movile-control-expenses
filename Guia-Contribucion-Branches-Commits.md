@@ -23,32 +23,35 @@ de ramas y mensajes de commits.
 
 Se utiliza **kebab-case** (minúsculas y palabras separadas por guiones).
 
-#### Ramas Épicas (`epic/<modulo>`)
+#### Ramas Épicas (`epic/<modulo>-<funcionalidad>-<ticket>`)
 
 - Nacen desde `develop`.
 - Agrupan múltiples tareas de un mismo módulo.
+- **El ticket es OBLIGATORIO.**
 
 **Ejemplo:**
 
 ```text
-epic/expenses
+epic/admin-desk-12
 ```
 
-#### Ramas de Tareas (`<tipo>/<modulo>-<funcionalidad>`)
+#### Ramas de Tareas (`<tipo>/<modulo>-<funcionalidad>[-ticket]`)
 
 - Nacen desde una rama épica.
 - Se fusionan nuevamente a la rama épica mediante un Pull Request.
+- **El ticket es OPCIONAL.**
 
 **Formato:**
 
 ```text
-tipo/modulo-breve-descripcion
+tipo/modulo-breve-descripcion[-ticket]
 ```
 
 **Ejemplos:**
 
 ```text
 feat/expenses-budget-form
+feat/admin-desk-login-12
 fix/shared-currency-format
 refactor/config-query-client
 ```
@@ -99,9 +102,11 @@ Scope Ubicación
 
 ---
 
-- **`expenses`**: `src/features/expenses/`
-- **`shared`**: `src/shared/`
 - **`config`**: `src/config/`
+- **`shared`**: `src/shared/`
+- **`trans`**: `src/features/transactions/`
+- **`accounts`**: `src/features/accounts/`
+- **`new-feat`**: `src/features/[news-feat]`
 - **`android`**: `android/`
 - **`public`**: `public/`
 - **`deps`**: `package.json`, `pnpm-lock.yaml`
@@ -113,7 +118,7 @@ Scope Ubicación
 
 ### ✅ Ejemplos válidos
 
-- ✅ `git commit -m "feat(expenses): create budget form component"`
+- ✅ `git commit -m "feat(trans): create budget form component"`
 - ✅ `git commit -m "fix(shared): resolve timezone issue in date format"`
 - ✅ `git commit -m "chore(deps): update lockfile dependencies"`
 - ✅ `git commit -m "refactor(tools): migrate config to typescript"`
@@ -125,16 +130,18 @@ Scope Ubicación
     - **Error:** Falta el tipo y el scope.
 - ❌ `git commit -m "feat(UI): add button"`
     - **Error:** `UI` no es un scope permitido y contiene mayúsculas.
-- ❌ `git commit -m "fix(expenses): Fix bug."`
+- ❌ `git commit -m "fix(trans): Fix bug."`
     - **Error:** La descripción inicia con mayúscula y termina con punto final.
 - ❌ `git commit -m "chore(root): update package.json"`
     - **Error:** El scope `root` ya no debe usarse para dependencias, se debe usar `deps`.
 
 ### Explicacion de scopes
 
-- **`expenses`**: Cambios exclusivos relacionados con la funcionalidad de gastos, presupuestos y su lógica de negocio.
-- **`shared`**: Componentes de UI comunes, utilidades, helpers y lógica compartida entre múltiples módulos de la aplicación.
 - **`config`**: Configuraciones e inicializaciones globales del proyecto (por ejemplo, configuración de QueryClient o Axios).
+- **`shared`**: Componentes de UI comunes, utilidades, helpers y lógica compartida entre múltiples módulos de la aplicación.
+- **`trans`**: Cambios exclusivos relacionados con la funcionalidad de transacciones y su lógica de negocio.
+- **`accounts`**: Cambios relacionados con la funcionalidad de cuentas de usuario.
+- **`new-feat`**: Desarrollo de nueva feature experimentales o en proceso (features).
 - **`android`**: Ajustes nativos específicos para la plataforma Android (archivos gradle, manifest, permisos, etc.).
 - **`public`**: Manejo de recursos estáticos, imágenes, íconos y fuentes expuestos públicamente.
 - **`deps`**: Modificaciones relacionadas exclusivamente con la adición, actualización o eliminación de dependencias.
@@ -160,35 +167,35 @@ El título del PR debe resumir el valor o la característica principal que se es
 1.  Cambiar a la rama épica correspondiente.
 
 ```bash
-git checkout epic/expenses
+git checkout epic/expenses-dashboard-40
 ```
 
 2.  Actualizar la rama.
 
 ```bash
-git pull origin epic/expenses
+git pull origin epic/expenses-dashboard-40
 ```
 
 3.  Crear una nueva rama de tarea.
 
 ```bash
-git checkout -b feat/expenses-modal
+git checkout -b feat/expenses-modal-40
 ```
 
 4.  Realizar los cambios y crear el commit.
 
 ```bash
-git commit -m "feat(expenses): add new expense modal"
+git commit -m "feat(trans): add new expense modal"
 ```
 
 5.  Subir la rama al repositorio remoto.
 
 ```bash
-git push origin feat/expenses-modal
+git push origin feat/expenses-modal-40
 ```
 
 6.  Abrir un **Pull Request** hacia la rama:
 
 ```text
-epic/expenses
+epic/expenses-dashboard-40
 ```
