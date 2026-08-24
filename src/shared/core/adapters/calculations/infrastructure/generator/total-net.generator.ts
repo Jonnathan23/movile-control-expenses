@@ -4,7 +4,7 @@ import type { TotalNetStrategy } from "src/shared/core/adapters/calculations/dom
 
 import { DefaultTotalNetStrategy } from "src/shared/core/adapters/calculations/infrastructure/strategies/default-total-net.strategy";
 
-import type { AccountEntity } from "src/features/accounts/core/entities/account.entity";
+import type { AccountEntity } from "src/features/accounts/core/domain/entities/account.entity";
 
 export class TotalNetGeneratorSingleton implements TotalNetGenerator {
     private static instance: TotalNetGeneratorSingleton;
