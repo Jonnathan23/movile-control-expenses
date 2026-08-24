@@ -106,18 +106,22 @@ Scope Carpeta
 
 ---
 
-- **expenses**: `src/features/expenses`
-- **shared**: `src/shared`
-- **config**: `src/config`
+- **config**: `src/config/`
+- **shared**: `src/shared/`
+- **trans**: `src/features/transactions/`
+- **accounts**: `src/features/accounts/`
+- **new-feat**: `src/features/[news-feat]`
 - **android**: `android/`
-- **md**: `.md`
-- **root**: Configuración principal
+- **public**: `public/`
+- **deps**: dependencias (`package.json`, `pnpm-lock.yaml`)
+- **tools**: configuración de herramientas (`vite`, `eslint`, etc.)
+- **root**: Configuración principal (`App.tsx`, `main.tsx`, etc.)
 - **ci**: GitHub Actions, Husky, CI
 
 ## Ejemplos válidos
 
 ```bash
-git commit -m "feat(expenses): create budget form component"
+git commit -m "feat(trans): create budget form component"
 git commit -m "fix(shared): resolve currency formatter"
 git commit -m "docs(root): update contributing guide"
 git commit -m "chore(ci): update commitlint configuration"
@@ -128,7 +132,7 @@ git commit -m "chore(ci): update commitlint configuration"
 ```text
 Actualice el formulario
 feat(UI): add button
-fix(expenses): Fix bug.
+fix(trans): Fix bug.
 ```
 
 ---
@@ -160,7 +164,7 @@ git checkout -b feat/expenses-modal-40
 4.  Crear commits siguiendo el estándar.
 
 ```bash
-git commit -m "feat(expenses): add expense modal"
+git commit -m "feat(trans): add expense modal"
 ```
 
 5.  Subir la rama.
@@ -207,7 +211,7 @@ git checkout -b feat/expenses-budget-form-40
 # desarrollar...
 
 git add .
-git commit -m "feat(expenses): create budget form"
+git commit -m "feat(trans): create budget form"
 
 git push origin feat/expenses-budget-form-40
 
