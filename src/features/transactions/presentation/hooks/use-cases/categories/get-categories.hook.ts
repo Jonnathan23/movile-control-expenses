@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
-import type { QueryResult } from "src/shared/ui/presentation/interfaces/tan-stack.interface";
+import type { QueryResult } from "src/shared/presentation/interfaces/tan-stack.interface";
 
 import type { CategoryEntity } from "src/features/transactions/core/domain/entities/category.entity";
 

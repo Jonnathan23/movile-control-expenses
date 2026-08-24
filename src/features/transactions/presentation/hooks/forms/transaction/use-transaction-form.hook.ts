@@ -1,7 +1,7 @@
 import { type ChangeEvent, type SyntheticEvent, useState } from "react";
 
 import { useBudgetContext } from "src/features/transactions/presentation/hooks/use-budget-context.hook";
-import { useSaveTransaction } from "src/features/transactions/presentation/hooks/use-cases/transactions/save-transaction.hook";
+import { useSaveTransaction } from "src/features/transactions/presentation/hooks/use-cases/transactions/create-transaction.hook";
 import { useUpdateTransaction } from "src/features/transactions/presentation/hooks/use-cases/transactions/update-transaction.hook";
 
 type ValuePiece = Date | null;

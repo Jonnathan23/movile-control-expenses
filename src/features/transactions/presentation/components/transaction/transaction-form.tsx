@@ -1,6 +1,6 @@
 import DatePicker from "react-date-picker";
 
-import ErrorMessage from "src/shared/ui/presentation/components/errors/error-message";
+import ErrorMessage from "src/shared/presentation/ui/components/errors/error-message";
 
 import { useTransactionForm } from "src/features/transactions/presentation/hooks/forms/transaction/use-transaction-form.hook";
 

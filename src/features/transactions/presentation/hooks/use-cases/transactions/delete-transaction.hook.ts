@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import type { MutationResult } from "src/shared/ui/presentation/interfaces/tan-stack.interface";
+import type { MutationResult } from "src/shared/presentation/interfaces/tan-stack.interface";
 
 import { ExecuteDeleteTransactionUseCase } from "src/features/transactions/core/di/transaction.dependency";
 import type { BudgetActions } from "src/features/transactions/presentation/reducers/budget.reducer";

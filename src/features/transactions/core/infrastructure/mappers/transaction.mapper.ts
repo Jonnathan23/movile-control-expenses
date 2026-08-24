@@ -9,15 +9,16 @@ export interface TransactionMapper {
 export class TransactionMapperImpl implements TransactionMapper {
     public toEntity(rawObject: Record<string, unknown>): TransactionEntity {
         if (!rawObject) throw new Error("Data is missing");
-        return new TransactionEntity(
-            rawObject.id as string,
-            rawObject.type as TransactionType,
-            rawObject.amount as number,
-            rawObject.category as string,
-            rawObject.description as string,
-            rawObject.accountId as string,
-            new Date(rawObject.date as string | number | Date),
-        );
+        return new TransactionEntity({
+            id: rawObject.id as string,
+            type: rawObject.type as TransactionType,
+            amount: rawObject.amount as number,
+            categoryId: rawObject.categoryId as string,
+            categoryName: rawObject.categoryName as string,
+            description: rawObject.description as string,
+            accountId: rawObject.accountId as string,
+            date: new Date(rawObject.date as string | number | Date),
+        });
     }
 
     public toArrayEntities(rawObjects: Record<string, unknown>[]): TransactionEntity[] {

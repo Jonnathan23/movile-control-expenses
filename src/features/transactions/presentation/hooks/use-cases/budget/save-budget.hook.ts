@@ -1,10 +1,10 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import type { MutationResult } from "src/shared/ui/presentation/interfaces/tan-stack.interface";
+import type { MutationResult } from "src/shared/presentation/interfaces/tan-stack.interface";
 
 import type { BudgetEntity } from "src/features/transactions/core/domain/entities/budget.entity";
 
-import { CreateBudgetDtoImpl } from "src/features/transactions/core/application/dtos/create-budget.dto";
+import { CreateBudgetDtoImpl } from "src/features/transactions/core/application/dtos/budget/create-budget.dto";
 
 import { ExecuteSaveBudgetUseCase } from "src/features/transactions/core/di/transaction.dependency";
 import type { BudgetActions } from "src/features/transactions/presentation/reducers/budget.reducer";
