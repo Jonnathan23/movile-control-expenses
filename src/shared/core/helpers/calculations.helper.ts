@@ -4,9 +4,8 @@ import {
     adapterTotalNetGenerator,
 } from "src/shared/core/adapters/calculations/di/calculations.dependencies";
 
+import type { AccountEntity } from "src/features/accounts/core/domain/entities/account.entity";
 import type { TransactionEntity } from "src/features/transactions/core/domain/entities/transaction.entity";
-
-import type { AccountEntity } from "src/features/accounts/core/entities/account.entity";
 
 export const calculateTotalNet = (accounts: AccountEntity[]): number => {
     return adapterTotalNetGenerator.calculateTotalNet(accounts);

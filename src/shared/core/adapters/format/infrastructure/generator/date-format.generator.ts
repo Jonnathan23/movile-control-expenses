@@ -1,6 +1,6 @@
 import { DateFormatContext } from "src/shared/core/adapters/format/domain/context/date-format.context";
-import type { DateFormatGenerator } from "src/shared/core/adapters/format/domain/interface/date-format-generator.interface";
-import type { DateFormatStrategy } from "src/shared/core/adapters/format/domain/interface/date-format-strategy.interface";
+import type { DateFormatGenerator } from "src/shared/core/adapters/format/domain/interface/date/date-format-generator.interface";
+import type { DateFormatStrategy } from "src/shared/core/adapters/format/domain/interface/date/date-format-strategy.interface";
 
 import { IntlDateFormatStrategy } from "src/shared/core/adapters/format/infrastructure/strategies/intl-date-format.strategy";
 
