@@ -1,6 +1,6 @@
 import { BudgetEntity } from "src/features/transactions/core/domain/entities/budget.entity";
 
-import type { CreateBudgetDto } from "src/features/transactions/core/application/dtos/create-budget.dto";
+import type { CreateBudgetDto } from "src/features/transactions/core/application/dtos/budget/create-budget.dto";
 
 export abstract class BudgetDataSource {
     public abstract getBudget(): Promise<BudgetEntity>;
