@@ -14,13 +14,6 @@ interface AccountsSidebarProps {
     onAddAccount: () => void;
 }
 
-const ACCOUNT_TYPE_LABELS: Record<string, string> = {
-    cash: "Efectivo",
-    bank: "Cuenta Bancaria",
-    credit: "Tarjeta de Crédito",
-    savings: "Ahorros",
-};
-
 export const AccountsSidebar = (props: AccountsSidebarProps): ReactElement => {
     const { accounts, isOpen, onClose: handleOnClose, onAddAccount: handleOnAddAccount } = props;
     const totalNet = calculateTotalNet(accounts);
@@ -130,7 +123,7 @@ const AccountCard = ({ account }: AccountCardProps): ReactElement => {
             <div className="flex-1 min-w-0">
                 <p className="font-semibold text-sm text-white truncate">{account.name}</p>
                 <p className="text-xs" style={{ color: THEME_COLORS.muted }}>
-                    {ACCOUNT_TYPE_LABELS[account.type] ?? account.type}
+                    Cuenta
                 </p>
             </div>
 
