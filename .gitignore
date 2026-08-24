@@ -26,3 +26,5 @@ dist-ssr
 *.sw?
 
 .docs/demo
+references/
+scratch_replace.js
