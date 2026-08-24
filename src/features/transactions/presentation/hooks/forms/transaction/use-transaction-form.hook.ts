@@ -1,14 +1,14 @@
 import { type ChangeEvent, type SyntheticEvent, useState } from "react";
 
 import { useBudgetContext } from "src/features/transactions/presentation/hooks/use-budget-context.hook";
-import { useSaveTransaction } from "src/features/transactions/presentation/hooks/use-cases/transactions/create-transaction.hook";
+import { useCreateTransaction } from "src/features/transactions/presentation/hooks/use-cases/transactions/create-transaction.hook";
 import { useUpdateTransaction } from "src/features/transactions/presentation/hooks/use-cases/transactions/update-transaction.hook";
 
 type ValuePiece = Date | null;
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 
 interface TransactionFormReturn {
-    transaction: { amount: number; transactionName: string; category: string; date: Date };
+    transaction: { amount: number; description: string; categoryId: string; date: Date };
     error: string;
     state: ReturnType<typeof useBudgetContext>["state"];
     handleChange: (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => void;
@@ -17,7 +17,7 @@ interface TransactionFormReturn {
 }
 
 export const useTransactionForm = (): TransactionFormReturn => {
-    const initialTransaction = { amount: 0, transactionName: "", category: "", date: new Date() };
+    const initialTransaction = { amount: 0, description: "", categoryId: "", date: new Date() };
 
     const [transaction, setTransaction] = useState(initialTransaction);
     const [previousAmount, setPreviousAmount] = useState(0);
@@ -25,7 +25,7 @@ export const useTransactionForm = (): TransactionFormReturn => {
     const [prevEditingId, setPrevEditingId] = useState<string>("");
 
     const { dispatch, state, remaininBudget } = useBudgetContext();
-    const { executeMutation: saveTransaction } = useSaveTransaction({ dispatch });
+    const { executeMutation: saveTransaction } = useCreateTransaction({ dispatch });
     const { executeMutation: updateTransaction } = useUpdateTransaction({ dispatch });
 
     if (state.editingId !== prevEditingId) {
@@ -35,8 +35,8 @@ export const useTransactionForm = (): TransactionFormReturn => {
             if (editingTransaction) {
                 setTransaction({
                     amount: editingTransaction.amount,
-                    transactionName: editingTransaction.transactionName,
-                    category: editingTransaction.category,
+                    description: editingTransaction.description,
+                    categoryId: editingTransaction.categoryId,
                     date: editingTransaction.date,
                 });
                 setPreviousAmount(editingTransaction.amount);
@@ -86,16 +86,18 @@ export const useTransactionForm = (): TransactionFormReturn => {
         if (state.editingId) {
             updateTransaction({
                 id: state.editingId,
-                transactionName: transaction.transactionName,
-                amount: transaction.amount,
-                category: transaction.category,
-                date: transaction.date,
+                data: {
+                    description: transaction.description,
+                    amount: transaction.amount,
+                    categoryId: transaction.categoryId,
+                    date: transaction.date,
+                },
             });
         } else {
             saveTransaction({
-                transactionName: transaction.transactionName,
+                description: transaction.description,
                 amount: transaction.amount,
-                category: transaction.category,
+                categoryId: transaction.categoryId,
                 date: transaction.date,
             });
         }

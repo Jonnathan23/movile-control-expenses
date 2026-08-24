@@ -15,7 +15,7 @@ interface TransactionDetailReturn {
 export const useTransactionDetail = (transaction: TransactionEntity): TransactionDetailReturn => {
     const { state, dispatch } = useBudgetContext();
     const categoryInfo = useMemo(
-        () => state.categories.find((cat) => cat.id === transaction.category),
+        () => state.categories.find((cat) => cat.id === transaction.categoryId),
         [transaction, state.categories],
     );
     const { executeMutation: deleteTransaction } = useDeleteTransaction({ dispatch });

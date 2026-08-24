@@ -1,3 +1,5 @@
+import { CustomError } from "src/shared/core/errors/custom-error.error";
+
 import { CategoryEntity } from "src/features/transactions/core/domain/entities/category.entity";
 
 export interface CategoryMapper {
@@ -6,16 +8,24 @@ export interface CategoryMapper {
 }
 
 export class CategoryMapperImpl implements CategoryMapper {
-    public toEntity(rawObject: Record<string, unknown>): CategoryEntity {
-        return new CategoryEntity(
-            typeof rawObject.id === "string" ? rawObject.id : "",
-            typeof rawObject.name === "string" ? rawObject.name : "",
-            typeof rawObject.icon === "string" ? rawObject.icon : "",
-        );
+    public toEntity(rawObject: unknown): CategoryEntity {
+        const { id, name, icon, color } = rawObject as Record<string, unknown>;
+
+        if (!id || typeof id !== "string") throw CustomError.badRequest({ payload: [], path: "id" });
+        if (!name || typeof name !== "string") throw CustomError.badRequest({ payload: [], path: "name" });
+        if (!icon || typeof icon !== "string") throw CustomError.badRequest({ payload: [], path: "icon" });
+        if (!color || typeof color !== "string") throw CustomError.badRequest({ payload: [], path: "color" });
+
+        return new CategoryEntity({
+            id,
+            name,
+            icon,
+            color,
+        });
     }
 
     public toArrayEntities(rawArray: unknown[]): CategoryEntity[] {
         if (!Array.isArray(rawArray)) return [];
-        return rawArray.map((item) => this.toEntity(item as Record<string, unknown>));
+        return rawArray.map((item) => this.toEntity(item));
     }
 }

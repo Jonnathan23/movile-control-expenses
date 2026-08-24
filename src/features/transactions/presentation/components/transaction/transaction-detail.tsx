@@ -40,7 +40,7 @@ export default function TransactionDetail({ transaction }: TransactionDetailProp
 
                     <div className="flex-1 space-y-2">
                         <p className="text-sm font-bold uppercase text-text-sub">{categoryInfo?.name ?? "Categoría eliminada"}</p>
-                        <p>{transaction.transactionName}</p>
+                        <p>{transaction.description}</p>
                         <p className="text-text-main text-sm">{dateFormatHelper(transaction.date)}</p>
                     </div>
 

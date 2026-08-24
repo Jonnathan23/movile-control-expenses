@@ -13,7 +13,7 @@ export const useTransactionList = (): TransactionListReturn => {
     const { state } = useBudgetContext();
 
     const filteredTransactions = state.currentCategory
-        ? state.transactions.filter((transaction) => transaction.category === state.currentCategory)
+        ? state.transactions.filter((transaction) => transaction.categoryId === state.currentCategory)
         : state.transactions;
     const isEmpty = useMemo(() => filteredTransactions.length === 0, [filteredTransactions]);
 

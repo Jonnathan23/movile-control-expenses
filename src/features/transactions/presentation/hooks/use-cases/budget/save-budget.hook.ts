@@ -4,8 +4,6 @@ import type { MutationResult } from "src/shared/presentation/interfaces/tan-stac
 
 import type { BudgetEntity } from "src/features/transactions/core/domain/entities/budget.entity";
 
-import { CreateBudgetDtoImpl } from "src/features/transactions/core/application/dtos/budget/create-budget.dto";
-
 import { ExecuteSaveBudgetUseCase } from "src/features/transactions/core/di/transaction.dependency";
 import type { BudgetActions } from "src/features/transactions/presentation/reducers/budget.reducer";
 
@@ -13,13 +11,12 @@ interface UseSaveBudgetProps {
     dispatch: (value: BudgetActions) => void;
 }
 
-export const useSaveBudget = ({ dispatch }: UseSaveBudgetProps): MutationResult<BudgetEntity, Error, number> => {
+export const useSaveBudget = ({ dispatch }: UseSaveBudgetProps): MutationResult<BudgetEntity, Error, unknown> => {
     const queryClient = useQueryClient();
 
     const { mutate, isPending, isError, error } = useMutation({
-        mutationFn: async (budgetAmount: number) => {
-            const validDto = CreateBudgetDtoImpl.create({ amount: budgetAmount });
-            return await ExecuteSaveBudgetUseCase(validDto);
+        mutationFn: async (budgetAmount: unknown) => {
+            return await ExecuteSaveBudgetUseCase({ amount: budgetAmount });
         },
         onSuccess(data) {
             const { amount } = data;

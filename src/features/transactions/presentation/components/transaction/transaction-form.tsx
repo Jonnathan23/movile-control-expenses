@@ -19,16 +19,16 @@ export default function TransactionForm() {
             {error && <ErrorMessage>{error}</ErrorMessage>}
 
             <div className="flex flex-col gap-2">
-                <label htmlFor="transactionName" className="text-xl">
+                <label htmlFor="description" className="text-xl">
                     Nombre Gasto:
                 </label>
                 <input
                     type="text"
-                    id="transactionName"
-                    name="transactionName"
+                    id="description"
+                    name="description"
                     placeholder="Añade el nombre del gasto"
                     className="bg-bg-input p-2"
-                    value={transaction.transactionName}
+                    value={transaction.description}
                     onChange={handleChange}
                 />
             </div>
@@ -49,14 +49,14 @@ export default function TransactionForm() {
             </div>
 
             <div className="flex flex-col gap-2">
-                <label htmlFor="category" className="text-xl">
+                <label htmlFor="categoryId" className="text-xl">
                     Categoria:
                 </label>
                 <select
-                    id="category"
-                    name="category"
+                    id="categoryId"
+                    name="categoryId"
                     className="bg-bg-input p-2"
-                    value={transaction.category}
+                    value={transaction.categoryId}
                     onChange={handleChange}
                 >
                     <option value="" disabled>
@@ -71,7 +71,7 @@ export default function TransactionForm() {
             </div>
 
             <div className="flex flex-col gap-2">
-                <label htmlFor="transactionName" className="text-xl">
+                <label htmlFor="date" className="text-xl">
                     Fecha Gasto:
                 </label>
                 <DatePicker className="bg-bg-input p-2 border-0" value={transaction.date} onChange={handleChangeDate} />

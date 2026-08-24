@@ -4,9 +4,6 @@ import type { MutationResult } from "src/shared/presentation/interfaces/tan-stac
 
 import type { TransactionEntity } from "src/features/transactions/core/domain/entities/transaction.entity";
 
-import type { UpdateTransactionDto } from "src/features/transactions/core/application/dtos/transactions/update-transaction.dto";
-import { UpdateTransactionDtoImpl } from "src/features/transactions/core/application/dtos/transactions/update-transaction.dto";
-
 import { ExecuteUpdateTransactionUseCase } from "src/features/transactions/core/di/transaction.dependency";
 import type { BudgetActions } from "src/features/transactions/presentation/reducers/budget.reducer";
 
@@ -16,13 +13,12 @@ interface UseUpdateTransactionProps {
 
 export const useUpdateTransaction = ({
     dispatch,
-}: UseUpdateTransactionProps): MutationResult<TransactionEntity, Error, UpdateTransactionDto> => {
+}: UseUpdateTransactionProps): MutationResult<TransactionEntity, Error, { id: string; data: unknown }> => {
     const queryClient = useQueryClient();
 
     const { mutate, isPending, isError, error } = useMutation({
-        mutationFn: async (transactionDto: UpdateTransactionDto) => {
-            const validDto = UpdateTransactionDtoImpl.create(transactionDto);
-            return await ExecuteUpdateTransactionUseCase(validDto);
+        mutationFn: async ({ id, data }: { id: string; data: unknown }) => {
+            return await ExecuteUpdateTransactionUseCase(id, data);
         },
         onSuccess(data) {
             dispatch({ type: "update-transaction", payload: { transaction: data } });
