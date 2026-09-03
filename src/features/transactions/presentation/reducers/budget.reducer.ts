@@ -32,6 +32,8 @@ export const initialState: BudgetState = {
     categories: [],
 };
 
+//FIXME: QUITAR ESTA COSA, se está utilizando SQLite :)
+
 export const budgetReducer = (state: BudgetState = initialState, action: BudgetActions): BudgetState => {
     if (action.type === "add-budget") {
         return {
