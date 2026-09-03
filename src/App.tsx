@@ -8,11 +8,11 @@ import { TopHeader } from "src/shared/presentation/ui/components/top-header";
 import { AccountsView } from "src/shared/presentation/ui/views/accounts.view";
 import { DashboardView } from "src/shared/presentation/ui/views/dashboard.view";
 import { ExpensesView } from "src/shared/presentation/ui/views/expenses.view";
-import { NewExpenseView } from "src/shared/presentation/ui/views/new-expense.view";
 
 import { useGetAccounts } from "src/features/accounts/presentation/hooks/use-cases/accounts/get-accounts.hook";
 import { useGetBudget } from "src/features/transactions/presentation/hooks/use-cases/budget/get-budget.hook";
 import { useGetTransactions } from "src/features/transactions/presentation/hooks/use-cases/transactions/get-transactions.hook";
+import { NewTransactionView } from "src/features/transactions/presentation/ui/views/transaction/new-transaction.view";
 
 export default function App() {
     const { data: accounts = [], isLoading: isLoadingAccounts } = useGetAccounts();
@@ -114,13 +114,13 @@ export default function App() {
                                         boxShadow: "-20px 0 60px rgba(0,0,0,0.4)",
                                     }}
                                 >
-                                    <NewExpenseView accounts={accounts} onClose={handleOnFormClose} />
+                                    <NewTransactionView accounts={accounts} onClose={handleOnFormClose} />
                                 </div>
                             </div>
 
                             {/* Mobile: fullscreen */}
                             <div className="md:hidden fixed inset-0 z-50 overflow-y-auto flex flex-col bg-background">
-                                <NewExpenseView accounts={accounts} onClose={handleOnFormClose} />
+                                <NewTransactionView accounts={accounts} onClose={handleOnFormClose} />
                             </div>
                         </>
                     )}
