@@ -1,5 +1,6 @@
-import type { ReactElement, ReactNode } from "react";
-import { Home, MoreHorizontal, Plus, TrendingDown, Wallet } from "lucide-react";
+import type { ReactElement } from "react";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { Plus } from "lucide-react";
 
 import {
     ICON_SIZES,
@@ -8,33 +9,24 @@ import {
     THEME_GRADIENTS,
     THEME_SHADOWS,
 } from "src/shared/presentation/constants/theme.constant";
+import type { AppRoute } from "src/shared/presentation/ui/routes/routes";
+import { APP_ROUTES } from "src/shared/presentation/ui/routes/routes";
 
-export type NavTab = "home" | "transactions" | "accounts" | "more";
+export const BottomNav = (): ReactElement => {
+    const location = useLocation();
+    const navigate = useNavigate();
+    const [, setSearchParams] = useSearchParams();
 
-interface BottomNavProps {
-    activeTab: NavTab;
-    onTabChange: (tab: NavTab) => void;
-    onNewTransaction: () => void;
-}
+    const handleOnNewTransaction = () => {
+        setSearchParams({ action: "new" });
+    };
 
-interface NavItem {
-    id: NavTab;
-    label: string;
-    icon: ReactNode;
-}
+    const routerLeftSlice = 2;
+    const routerRightSlice = 4;
 
-const NAV_ITEMS_LEFT: NavItem[] = [
-    { id: "home", label: "Inicio", icon: <Home size={ICON_SIZES.large} /> },
-    { id: "transactions", label: "Gastos", icon: <TrendingDown size={ICON_SIZES.large} /> },
-];
+    const navItemsLeft = APP_ROUTES.slice(0, routerLeftSlice);
 
-const NAV_ITEMS_RIGHT: NavItem[] = [
-    { id: "accounts", label: "Cuentas", icon: <Wallet size={ICON_SIZES.large} /> },
-    { id: "more", label: "Más", icon: <MoreHorizontal size={ICON_SIZES.large} /> },
-];
-
-export const BottomNav = (props: BottomNavProps): ReactElement => {
-    const { activeTab, onTabChange: handleOnTabChange, onNewTransaction: handleOnNewTransaction } = props;
+    const navItemsRight = APP_ROUTES.slice(routerLeftSlice, routerRightSlice);
 
     return (
         <nav aria-label="Navegación principal" className="md:hidden flex-shrink-0">
@@ -47,14 +39,13 @@ export const BottomNav = (props: BottomNavProps): ReactElement => {
                     paddingTop: "8px",
                 }}
             >
-                {NAV_ITEMS_LEFT.map((item) => (
-                    <NavButton
-                        key={item.id}
-                        item={item}
-                        isActive={activeTab === item.id}
-                        onClick={() => handleOnTabChange(item.id)}
-                    />
-                ))}
+                {navItemsLeft.map((item) => {
+                    const isActive = location.pathname === item.path;
+                    const handleNavClick = () => {
+                        navigate(item.path);
+                    };
+                    return <NavButton key={item.id} item={item} isActive={isActive} onClick={handleNavClick} />;
+                })}
 
                 {/* Center FAB */}
                 <div className="flex flex-col items-center -mt-5">
@@ -74,21 +65,20 @@ export const BottomNav = (props: BottomNavProps): ReactElement => {
                     </span>
                 </div>
 
-                {NAV_ITEMS_RIGHT.map((item) => (
-                    <NavButton
-                        key={item.id}
-                        item={item}
-                        isActive={activeTab === item.id}
-                        onClick={() => handleOnTabChange(item.id)}
-                    />
-                ))}
+                {navItemsRight.map((item) => {
+                    const isActive = location.pathname === item.path;
+                    const handleNavClick = () => {
+                        navigate(item.path);
+                    };
+                    return <NavButton key={item.id} item={item} isActive={isActive} onClick={handleNavClick} />;
+                })}
             </div>
         </nav>
     );
 };
 
 interface NavButtonProps {
-    item: NavItem;
+    item: AppRoute;
     isActive: boolean;
     onClick: () => void;
 }
@@ -104,7 +94,7 @@ const NavButton = (props: NavButtonProps): ReactElement => {
             className="flex flex-col items-center gap-1 px-3 py-1 rounded-xl transition-colors"
             style={{ color: isActive ? THEME_COLORS.primaryLight : THEME_COLORS.muted }}
         >
-            {item.icon}
+            <item.icon size={ICON_SIZES.large} />
             <span className="text-[10px] font-medium">{item.label}</span>
         </button>
     );

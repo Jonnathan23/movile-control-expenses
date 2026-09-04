@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { ArrowDownRight, ChevronDown, Eye, EyeOff, Wallet } from "lucide-react";
 
 import { calculateMonthlyExpenses, calculateMonthlyIncome, calculateTotalNet } from "src/shared/core/helpers/calculations.helper";
@@ -9,6 +10,7 @@ import type { AccountEntity } from "src/features/accounts/core/domain/entities/a
 import type { TransactionEntity } from "src/features/transactions/core/domain/entities/transaction.entity";
 
 import { useGetCategories } from "src/features/transactions/presentation/hooks/use-cases/categories/get-categories.hook";
+import { NewTransactionView } from "src/features/transactions/presentation/ui/views/transaction/new-transaction.view";
 
 const MONTHLY_BUDGET = 2000;
 const MAX_SCORE = 100;
@@ -21,14 +23,14 @@ const FALLBACK_CATEGORY = { icon: "📦", color: "#6b7280" };
 interface DashboardViewProps {
     readonly accounts: AccountEntity[];
     readonly transactions: TransactionEntity[];
-    readonly onNewExpense: () => void;
     readonly onViewAllExpenses: () => void;
 }
 
 export function DashboardView(props: DashboardViewProps) {
-    const { accounts, transactions, onNewExpense, onViewAllExpenses } = props;
+    const { accounts, transactions, onViewAllExpenses } = props;
 
     const [isBalanceVisible, setIsBalanceVisible] = useState<boolean>(true);
+    const [searchParams, setSearchParams] = useSearchParams();
     const { data: categories } = useGetCategories();
 
     const totalNet = calculateTotalNet(accounts);
@@ -53,12 +55,49 @@ export function DashboardView(props: DashboardViewProps) {
         onViewAllExpenses();
     };
 
+    const isShowForm = searchParams.get("action") === "new";
+
     const handleNewExpenseClick = () => {
-        onNewExpense();
+        setSearchParams({ action: "new" });
+    };
+
+    const handleOnFormClose = (): void => {
+        setSearchParams((prev) => {
+            prev.delete("action");
+            return prev;
+        });
+    };
+
+    const handleOnOverlayClick = (e: React.MouseEvent<HTMLDivElement>): void => {
+        if (e.target === e.currentTarget) handleOnFormClose();
     };
 
     return (
         <div className="p-4 md:p-8 pb-6 animate-slide-up">
+            {/* Form overlay */}
+            {isShowForm && (
+                <>
+                    {/* Desktop: side panel */}
+                    <div className="hidden md:flex fixed inset-0 z-50 items-start justify-end" onClick={handleOnOverlayClick}>
+                        <div
+                            className="h-full w-full max-w-md overflow-y-auto flex flex-col animate-slide-in-left"
+                            style={{
+                                background: "#0c3c46",
+                                borderLeft: "1px solid rgba(38,160,155,0.2)",
+                                boxShadow: "-20px 0 60px rgba(0,0,0,0.4)",
+                            }}
+                        >
+                            <NewTransactionView accounts={accounts} onClose={handleOnFormClose} />
+                        </div>
+                    </div>
+
+                    {/* Mobile: fullscreen */}
+                    <div className="md:hidden fixed inset-0 z-50 overflow-y-auto flex flex-col bg-background">
+                        <NewTransactionView accounts={accounts} onClose={handleOnFormClose} />
+                    </div>
+                </>
+            )}
+
             {/* ─── Desktop: 2-column grid ─── */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
                 {/* Left / top column */}

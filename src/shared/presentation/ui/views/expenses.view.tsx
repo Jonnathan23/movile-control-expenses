@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
 import { currencyFormatHelper, dateFormatHelper, timeFormatHelper } from "src/shared/core/helpers/format.helper";
 
@@ -8,20 +9,21 @@ import type { AccountEntity } from "src/features/accounts/core/domain/entities/a
 import type { TransactionEntity } from "src/features/transactions/core/domain/entities/transaction.entity";
 
 import { useGetCategories } from "src/features/transactions/presentation/hooks/use-cases/categories/get-categories.hook";
+import { NewTransactionView } from "src/features/transactions/presentation/ui/views/transaction/new-transaction.view";
 
 interface ExpensesViewProps {
     readonly accounts: AccountEntity[];
     readonly transactions: TransactionEntity[];
-    readonly onNewExpense: () => void;
 }
 
 type Filter = "all" | "expense" | "income";
 
-export function ExpensesView({ accounts, transactions, onNewExpense }: ExpensesViewProps) {
+export function ExpensesView({ accounts, transactions }: ExpensesViewProps) {
     //TODO: quitar el filtro en la vista y delegar esa logica al caso de uso (datasource)
     const { data: categories = [] } = useGetCategories();
     const [filter, setFilter] = useState<Filter>("all");
     const [category, setCategory] = useState<string>("all");
+    const [searchParams, setSearchParams] = useSearchParams();
 
     const filtered = transactions.filter((transaction) => {
         if (filter !== "all" && transaction.type !== filter) return false;
@@ -42,12 +44,49 @@ export function ExpensesView({ accounts, transactions, onNewExpense }: ExpensesV
         setCategory(categoryName);
     };
 
+    const isShowForm = searchParams.get("action") === "new";
+
     const handleNewExpenseClick = () => {
-        onNewExpense();
+        setSearchParams({ action: "new" });
+    };
+
+    const handleOnFormClose = (): void => {
+        setSearchParams((prev) => {
+            prev.delete("action");
+            return prev;
+        });
+    };
+
+    const handleOnOverlayClick = (e: React.MouseEvent<HTMLDivElement>): void => {
+        if (e.target === e.currentTarget) handleOnFormClose();
     };
 
     return (
         <div className="flex flex-col gap-5 p-4 md:p-8 pb-6 animate-slide-up max-w-4xl mx-auto w-full">
+            {/* Form overlay */}
+            {isShowForm && (
+                <>
+                    {/* Desktop: side panel */}
+                    <div className="hidden md:flex fixed inset-0 z-50 items-start justify-end" onClick={handleOnOverlayClick}>
+                        <div
+                            className="h-full w-full max-w-md overflow-y-auto flex flex-col animate-slide-in-left"
+                            style={{
+                                background: "#0c3c46",
+                                borderLeft: "1px solid rgba(38,160,155,0.2)",
+                                boxShadow: "-20px 0 60px rgba(0,0,0,0.4)",
+                            }}
+                        >
+                            <NewTransactionView accounts={accounts} onClose={handleOnFormClose} />
+                        </div>
+                    </div>
+
+                    {/* Mobile: fullscreen */}
+                    <div className="md:hidden fixed inset-0 z-50 overflow-y-auto flex flex-col bg-background">
+                        <NewTransactionView accounts={accounts} onClose={handleOnFormClose} />
+                    </div>
+                </>
+            )}
+
             {/* Summary banner */}
             <div className="rounded-2xl p-4" style={{ background: "#1a5862", border: "1px solid rgba(38,160,155,0.2)" }}>
                 <p className="text-xs font-medium mb-1" style={{ color: "#85c9c0" }}>

@@ -1,5 +1,6 @@
 import type { ReactElement } from "react";
-import { Bell, Home, MoreHorizontal, Plus, TrendingDown, Wallet } from "lucide-react";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { Bell, Plus, Wallet } from "lucide-react";
 
 import { calculateTotalNet } from "src/shared/core/helpers/calculations.helper";
 import { currencyFormatHelper } from "src/shared/core/helpers/format.helper";
@@ -10,30 +11,26 @@ import {
     THEME_GRADIENTS,
     THEME_SHADOWS,
 } from "src/shared/presentation/constants/theme.constant";
-import type { NavTab } from "src/shared/presentation/ui/components/bottom-nav";
+import { APP_ROUTES } from "src/shared/presentation/ui/routes/routes";
 
 import type { AccountEntity } from "src/features/accounts/core/domain/entities/account.entity";
 
 interface SideNavProps {
-    activeTab: NavTab;
-    accounts: AccountEntity[];
-
-    onTabChange: (tab: NavTab) => void;
-    onNewTransaction: () => void;
+    readonly accounts: AccountEntity[];
 }
 
-const NAV_ITEMS = [
-    { id: "home" as NavTab, label: "Inicio", icon: Home },
-    { id: "transactions" as NavTab, label: "Gastos", icon: TrendingDown },
-    { id: "accounts" as NavTab, label: "Cuentas", icon: Wallet },
-    { id: "more" as NavTab, label: "Más", icon: MoreHorizontal },
-];
-
 export const SideNav = (props: SideNavProps): ReactElement => {
-    const { activeTab, accounts } = props;
-    const { onTabChange: handleOnTabChange, onNewTransaction: handleOnNewTransaction } = props;
+    const { accounts } = props;
+
+    const location = useLocation();
+    const navigate = useNavigate();
+    const [, setSearchParams] = useSearchParams();
 
     const totalNet = calculateTotalNet(accounts);
+
+    const handleOnNewTransaction = () => {
+        setSearchParams({ action: "new" });
+    };
 
     return (
         <aside
@@ -59,14 +56,16 @@ export const SideNav = (props: SideNavProps): ReactElement => {
 
             {/* Nav links */}
             <nav className="flex-1 px-3 space-y-1 overflow-y-auto">
-                {NAV_ITEMS.map((item) => {
-                    // eslint-disable-next-line @typescript-eslint/naming-convention
-                    const Icon = item.icon;
-                    const isActive = activeTab === item.id;
+                {APP_ROUTES.map((item) => {
+                    const isActive = location.pathname === item.path;
+                    const handleNavClick = () => {
+                        navigate(item.path);
+                    };
                     return (
                         <button
                             key={item.id}
-                            onClick={() => handleOnTabChange(item.id)}
+                            type="button"
+                            onClick={handleNavClick}
                             aria-current={isActive ? "page" : undefined}
                             className="w-full flex items-center gap-3 px-3 py-3 rounded-xl text-sm font-medium transition-all hover:brightness-110"
                             style={{
@@ -74,7 +73,7 @@ export const SideNav = (props: SideNavProps): ReactElement => {
                                 color: isActive ? THEME_COLORS.primaryLight : THEME_COLORS.muted,
                             }}
                         >
-                            <Icon size={ICON_SIZES.medium} />
+                            <item.icon size={ICON_SIZES.medium} />
                             {item.label}
                         </button>
                     );
